@@ -63,6 +63,7 @@
 <a href="/2020/03/07/A-painful-experience/9.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="30%" height="30%" data-src="/2020/03/07/A-painful-experience/9.jpg" class="lazyload"></a>
 
 <p>Edge是个 随便！！（好吧，其实是我菜，但是edge浏这个览器连我域名没开解析都能进去的机制属实恶心</p>
+<p>还有就是为啥我拿dl进去是更新的状态，自己的ip却不更新的（我咋觉得还跟上次扫目录有关。。</p>
 <p>&nbsp;</p>
 <p>以后一定要提前备份！！</p>
 <p>还有在这插个眼，以后再在git上犯重大错误就T回来扇自己</p>
@@ -88,7 +89,7 @@
 <h5 id="事件记录"><a href="#事件记录" class="headerlink" title="事件记录"></a>事件记录</h5><p>curl太慢（卡着卡着停了）、python2退休（确实不方便）、pip安装不成功</p>
 <p>权限赋予 chmod、教程没啥说的下面挺全</p>
 <p>学习过程再更，（众所周知，安装≈学会）</p>
-<p><a href="/2020/03/02/Docker-learning/t.jpg" data-fancybox="group" data-caption class="fancybox"><img alt title data-src="/2020/03/02/Docker-learning/t.jpg" class="lazyload"></a></p>
+<p><a href="/2020/03/02/Docker-learning/t.jpg" data-fancybox="group" data-caption class="fancybox"><img alt data-src="/2020/03/02/Docker-learning/t.jpg" class="lazyload" title></a></p>
 <h5 id="相关网址："><a href="#相关网址：" class="headerlink" title="相关网址："></a>相关网址：</h5><p><a href="https://blog.csdn.net/deng624796905/article/details/86493330" target="_blank" rel="noopener">Docker入门</a></p>
 <p><a href="https://blog.csdn.net/zzq060143/article/details/91050272" target="_blank" rel="noopener">Win10中docker的安装与使用</a></p>
 <p><a href="https://blog.csdn.net/weixin_44725156/article/details/104403204" target="_blank" rel="noopener">Centos7安装Docker Compose(pip方式安装)</a></p>
