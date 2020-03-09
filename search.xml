@@ -1,6 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>高校战&quot;疫&quot;-misc-wp</title>
+    <url>/2020/03/09/xctf-misc-wp/</url>
+    <content><![CDATA[<h3 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h3><p>虽然计网和OS作业还没写，但是奈何不想写啊。。。于是就写篇博客玩吧。。。。</p>
+<p>上周末有一场高校战“疫”赛在adworld平台上举行了，作为联盟学校的一员当然要去水一水啦。</p>
+<p>不过恰巧比赛前一天博客炸了，搞到半夜，第二天早上没起来。。</p>
+<p>早上起来的时候发现签到题和一道misc已经被做了，伤心！（web是不敢想的，也就水水misc。。</p>
+<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><h4 id="简单misc"><a href="#简单misc" class="headerlink" title="简单misc"></a>简单misc</h4><p>思路：文件头修复+文件分离+摩斯密码+base64</p>
+<p>用winhex或者010editor或者hxd打开文件，修复文件头为FFD8</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="30%" height="30%" data-src="/2020/03/09/xctf-misc-wp/1.jpg" src="/img/loading.gif" class="lazyload"></a>
+
+<p>好像并没有什么有用的信息，搜一下文件尾FFD9，发现后面有个压缩包</p>
+<p>手动提取也行，binwalk也行，foremost也行（最近爱上了手撕，因为不用往linux里放了</p>
+<p>解压后发现一段摩斯密码：<code>./.--./../-.././--/../-.-./.../../-/..-/.-/-/../---/-./---/..-./..-/-./../...-/./.-./.../../-/-.--/.--/.-/.-.</code> 解密一下：<code>EPIDEMICSITUATIONOFUNIVERSITYWAR</code></p>
+<p>这个就是flag压缩包的密码，解压后得到一传base64：<code>VGgxc19pc19GbGFHX3lvdV9hUkVfcmlnSFQ=</code>解码一下得到flag</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Th1s_is_FlaG_you_aRE_rigHT</span><br></pre></td></tr></table></figure></div>
+
+<p>&nbsp;</p>
+<h4 id="隐藏的信息"><a href="#隐藏的信息" class="headerlink" title="隐藏的信息"></a>隐藏的信息</h4><p>反色二维码补全扫码+伪加密+频谱图(高群、低群)电话音分析+base64加密</p>
+<p>把二维码里面反色一下，补上三个定位点</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/09/xctf-misc-wp/2.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>扫出来是：<code>flag{this_is_also_not_flag} 解压密码不在这里0.0！</code></p>
+<p>并没有什么卵用，然后还在二维码那张图片里发现了这个</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/09/xctf-misc-wp/3.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>应该是找出隐藏的信息后base64加密（后面是TOGETYOUFLAG</p>
+<p>然后就是那个纯数字的压缩包，我从1位爆破到10位后，感觉不对劲</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="10%" height="10%" data-src="/2020/03/09/xctf-misc-wp/4.jpg" src="/img/loading.gif" class="lazyload"></a>
+
+<p>再高位数跑完怕不是比赛都结束了，放进010一看，淦，伪加密</p>
+<p>解开后得到一个音频，放进Audacity看一下，发现正巧是前几天看的<a href="https://www.ichunqiu.com/course/61665" target="_blank" rel="noopener">视频</a>里的（拨号音</p>
+<p><a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/09/xctf-misc-wp/5.png" src="/img/loading.gif" class="lazyload"></a><a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/09/xctf-misc-wp/5.png" src="/img/loading.gif" class="lazyload"></a></p>
+<p>手解一下</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/03/09/xctf-misc-wp/7.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>得到一串数字：<code>187485618521</code>，base64加密一下得到flag</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">MTg3NDg1NjE4NTIx</span><br></pre></td></tr></table></figure></div>
+
+<p>&nbsp;</p>
+<h4 id="ez-mem-amp-usb"><a href="#ez-mem-amp-usb" class="headerlink" title="ez_mem&amp;usb"></a>ez_mem&amp;usb</h4><p>流量分析+内存取证+usb(键盘)</p>
+<p>这道题在比赛的时候没做出来（当时还没咋做过内存取证），看<a href="https://blog.xiafeng2333.top/" target="_blank" rel="noopener">夏风师傅的博客</a>又复盘了一遍</p>
+<p>在pacp提取出一个压缩包里面有data.vmem（或者binwalk，foremost啥的</p>
+<p>扔进kali里，先识别一下操作系统</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">volatility -f data.vmem imageinfo</span><br></pre></td></tr></table></figure></div>
+
+<p>发现是32位的winxp，列一下进程(pslist无法显示隐藏/终止进程，可以用插件psscan解决</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">volatility -f data.vmem --profile=WinXPSP2x86 pslist</span><br></pre></td></tr></table></figure></div>
+
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/09/xctf-misc-wp/8.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>当时关键进程抓错了。。没分析IE（一生之敌）。。直接去提取cmd和conime的进程，然后去扫flag字符串</p>
+<p>陷进去的时候，那道题已经被解出来了，然后就不想做了。。（小白还是小白。。</p>
+<p>关键进程应该是explorer.exe和cmd.exe</p>
+<p>先去提取内存中保留的 cmd 命令使用情况</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/09/xctf-misc-wp/10.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>发现passwd：<code>weak_auth_top100</code></p>
+<p>然后用iehistory查看ie浏览器使用情况发现没有信息，于是用editbox查看输入框信息</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/09/xctf-misc-wp/9.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>发现ie访问的地址是 “C:\Documents and Settings\Administrator”</p>
+<p>于是用filescan搜索文件，grep过滤包含<code>Administrator</code>的地址</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">volatility -f data.vmem --profile=WinXPSP2x86 filescan | grep <span class="string">"Administrator"</span></span><br></pre></td></tr></table></figure></div>
+
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/09/xctf-misc-wp/11.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>发现flag.img，提取出来</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">volatility -f data.vmem --profile=WinXPSP2x86 dumpfiles -Q 0x0000000001155f90 -n --dump-dir=./</span><br></pre></td></tr></table></figure></div>
+
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/03/09/xctf-misc-wp/12.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>其实当时我也过滤了好多。。但是过滤的都是zip、rar、png、jpg、txt、pacp啥的。。没想过img文件（其实过滤flag也行</p>
+<p>得到文件file.None.0xff425090.dat，修改后缀为img，把里面的东西提取一下</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/03/09/xctf-misc-wp/13.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>得到一个加密的压缩包，密码就是<code>weak_auth_top100</code>（我还以为是弱口令爆破，试了两组后就放弃了</p>
+<p>解压得到usbdata.txt ，网上有脚本可以分析，贴个<a href="https://www.cnblogs.com/ECJTUACM-873284962/p/9473808.html" target="_blank" rel="noopener">网址</a>，大佬分析的挺全面的</p>
+<p>脚本跑完后得到flag</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">flag&#123;69200835784ec3ed8d2a64e73fe913c0&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="武汉加油"><a href="#武汉加油" class="headerlink" title="武汉加油"></a>武汉加油</h4><p>能力不够，这个是真不会（挺正能量一题，哈哈哈哈哈</p>
+<p>提取到flag.exe就不会了，IDA分析不会。。运行的时候倒是发现六个输入接回车后会输出一些无规则字符。。</p>
+<p>赛后讨论的时候才知道加了个VMP壳？。。</p>
+<p>然后群里的师傅发现了这个</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/09/xctf-misc-wp/15.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>还有这个</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/09/xctf-misc-wp/15.jpg" src="/img/loading.gif" class="lazyload"></a>
+
+<p>misc新题型解锁：开心猜猜猜！</p>
+<p>最后我：</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/09/xctf-misc-wp/16.jpg" src="/img/loading.gif" class="lazyload"></a>
+
+<p>希望下次misc能多做出来几道，嘿嘿嘿！</p>
+]]></content>
+      <categories>
+        <category>misc</category>
+        <category>xctf</category>
+      </categories>
+      <tags>
+        <tag>Write_up</tag>
+        <tag>misc</tag>
+        <tag>xctf</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>记一次惨痛经历</title>
     <url>/2020/03/07/A-painful-experience/</url>
     <content><![CDATA[<p>记昨晚我的一次惨痛经历</p>
