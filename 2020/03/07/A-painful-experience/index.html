@@ -1,0 +1,138 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5"><title>记一次惨痛经历 | BTIS's blog</title><meta name="description" content="记一次惨痛经历"><meta name="keywords" content="hexo,cdn,git"><meta name="author" content="BTIS"><meta name="copyright" content="BTIS"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="/img/favicon.png"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="https://fonts.googleapis.com" crossorigin><link rel="preconnect" href="//busuanzi.ibruce.info"><meta name="baidu-site-verification" content="Ti8NSAF1tI"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="记一次惨痛经历"><meta name="twitter:description" content="记一次惨痛经历"><meta name="twitter:image" content="https://images.pexels.com/photos/39348/musician-trumpet-metal-snowman-39348.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=1&amp;w=500"><meta property="og:type" content="article"><meta property="og:title" content="记一次惨痛经历"><meta property="og:url" content="https://www.btis.site/2020/03/07/A-painful-experience/"><meta property="og:site_name" content="BTIS's blog"><meta property="og:description" content="记一次惨痛经历"><meta property="og:image" content="https://images.pexels.com/photos/39348/musician-trumpet-metal-snowman-39348.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=1&amp;w=500"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://cdn.jsdelivr.net/npm/js-cookie/dist/js.cookie.min.js"></script><script>const autoChangeMode = 'false'
+var t = Cookies.get("theme");
+if (autoChangeMode == '1'){
+const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+const isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
+const isNotSpecified = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+if (t === undefined){
+  if (isLightMode) activateLightMode()
+  else if (isDarkMode) activateDarkMode()
+  else if (isNotSpecified || hasNoSupport){
+    console.log('You specified no preference for a color scheme or your browser does not support it. I Schedule dark mode during night time.')
+    now = new Date();
+    hour = now.getHours();
+    isNight = hour < 6 || hour >= 18
+    isNight ? activateDarkMode() : activateLightMode()
+}
+} else if (t == 'light') activateLightMode()
+else activateDarkMode()
+
+
+} else if (autoChangeMode == '2'){
+  now = new Date();
+  hour = now.getHours();
+  isNight = hour < 6 || hour >= 18
+  if(t === undefined) isNight? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode() 
+} else {
+  if ( t == 'dark' ) activateDarkMode()
+  else if ( t == 'light') activateLightMode()
+}
+
+function activateDarkMode(){
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+    document.querySelector('meta[name="theme-color"]').setAttribute('content','#000')
+  }
+}
+function activateLightMode(){
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null){
+  document.querySelector('meta[name="theme-color"]').setAttribute('content','#fff')
+  }
+}</script><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><link rel="canonical" href="https://www.btis.site/2020/03/07/A-painful-experience/"><link rel="prev" title="高校战&quot;疫&quot;-misc-wp" href="https://www.btis.site/2020/03/09/xctf-misc-wp/"><link rel="next" title="Docker安装(learning)" href="https://www.btis.site/2020/03/02/Docker-learning/"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"https://xxx/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    title: 'Snackbar.bookmark.title',
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天',
+  runtime: true,
+  copyright: undefined,
+  ClickShowText: {"text":"C++,Python,PHP,Java,MYSQL,C#,Perl,Ruby,都不会","fontSize":"15px"},
+  medium_zoom: false,
+  fancybox: true,
+  Snackbar: {"bookmark":{"title":"Snackbar.bookmark.title","message_prev":"按","message_next":"键将本页加入书签"},"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#2d3035","position":"bottom-left"},
+  baiduPush: false,
+  isHome: false,
+  isPost: true
+  
+}</script><meta name="generator" content="Hexo 4.2.0"></head><body><header> <div id="page-header"><span class="pull_left" id="blog_name"><a class="blog_title" id="site-name" href="/">BTIS's blog</a></span><span class="toggle-menu pull_right close"><a class="site-page"><i class="fa fa-bars fa-fw" aria-hidden="true"></i></a></span><span class="pull_right menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> List</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/photos/"><i class="fa-fw fa fa-photo"></i><span> Photos</span></a></li><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> Music</span></a></li></ul></div></div></span><span class="pull_right" id="search_button"><a class="site-page social-icon search"><i class="fa fa-search fa-fw"></i><span> 搜索</span></a></span></div></header><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">5</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">9</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">6</div></a></div></div></div><hr><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fa fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa fa-user"></i><span> About</span></a></div><div class="menus_item"><a class="site-page"><i class="fa-fw fa fa-list" aria-hidden="true"></i><span> List</span><i class="fa fa-chevron-down menus-expand" aria-hidden="true"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/photos/"><i class="fa-fw fa fa-photo"></i><span> Photos</span></a></li><li><a class="site-page" href="/music/"><i class="fa-fw fa fa-music"></i><span> Music</span></a></li></ul></div></div></div><div id="mobile-sidebar-toc"><div class="toc_mobile_headline">目录</div><div class="sidebar-toc__content"><ol class="toc_mobile_items"><li class="toc_mobile_items-item toc_mobile_items-level-4"><a class="toc_mobile_items-link" href="#事件经过"><span class="toc_mobile_items-number">1.</span> <span class="toc_mobile_items-text">事件经过</span></a></li></ol></div></div></div><div id="body-wrap"><div id="web_bg" data-type="color"></div><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true">     </i><div class="auto_open" id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#事件经过"><span class="toc-number">1.</span> <span class="toc-text">事件经过</span></a></li></ol></div></div></div><main id="content-outer"><div id="top-container" style="background-image: url(https://images.pexels.com/photos/39348/musician-trumpet-metal-snowman-39348.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=1&amp;w=500)"><div id="post-info"><div id="post-title"><div class="posttitle">记一次惨痛经历</div></div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar fa-fw" aria-hidden="true"></i> 发表于 2020-03-07<span class="post-meta__separator">|</span><i class="fa fa-history fa-fw" aria-hidden="true"></i> 更新于 2020-03-08</time><span class="post-meta__separator">|</span><span><i class="fa fa-inbox post-meta__icon fa-fw" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/hexo/">hexo</a></span><div class="post-meta-wordcount"><i class="fa fa-file-word-o post-meta__icon fa-fw" aria-hidden="true"></i><span>字数总计:</span><span class="word-count">934</span><span class="post-meta__separator">|</span><i class="fa fa-clock-o post-meta__icon fa-fw" aria-hidden="true"></i><span>阅读时长: 2 分钟</span><div class="post-meta-pv-cv"><span class="post-meta__separator">|</span><span><i class="fa fa-eye post-meta__icon fa-fw" aria-hidden="true"> </i>阅读量:</span><span id="busuanzi_value_page_pv"></span></div></div></div></div></div><div class="layout layout_post" id="content-inner">   <article id="post"><div class="article-container" id="post-content"><p>记昨晚我的一次惨痛经历</p>
+<h4 id="事件经过"><a href="#事件经过" class="headerlink" title="事件经过"></a>事件经过</h4><p>因为我是在服务器和Github上同时更新博客的，所以在昨天配置完善好新加的主题后</p>
+<p>先deploy到了Gitpage上，可以、不错很成功，然后就是往服务器上放了</p>
+<p>嗯，hexo clean g d一气呵成。。。访问网站。。。</p>
+<p>？？？？？？？？？</p>
+<p>此时问题出现了，网站内容没更新！！！</p>
+<p>再刷新几次试试。。。还是没有！！！！</p>
+<p>回来再部署一次！一定是姿势不对！</p>
+<a href="/2020/03/07/A-painful-experience/5.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="10%" height="10%" data-src="/2020/03/07/A-painful-experience/5.jpg" src="/img/loading.gif" class="lazyload"></a>
+
+<p>淦！！为啥还是没有，研究一下hexo d之后的内容。。</p>
+<p>“Branch ‘master’ set up to track remote branch ‘master’ from”？？？？？？</p>
+<p>百度一下，奥！！原来是分叉了，操作一番。。。。</p>
+<p>在一窍不通的情况下试验了status、commit、merge、branch、add、push、checkout、push………</p>
+<p>嘿！还是不行？？这时一段代码来了！！</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clean -f -d</span><br></pre></td></tr></table></figure></div>
+
+<p>就是它！！就是它！！它摧毁了我的hexo，它删掉了我辛辛苦苦配置了很久的next和butterfly</p>
+<a href="/2020/03/07/A-painful-experience/1.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="15%" height="15%" data-src="/2020/03/07/A-painful-experience/1.jpg" src="/img/loading.gif" class="lazyload"></a>
+
+<p>第一反应woc！！！赶紧去回收站看看，有救没？？有救没？？？</p>
+<p>没有了！！！5555草5555！！！</p>
+<p>于是悲伤地卸掉hexo打算重新来过</p>
+<a href="/2020/03/07/A-painful-experience/3.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img style="zoom:80%;" data-src="/2020/03/07/A-painful-experience/3.jpg" src="/img/loading.gif" class="lazyload"></a>
+
+<p>但是再下下来后，发现hexo s连TM自己本地的4000端口都看不来了！！（急了急了脑子没了</p>
+<p>那时候已经一点多了，我悲伤地发出了一篇纪念我短暂博客生涯的说说</p>
+<p>那时已经在看Ghost怎么搭建了（但是说真的还是放不下hexo，作业那么多，也没有重头再来的勇气了</p>
+<p>这时一位学姐的评论，又让我看到blog转生的希望</p>
+<a href="/2020/03/07/A-painful-experience/4.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/07/A-painful-experience/4.jpg" src="/img/loading.gif" class="lazyload"></a>
+
+<p>DiskGenius文件数据恢复工具，然后就去扫我的磁盘</p>
+<p>但是有用的只找到了一部分，很多都丢了（像styl文件、yml文件</p>
+<p>比较惊喜的还是把自己之前发博客写的md文件找到了（很重要，没这个我贼难受，懒得copy了</p>
+<p>这时时间来到了3点多钟，我不甘心的睡下了，仿佛看开了，其实脑子里全都是</p>
+<p>“Branch ‘master’ set up to track remote branch ‘master’ from”。。。。。。。。。</p>
+<a href="/2020/03/07/A-painful-experience/6.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/07/A-painful-experience/6.jpg" src="/img/loading.gif" class="lazyload"></a>
+
+<p>时间来到了今天，早上爬起来水了道战疫的misc后。。</p>
+<p>淦！我不甘心！爷要从头开始！！！（md，要不是这事，我OS实验一应该写的差不多了</p>
+<p>经过一下午的复原。。。。我努力把它变成了原来的样子。。。。</p>
+<p>hexo clean g d。。！！？？还是之前的样子？？？？</p>
+<p>这次又去研究了下分叉，切到.deploy<code>git branch -a</code>。。。就一个master呀</p>
+<p><code>ssh -v git@xx.xx.xx.xx</code>在服务器里切到blog.git。。。就一个master呀</p>
+<a href="/2020/03/07/A-painful-experience/7.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="15%" height="15%" data-src="/2020/03/07/A-painful-experience/7.jpg" src="/img/loading.gif" class="lazyload"></a>
+
+<p>WinSCP连上服务器，看一下文件更新时间？？是今天下午啊！没错呀！</p>
+<p>此时的我意识到了问题的不对劲</p>
+<a href="/2020/03/07/A-painful-experience/8.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/07/A-painful-experience/8.jpg" src="/img/loading.gif" class="lazyload"></a>
+
+<p>每次在Edge进博客进得都很快，我知道可能是有缓存之类的，但是清除缓存后好像没并没有什么卵用</p>
+<p>于是我打算换一个浏览器进入一下我的博客（  Firefox启动，Google启动</p>
+<p>进入博客。。无法访问？？？？？？？？</p>
+<p>换一个子域名，进去了！更新了！！？？</p>
+<p>我突然想到了我昨天下午搞的骚东西——CDN，好像没搞完就放那不管了</p>
+<p>接下来我发现我的域名解析暂停了没开，CDN暂停了没删</p>
+<p>真相只有一个</p>
+<a href="/2020/03/07/A-painful-experience/9.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="30%" height="30%" data-src="/2020/03/07/A-painful-experience/9.jpg" src="/img/loading.gif" class="lazyload"></a>
+
+<p>Edge是个 随便！！（好吧，其实是我菜，但是edge浏这个览器连我域名没开解析都能进去的机制属实恶心</p>
+<p>还有就是为啥我拿dl进去是更新的状态，自己的ip却不更新的（我咋觉得还跟上次扫目录有关。。</p>
+<p>&nbsp;</p>
+<p>以后一定要提前备份！！</p>
+<p>还有在这插个眼，以后再在git上犯重大错误就T回来扇自己</p>
+<p><a href="https://www.runoob.com/git/git-tutorial.html" target="_blank" rel="noopener">Git 菜鸟教程</a></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">BTIS</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.btis.site/2020/03/07/A-painful-experience/">https://www.btis.site/2020/03/07/A-painful-experience/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://www.btis.site">BTIS's blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/hexo/">hexo    </a><a class="post-meta__tags" href="/tags/cdn/">cdn    </a><a class="post-meta__tags" href="/tags/git/">git    </a></div><div class="post_share"><div class="social-share" data-image="https://images.pexels.com/photos/39348/musician-trumpet-metal-snowman-39348.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=1&amp;w=500" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js"></script></div></div><nav class="pagination_post" id="pagination"><div class="prev-post pull_left"><a href="/2020/03/09/xctf-misc-wp/"><img class="prev_cover lazyload" data-src="https://images.pexels.com/photos/746386/pexels-photo-746386.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=2&amp;h=650&amp;w=940" onerror="onerror=null;src='/img/404.jpg'"><div class="label">上一篇</div><div class="prev_info"><span>高校战&quot;疫&quot;-misc-wp</span></div></a></div><div class="next-post pull_right"><a href="/2020/03/02/Docker-learning/"><img class="next_cover lazyload" data-src="https://images.pexels.com/photos/6758/wildernessculture-rei1440project-welltravelled-awesomeearth.jpg?auto=compress&amp;cs=tinysrgb&amp;dpr=1&amp;w=500" onerror="onerror=null;src='/img/404.jpg'"><div class="label">下一篇</div><div class="next_info"><span>Docker安装(learning)</span></div></a></div></nav></div></main><footer id="footer" style="background-image: url(https://images.pexels.com/photos/39348/musician-trumpet-metal-snowman-39348.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=1&amp;w=500)" data-type="photo"><div id="footer-wrap"><div class="copyright">&copy;2020 By BTIS</div><div class="framework-info"><span>驱动 </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly" target="_blank" rel="noopener"><span>Butterfly</span></a></div><div class="footer_custom_text">A place to record life and learning.</div><div class="icp"><a href="http://www.beian.miit.gov.cn/" target="_blank" rel="noopener"><img class="icp-icon" src="/img/icp.png"><span>冀ICP备20003068号</span></a></div></div></footer></div><section class="rightside" id="rightside"><div id="rightside-config-hide"><i class="fa fa-book" id="readmode" title="阅读模式"></i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换" target="_self">繁</a><i class="darkmode fa fa-moon-o" id="darkmode" title="夜间模式"></i></div><div id="rightside-config-show"><div id="rightside_config" title="设置"><i class="fa fa-cog" aria-hidden="true"></i></div><i class="fa fa-list-ul close" id="mobile-toc-button" title="目录" aria-hidden="true"></i><i class="fa fa-arrow-up" id="go-up" title="回到顶部" aria-hidden="true"></i></div></section><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script id="canvas_nest" color="0,0,255" opacity="0.5" zIndex="-1" count="80" mobile="true" src="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/js/canvas-nest.js"></script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@latest/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/lazysizes@latest/lazysizes.min.js" async=""></script><script src="https://cdn.jsdelivr.net/gh/jerryc127/butterfly_cdn@2.1.0/js/ClickShowText.js"></script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
