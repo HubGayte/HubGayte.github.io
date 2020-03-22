@@ -4,7 +4,7 @@
     <title>BJDCTF-2nd-wp</title>
     <url>/2020/03/21/BJDCTF-2nd-wp/</url>
     <content><![CDATA[<p>上周六，第二届BJD在buuoj上举行了，去水了一下，在这里写一些misc和crypto的wp吧（别问，问就是web基本不会</p>
-<p>[TOC]</p>
+<p>&nbsp;</p>
 <h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="最简单的misc-y1ng"><a href="#最简单的misc-y1ng" class="headerlink" title="最简单的misc-y1ng"></a>最简单的misc-y1ng</h3><p>思路：伪加密+补全文件头+16进制转ASCII</p>
 <p>09-&gt;00，补全文件头89 50 4E 47，得到下图</p>
 <a href="/2020/03/21/BJDCTF-2nd-wp/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/1.png" src="/img/loading.gif" class="lazyload"></a>
