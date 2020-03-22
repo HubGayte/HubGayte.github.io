@@ -7,11 +7,11 @@
 <p>[TOC]</p>
 <h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="最简单的misc-y1ng"><a href="#最简单的misc-y1ng" class="headerlink" title="最简单的misc-y1ng"></a>最简单的misc-y1ng</h3><p>思路：伪加密+补全文件头+16进制转ASCII</p>
 <p>09-&gt;00，补全文件头89 50 4E 47，得到下图</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/1.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/21/BJDCTF-2nd-wp/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/1.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>将下面那一行转换为ASCII后得到flag：<code>BJD{y1ngzuishuai}</code></p>
 <h3 id="A-Beautiful-Picture"><a href="#A-Beautiful-Picture" class="headerlink" title="A_Beautiful_Picture"></a>A_Beautiful_Picture</h3><p>思路：png高度修改</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/2.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/2.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/21/BJDCTF-2nd-wp/2.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/03/21/BJDCTF-2nd-wp/2.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>开始没想修改高度，直接放到slover了啥也没发现，然后用zsteg没法发现隐写，最后去改了高度</p>
 <p>得到flag：<code>BJD{PnG_He1ghT_1s_WR0ng}</code></p>
@@ -19,36 +19,36 @@
 <p>foremost分离出了一个zip，解压得到一个jpg，格式不正确，file一下发现是avi，改后缀</p>
 <p>近期钉钉“求饶”视频，但是里面混进去一些图片，pr，ae，ff不会用。。（所以我选择迅雷</p>
 <p>逐帧查看后发现四张图片</p>
-<p><a href="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/3.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/3.png" src="/img/loading.gif" class="lazyload"></a><a href="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/4.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/4.png" src="/img/loading.gif" class="lazyload"></a></p>
-<p><a href="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/5.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/5.png" src="/img/loading.gif" class="lazyload"></a><a href="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/6.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/6.png" src="/img/loading.gif" class="lazyload"></a></p>
+<p><a href="/2020/03/21/BJDCTF-2nd-wp/3.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/3.png" src="/img/loading.gif" class="lazyload"></a><a href="/2020/03/21/BJDCTF-2nd-wp/4.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/4.png" src="/img/loading.gif" class="lazyload"></a></p>
+<p><a href="/2020/03/21/BJDCTF-2nd-wp/5.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/5.png" src="/img/loading.gif" class="lazyload"></a><a href="/2020/03/21/BJDCTF-2nd-wp/6.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/6.png" src="/img/loading.gif" class="lazyload"></a></p>
 <p>前三张反色完，要不PsQREdit，要不Barcode Reader都能扫出来</p>
 <p>但是第4张中间有、糊，于是掏出QRazyBox自己拼了一张</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/7.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/7.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/21/BJDCTF-2nd-wp/7.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/7.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>最后把扫出来的字符串拼起来得到<code>6167696E5F6C  6F76655F59  424A447B696D  316E677D</code></p>
 <p>16进制转ASCII后调整一下顺序得到flag：<code>BJD{imagin_love_Y1ng}</code></p>
 <h3 id="小姐姐-y1ng"><a href="#小姐姐-y1ng" class="headerlink" title="小姐姐-y1ng"></a>小姐姐-y1ng</h3><p>思路：直接010里搜BJD</p>
 <p>u1s1，图不错，这题卡了半天</p>
 <p>刚开始拿stegdetect分析了一下，以为是jphide。。然后因为不知道密码是啥就一直卡住了，break爆破也爆不出来</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/8.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/8.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/21/BJDCTF-2nd-wp/8.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/8.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>最后去010里面搜了一下BJD。。（人傻了</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/9.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/9.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/21/BJDCTF-2nd-wp/9.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/9.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>得到flag：<code>BJD{haokanma_xjj}</code></p>
 <h3 id="Real-EasyBaBa"><a href="#Real-EasyBaBa" class="headerlink" title="Real_EasyBaBa"></a>Real_EasyBaBa</h3><p>思路：010里面看flag形状（抽象带师。。</p>
 <p>打开010，往下拉</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/10.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/10.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/21/BJDCTF-2nd-wp/10.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/03/21/BJDCTF-2nd-wp/10.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>得到flag：<code>BJD{572154976}</code></p>
 <h3 id="圣火昭昭-y1ng"><a href="#圣火昭昭-y1ng" class="headerlink" title="圣火昭昭-y1ng"></a>圣火昭昭-y1ng</h3><p>思路：新佛曰+outguess隐写</p>
 <p>看属性发现新佛曰，<a href="http://hi.pcmoe.net/buddha.html" target="_blank" rel="noopener">解码</a>一下（得到key：gemlove，题目提示去掉com</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/11.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/11.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/21/BJDCTF-2nd-wp/11.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/11.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>然后根据题目hint：<code>开局一张图，flag全靠猜</code>     暗示outguess隐写</p>
 <p>其实刚开始我没理解这意思，然后用stegdetect扫<code>error: Quantization table 0x00 was not defined</code></p>
 <p>打开010看一下，发现大量00，20明示outguess隐写</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/12.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/12.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/21/BJDCTF-2nd-wp/12.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/12.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>解出来得到flag：<code>BJD{wdnmd_misc_1s_so_Fuck1ng_e@sy}</code></p>
 <h3 id="TARGZ-y1ng"><a href="#TARGZ-y1ng" class="headerlink" title="TARGZ-y1ng"></a>TARGZ-y1ng</h3><p>思路：文件名为压缩包密码，多层压缩包解密</p>
@@ -71,15 +71,15 @@
 <p>base64解码得到flag：<code>BJD{W3lc0me_T0_BJDCTF}</code></p>
 <h3 id="老文盲了"><a href="#老文盲了" class="headerlink" title="老文盲了"></a>老文盲了</h3><p>这题给爷整笑了，百度翻译读一下</p>
 <p>去掉BJD{}对应的字，得到flag：<code>BJD{淛匶襫黼瀬鎶軄鶛驕鳓哵}</code></p>
-<h3 id="cat-flag"><a href="#cat-flag" class="headerlink" title="cat_flag"></a>cat_flag</h3><a href="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/13.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/13.gif" src="/img/loading.gif" class="lazyload"></a>
+<h3 id="cat-flag"><a href="#cat-flag" class="headerlink" title="cat_flag"></a>cat_flag</h3><a href="/2020/03/21/BJDCTF-2nd-wp/13.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/13.gif" src="/img/loading.gif" class="lazyload"></a>
 
 <p>拿🍙的是0，拿🍗的是1，翻译一下，二进制转ASCII</p>
 <p>得到flag：<code>BJD{M!a0~}</code></p>
-<h3 id="灵能精通-y1ng"><a href="#灵能精通-y1ng" class="headerlink" title="灵能精通-y1ng"></a>灵能精通-y1ng</h3><a href="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/14.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/14.png" src="/img/loading.gif" class="lazyload"></a>
+<h3 id="灵能精通-y1ng"><a href="#灵能精通-y1ng" class="headerlink" title="灵能精通-y1ng"></a>灵能精通-y1ng</h3><a href="/2020/03/21/BJDCTF-2nd-wp/14.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/03/21/BJDCTF-2nd-wp/14.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>圣堂武士密码，翻译一哈，flag：<code>BJD{IMKNIGHTSTEMPLAR}</code></p>
 <h3 id="燕言燕语"><a href="#燕言燕语" class="headerlink" title="燕言燕语"></a>燕言燕语</h3><p>16进制转ASCII+维吉尼亚密码</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/16.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/16.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/21/BJDCTF-2nd-wp/16.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/16.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>得到flag：<code>bjd{yanzi_jiushige_shabi}</code></p>
 <h3 id="Y1nglish-y1ng"><a href="#Y1nglish-y1ng" class="headerlink" title="Y1nglish-y1ng"></a>Y1nglish-y1ng</h3><p>本来以为这题是词频分析，然后直接上脚本，还把字母顺序和最常出现字母顺序对应了一下，然并卵</p>
@@ -88,7 +88,7 @@
 <p>最后得到flag：<code>BJD{pyth0n_Brut3_f0rc3_oR_quipquip_AI_Cr4ck}</code></p>
 <h2 id="web"><a href="#web" class="headerlink" title="web"></a>web</h2><h3 id="fake-google"><a href="#fake-google" class="headerlink" title="fake google"></a>fake google</h3><p>SSTI模板注入</p>
 <p>随意输一个数字在网页源代码出看到提示</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/17.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/17.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/21/BJDCTF-2nd-wp/17.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/17.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>不会，根据<a href="www.1p0ch.cn">王牌辅助楠子神</a>给的提示，搜SSTI模板注入，大概看懂了点，讲也讲不出来，直接放payload</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">markdown</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">qaq?name=&#123;&#123;().<span class="strong">__class__</span>.<span class="strong">__bases__</span>[<span class="string">0</span>].<span class="strong">__subclasses__</span>()[<span class="string">177</span>].<span class="strong">__init__</span>.<span class="strong">__globals__</span>.<span class="strong">__builtins__</span>[<span class="string">'open'</span>](<span class="link">'/flag'</span>).read()&#125;&#125;</span><br></pre></td></tr></table></figure></div>
@@ -96,7 +96,7 @@
 <p>还有参考的<a href="https://www.cnblogs.com/20175211lyz/p/11425368.html" target="_blank" rel="noopener">师傅的博客</a></p>
 <h3 id="duangShell"><a href="#duangShell" class="headerlink" title="duangShell"></a>duangShell</h3><p>开始是个vim文件泄露，而且没走寻常路，dirsearch也没扫出来</p>
 <p>备份文件在/.index.php.swp里，vim -r  恢复一下</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/18.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/18.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/21/BJDCTF-2nd-wp/18.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/18.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>起初以为是个RCE，绕倒是不难，但是它没回显。。</p>
 <p>于是就开始了我漫长的，弹shell之路。试过bash，python，curl，perl，nc…..</p>
@@ -115,7 +115,7 @@
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">列出从客户端到 OCS 或者相反方向的响应经过了哪些代理服务器，他们用什么协议（和版本）发送的请求。当客户端请求到达第一个代理服务器时，该服务器会在自己发出的请求里面添加 Via 头部，并填上自己的相关信息，当下一个代理服务器 收到第一个代理服务器的请求时，会在自己发出的请求里面复制前一个代理服务器的请求的Via 头部，并把自己的相关信息加到后面， 以此类推，当 OCS 收到最后一个代理服务器的请求时，检查 Via 头部，就知道该请求所经过的路由。</span><br></pre></td></tr></table></figure></div>
 
 <p>再开环境做了一遍得到flag</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/19.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/03/21/BJDCTF-2nd-wp/myblog/source/_posts/BJDCTF-2nd-wp/19.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/21/BJDCTF-2nd-wp/19.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/03/21/BJDCTF-2nd-wp/19.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>&nbsp;</p>
 <p>这是新生赛？？让我深刻地认识到自己连新生都不如了。（我感觉BJD 1st 也不简单</p>
