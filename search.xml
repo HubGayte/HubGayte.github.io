@@ -62,8 +62,9 @@
 <p>最后得到flag：<code>BJD{wow_you_can_rea11y_dance}</code></p>
 <h3 id="Imagin-开场曲"><a href="#Imagin-开场曲" class="headerlink" title="Imagin - 开场曲"></a>Imagin - 开场曲</h3><p>思路：玩mikutap，根据键盘键位打出相似的拍子，然后移位得到密码</p>
 <p>hint：</p>
-<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">大写</span><br><span class="line">mikutap</span><br><span class="line">开场曲重复了两遍</span><br><span class="line">flag交一遍的就行</span><br><span class="line">格式BJD&#123;字母+数字&#125;</span><br><span class="line">数字范围0-5</span><br></pre></td></tr></table></figure></div>
-
+<blockquote>
+<p>大写<br>mikutap<br>开场曲重复了两遍<br>flag交一遍的就行<br>格式BJD{字母+数字}<br>数字范围0-5</p>
+</blockquote>
 <p>（横，圈点，实心方块）x 2+ （叉，空心方块，实心散布圆，空心散布圆，实心方块，空心多边形，实心多边形）x 2+  （中心出发圆，中心出发圆，空心多边形，中心出发圆）x 2 </p>
 <p>听就完事了…..最后得到flag：<code>BJD{MIKUTAP3313313}</code></p>
 <h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><p>做的全是1分的嗷，菜鸡不愿去找RSA脚本了</p>
@@ -83,10 +84,10 @@
 
 <p>得到flag：<code>bjd{yanzi_jiushige_shabi}</code></p>
 <h3 id="Y1nglish-y1ng"><a href="#Y1nglish-y1ng" class="headerlink" title="Y1nglish-y1ng"></a>Y1nglish-y1ng</h3><p>本来以为这题是词频分析，然后直接上脚本，还把字母顺序和最常出现字母顺序对应了一下，然并卵</p>
-<p>最后收到群里师傅的启发用<a href="www.quipqiup.com">quipquip</a>（解一些简单替换密码，其中MIH明显对应BJD</p>
+<p>最后收到群里师傅的启发用<a href="https://www.quipqiup.com" target="_blank" rel="noopener">quipquip</a>（解一些简单替换密码，其中MIH明显对应BJD</p>
 <p>hint中提示都是英文单词，所以把y替换成k</p>
 <p>最后得到flag：<code>BJD{pyth0n_Brut3_f0rc3_oR_quipquip_AI_Cr4ck}</code></p>
-<h2 id="web"><a href="#web" class="headerlink" title="web"></a>web</h2><h3 id="fake-google"><a href="#fake-google" class="headerlink" title="fake google"></a>fake google</h3><p>SSTI模板注入 （jinjia2</p>
+<h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="fake-google"><a href="#fake-google" class="headerlink" title="fake google"></a>fake google</h3><p>SSTI模板注入 （jinjia2</p>
 <p>随意输一个数字在网页源代码出看到提示ssssssti，然而并不会…..</p>
 <a href="/2020/03/21/BJDCTF-2nd-wp/17.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/17.png" src="/img/loading.gif" class="lazyload"></a>
 
