@@ -18,7 +18,7 @@
 <h3 id="EasyBaBa"><a href="#EasyBaBa" class="headerlink" title="EasyBaBa"></a>EasyBaBa</h3><p>思路：foremost分离+改文件格式+视频逐帧+二维码反色+16进制转ASCII</p>
 <p>foremost分离出了一个zip，解压得到一个jpg，格式不正确，file一下发现是avi，改后缀</p>
 <p>近期钉钉“求饶”视频，但是里面混进去一些图片，pr，ae，ff不会用。。（所以我选择迅雷</p>
-<p>逐帧查看后发现四张图片</p>
+<p>逐帧查看后发现四张图片(都是出题人…</p>
 <p><a href="/2020/03/21/BJDCTF-2nd-wp/3.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/3.png" src="/img/loading.gif" class="lazyload"></a><a href="/2020/03/21/BJDCTF-2nd-wp/4.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/4.png" src="/img/loading.gif" class="lazyload"></a></p>
 <p><a href="/2020/03/21/BJDCTF-2nd-wp/5.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/5.png" src="/img/loading.gif" class="lazyload"></a><a href="/2020/03/21/BJDCTF-2nd-wp/6.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/6.png" src="/img/loading.gif" class="lazyload"></a></p>
 <p>前三张反色完，要不PsQREdit，要不Barcode Reader都能扫出来</p>
@@ -86,14 +86,29 @@
 <p>最后收到群里师傅的启发用<a href="www.quipqiup.com">quipquip</a>（解一些简单替换密码，其中MIH明显对应BJD</p>
 <p>hint中提示都是英文单词，所以把y替换成k</p>
 <p>最后得到flag：<code>BJD{pyth0n_Brut3_f0rc3_oR_quipquip_AI_Cr4ck}</code></p>
-<h2 id="web"><a href="#web" class="headerlink" title="web"></a>web</h2><h3 id="fake-google"><a href="#fake-google" class="headerlink" title="fake google"></a>fake google</h3><p>SSTI模板注入</p>
-<p>随意输一个数字在网页源代码出看到提示</p>
+<h2 id="web"><a href="#web" class="headerlink" title="web"></a>web</h2><h3 id="fake-google"><a href="#fake-google" class="headerlink" title="fake google"></a>fake google</h3><p>SSTI模板注入 （jinjia2</p>
+<p>随意输一个数字在网页源代码出看到提示ssssssti，然而并不会…..</p>
 <a href="/2020/03/21/BJDCTF-2nd-wp/17.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/17.png" src="/img/loading.gif" class="lazyload"></a>
 
-<p>不会，根据<a href="www.1p0ch.cn">王牌辅助楠子神</a>给的提示，搜SSTI模板注入，大概看懂了点，讲也讲不出来，直接放payload</p>
+<p>根据<a href="https://www.1p0ch.cn" target="_blank" rel="noopener">王牌辅助楠子神</a>给的提示，搜SSTI模板注入，大概看懂了点，讲也讲不出来，直接放payload</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">markdown</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">qaq?name=&#123;&#123;().<span class="strong">__class__</span>.<span class="strong">__bases__</span>[<span class="string">0</span>].<span class="strong">__subclasses__</span>()[<span class="string">177</span>].<span class="strong">__init__</span>.<span class="strong">__globals__</span>.<span class="strong">__builtins__</span>[<span class="string">'open'</span>](<span class="link">'/flag'</span>).read()&#125;&#125;</span><br></pre></td></tr></table></figure></div>
 
 <p>还有参考的<a href="https://www.cnblogs.com/20175211lyz/p/11425368.html" target="_blank" rel="noopener">师傅的博客</a></p>
+<p>好像还有一种<a href="https://github.com/epinna/tplmap" target="_blank" rel="noopener">tplmap</a>的解法</p>
+<blockquote>
+<p>Tplmap是一个python工具，可以通过使用沙箱转义技术找到代码注入和服务器端模板注入（SSTI）漏洞。该工具能够在许多模板引擎中利用SSTI来访问目标文件或操作系统。一些受支持的模板引擎包括PHP（代码评估），Ruby（代码评估），JaveScript（代码评估），Python（代码评估），ERB，Jinja2和Tornado。该工具可以执行对这些模板引擎的盲注入，并具有执行远程命令的能力。</p>
+</blockquote>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./tplmap.py -u http://9df44046-64a1-4ab3-b167-6e2bca4fe272.node3.buuoj.cn/qaq?name= --os-shell</span><br></pre></td></tr></table></figure></div>
+
+<a href="/2020/03/21/BJDCTF-2nd-wp/22.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/22.png" src="/img/loading.gif" class="lazyload"></a>
+
+<h3 id="old-hack"><a href="#old-hack" class="headerlink" title="old-hack"></a>old-hack</h3><p>网站提示：Power By thinkphp5</p>
+<p>随便输入一个s参数，报错如下</p>
+<a href="/2020/03/21/BJDCTF-2nd-wp/20.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/20.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>得到tp版本，网上搜一下<a href="https://blog.csdn.net/qq_38807738/article/details/86777541" target="_blank" rel="noopener">5.0.23</a>的漏洞，可以直接用的，得到flag</p>
+<a href="/2020/03/21/BJDCTF-2nd-wp/21.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/21.png" src="/img/loading.gif" class="lazyload"></a>
+
 <h3 id="duangShell"><a href="#duangShell" class="headerlink" title="duangShell"></a>duangShell</h3><p>开始是个vim文件泄露，而且没走寻常路，dirsearch也没扫出来</p>
 <p>备份文件在/.index.php.swp里，vim -r  恢复一下</p>
 <a href="/2020/03/21/BJDCTF-2nd-wp/18.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/18.png" src="/img/loading.gif" class="lazyload"></a>
@@ -112,8 +127,9 @@
 <p>UA谷歌一下发现是国外的一道原题，包含Commodore 64就好</p>
 <p>最后卡到Via好久，一直以为是Proxy-Authorization要去爆破用户名加密码的base64，失败了。</p>
 <p>后来看到群里师傅发的截图才知道Via</p>
-<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">列出从客户端到 OCS 或者相反方向的响应经过了哪些代理服务器，他们用什么协议（和版本）发送的请求。当客户端请求到达第一个代理服务器时，该服务器会在自己发出的请求里面添加 Via 头部，并填上自己的相关信息，当下一个代理服务器 收到第一个代理服务器的请求时，会在自己发出的请求里面复制前一个代理服务器的请求的Via 头部，并把自己的相关信息加到后面， 以此类推，当 OCS 收到最后一个代理服务器的请求时，检查 Via 头部，就知道该请求所经过的路由。</span><br></pre></td></tr></table></figure></div>
-
+<blockquote>
+<p>列出从客户端到 OCS 或者相反方向的响应经过了哪些代理服务器，他们用什么协议（和版本）发送的请求。当客户端请求到达第一个代理服务器时，该服务器会在自己发出的请求里面添加 Via 头部，并填上自己的相关信息，当下一个代理服务器 收到第一个代理服务器的请求时，会在自己发出的请求里面复制前一个代理服务器的请求的Via 头部，并把自己的相关信息加到后面， 以此类推，当 OCS 收到最后一个代理服务器的请求时，检查 Via 头部，就知道该请求所经过的路由。</p>
+</blockquote>
 <p>再开环境做了一遍得到flag</p>
 <a href="/2020/03/21/BJDCTF-2nd-wp/19.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/03/21/BJDCTF-2nd-wp/19.png" src="/img/loading.gif" class="lazyload"></a>
 
