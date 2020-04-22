@@ -11,13 +11,14 @@
 <p>下面进入正题，NPU的misc也是真的🚹，老折磨人了。。。套娃有一手的。。</p>
 <p>NPU的web已经在buu上了，等做完了就在这再复盘一下。</p>
 <p>misc签到是个mc，零解？忘记了，题目新颖，内容劝退。。</p>
-<h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="抽象带师"><a href="#抽象带师" class="headerlink" title="抽象带师"></a>抽象带师</h3><p>⭕🦅来🔪西北工✌ 带❄ 西踢莪🖊赛🔟🎀⬆👄➖单💧🖊赛</p>
+<h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="抽象带师"><a href="#抽象带师" class="headerlink" title="抽象带师"></a>抽象带师</h3><p>⭕🦅来🔪西北工✌ 带❄ 西踢莪⛏🖊赛🔟🎀⬆👄➖单💧🖊赛</p>
 <p>🌶⑩💉💧🐂🍺</p>
 <p>NPUCTF{欢迎⼤家来到⻄北⼯业⼤学CTF⽐赛世界上最简单的⽐赛}</p>
 <h3 id="HappyCheckInVerification"><a href="#HappyCheckInVerification" class="headerlink" title="HappyCheckInVerification"></a>HappyCheckInVerification</h3><p>zip修复、伪加密、补全二位码定位、与佛论禅、base16、urldecode、base64、dtmf电话音、微信公众号、无线电识别Robot36</p>
 <h3 id="碰上彩虹，吃定彩虹"><a href="#碰上彩虹，吃定彩虹" class="headerlink" title="碰上彩虹，吃定彩虹"></a>碰上彩虹，吃定彩虹</h3><p>空格转摩斯、autokey爆破、strings文件发现字符串、零字符宽度隐写、NTFS、词频统计、base64、encrypto、脑洞（删去strings字符串）、foremost、gimp提取颜色并比较html标记后两位、拼起来转16进制、隐藏文字、ALPHUCK</p>
-<p>总结上两题：巨大脑洞+多层套娃</p>
-<h3 id="剩下的题"><a href="#剩下的题" class="headerlink" title="剩下的题"></a>剩下的题</h3><p>MC、老千层饼（暂时⑤复盘，👴⑤思路）、刻在DNA的撤硕儿（偏逆向，要读代码，不会喽）</p>
+<h3 id="老千层饼"><a href="#老千层饼" class="headerlink" title="老千层饼"></a>老千层饼</h3><p>文件分离、base64、LSB、01序列转二维码、二维码补全、脑洞、cyberchef_recipe、B站av转bv</p>
+<p>总结上三题：巨大脑洞+多层套娃</p>
+<h3 id="剩下的题"><a href="#剩下的题" class="headerlink" title="剩下的题"></a>剩下的题</h3><p>MC、刻在DNA的撤硕儿（偏逆向，要读代码，不会喽）</p>
 <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><p>有时间就复盘</p>
 ]]></content>
       <categories>
