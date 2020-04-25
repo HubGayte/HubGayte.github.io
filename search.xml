@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>DASCTF_2020_April</title>
+    <url>/2020/04/25/DASCTF-2020-April/</url>
+    <content><![CDATA[<p>虽然有一堆作业和ppt还没做，但是俯冲完中期报告还是有个闲适期的，然后就看比赛、多人运动（开黑）了，也复盘了一部分极客大挑战吧。还好今天安恒有个月赛玩，就来水一水。随便写点wp，也纪念一下我妹的生日（第一次在家一起过，不过好像跟平常的日子没啥子区别，哈哈。）然后的话，后面几天就把作业和两个项目ppt搞搞，顺便期待一下明天IG大战TES。</p>
+<p>言归正传，这场比赛有两道web，四道misc，有一道web还是不会，搞会了就再来复盘一下</p>
+<h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="misc1-bluetooth"><a href="#misc1-bluetooth" class="headerlink" title="misc1(bluetooth)"></a>misc1(bluetooth)</h3><p>流量包分析，文件提取</p>
+<p>首先拿到这道题，没啥思路，那堆协议也没见过，尝试binwalk一下，发现一个7z压缩包，用dd命令提取出来</p>
+<p>发现里面的文本名称是<code>password_is_Bluetooth_PIN.txt</code>，然后就去流量包里找</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/04/25/DASCTF-2020-April/1.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>找到后解开压缩包，就得到flag了</p>
+<h3 id="misc2-keyboard"><a href="#misc2-keyboard" class="headerlink" title="misc2(keyboard)"></a>misc2(keyboard)</h3><p>vol文件提取、电脑键盘QWE密码、大小写转换、VeraCrypt文件挂载、NTFS</p>
+<p>下载得到两个文件，感觉很熟悉，有、像<code>1st XTUCTF</code>里面的一道取证，不过不太一样</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">volatility -f Keyboard.raw imageinfo</span><br><span class="line">volatility -f Keyboard.raw --profile=Win7SP1x64 pslist  <span class="comment">#查看进程，发现VeraCrypt.exe和keyboard-log.exe</span></span><br><span class="line">volatility -f Keyboard.raw --profile=Win7SP1x64 filescan | grep keyboard  <span class="comment">#扫一下发现t.txt</span></span><br><span class="line">volatility -f Keyboard.raw --profile=Win7SP1x64 dumpfiles -Q 0x000000003d700880 --dump-dir=./ <span class="comment">#提取一下</span></span><br></pre></td></tr></table></figure></div>
+
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/25/DASCTF-2020-April/2.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>然后通过下图解密给出的<code>CTKQEKNHZHQLLVGKROLATNWGQKRRKQGWNTA</code></p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/25/DASCTF-2020-April/3.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>得到<code>VERACRYPTPASSWORDISKEYBOARDDRAOBYEK</code>，提示小写更容易看出<code>veracryptpasswordiskeyboarddraobyek</code></p>
+<p>得到密码<code>keyboarddraobyek</code>，但是下面提示还是要大写。。。</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/25/DASCTF-2020-April/4.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>拿VeraCrypt.exe加载一下Secret</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/25/DASCTF-2020-April/5.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>猜一手NTFS，拿NtfsStreamsEditor2.exe扫一下，或者用dir命令</p>
+<h3 id="misc3-AWDshell"><a href="#misc3-AWDshell" class="headerlink" title="misc3(AWDshell)"></a>misc3(AWDshell)</h3><p>明天起来写</p>
+<h3 id="misc4-6G！签到题目"><a href="#misc4-6G！签到题目" class="headerlink" title="misc4(6G！签到题目)"></a>misc4(6G！签到题目)</h3><p>这个题出的有意思，哈哈哈哈，给个1G文件，下载速度还奇慢</p>
+<p>下载一部分就好了，有<code>crdownload</code>文件生成后，直接放010就好，文件头部发现DSACTF</p>
+<h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="web1-Joomla-3-4-6-RCE"><a href="#web1-Joomla-3-4-6-RCE" class="headerlink" title="web1(Joomla 3.4.6 RCE)"></a>web1(Joomla 3.4.6 RCE)</h3><p>明天起来写</p>
+<h3 id="web2"><a href="#web2" class="headerlink" title="web2"></a>web2</h3><p>会了就写</p>
+]]></content>
+      <categories>
+        <category>Write_up</category>
+      </categories>
+      <tags>
+        <tag>Write_up</tag>
+        <tag>Web</tag>
+        <tag>misc</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>NPUCTF_2020</title>
     <url>/2020/04/22/NPUCTF-2020/</url>
     <content><![CDATA[<p>这场是西工大的校外赛道，平台被扫了好多次，苦了运维了，中间也修了好多次，赛题质量咋说呢，反正都是我不会的类型。。。操作系统的信号量、条件变量+互斥锁作业，密码学作业，信号作业，虎符CTF，西工大NPU，区块链项目中期检查，财经概论的presentation。。。近期这一堆事情真滴搞人心态，不过好歹也算过去一大半了。但是后面还有安恒月赛、ISCC、De1ta、网鼎。。。u1s1，比赛是真的多，我也是真的菜。。。</p>
