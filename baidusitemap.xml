@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://www.btis.site/2020/04/22/NPUCTF-2020/</loc>
+    <lastmod>2020-04-29</lastmod>
+  </url>  <url>
     <loc>https://www.btis.site/2020/04/25/DASCTF-2020-April/</loc>
     <lastmod>2020-04-29</lastmod>
   </url>  <url>
@@ -9,9 +12,6 @@
   </url>  <url>
     <loc>https://www.btis.site/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/</loc>
     <lastmod>2020-04-24</lastmod>
-  </url>  <url>
-    <loc>https://www.btis.site/2020/04/22/NPUCTF-2020/</loc>
-    <lastmod>2020-04-22</lastmod>
   </url>  <url>
     <loc>https://www.btis.site/2020/04/16/HyperLedger-Fabric/</loc>
     <lastmod>2020-04-17</lastmod>
