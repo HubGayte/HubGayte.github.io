@@ -87,13 +87,13 @@ function activateLightMode(){
 
 <p>3、执行bootstrap.sh下载镜像和二进制文件：<code>./bootstrap.sh</code></p>
 <p>会发现</p>
-<a href="/2020/04/16/HyperLedger-Fabric/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/16/HyperLedger-Fabric/1.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/16/HyperLedger-Fabric/1.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>卡在这，所以<code>vim bootstrap.sh</code>，将 <strong>binariesInstall</strong> 屏蔽后再执行</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$BINARIES</span>"</span> == <span class="string">"true"</span> ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"Pull Hyperledger Fabric binaries"</span></span><br><span class="line">    <span class="built_in">echo</span></span><br><span class="line">    <span class="comment">#pullBinaries</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure></div>
 
 <p>执行结果如下，执行完之后会发现在目录下创建了fabric-samples文件夹</p>
-<a href="/2020/04/16/HyperLedger-Fabric/2.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/16/HyperLedger-Fabric/2.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/04/16/HyperLedger-Fabric/2.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>然后把从网上下载的<code>hyperledger-fabric-linux-amd64-2.0.0.tar.gz</code>解压到这个目录下面</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf hyperledger-fabric-linux-amd64-2.0.0.tar.gz</span><br></pre></td></tr></table></figure></div>
@@ -102,12 +102,12 @@ function activateLightMode(){
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;opt&#x2F;gopath&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;scripts&#x2F;fabric-samples&#x2F;test-network</span><br><span class="line">.&#x2F;network.sh up</span><br></pre></td></tr></table></figure></div>
 
 <p>如图，表示启动成功，已启动一个orderer节点和两个peer节点。</p>
-<a href="/2020/04/16/HyperLedger-Fabric/3.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/04/16/HyperLedger-Fabric/3.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/04/16/HyperLedger-Fabric/3.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="使用测试网络"><a href="#使用测试网络" class="headerlink" title="使用测试网络"></a>使用测试网络</h3><p>1、创建channel，使用network.sh脚本创建来创建一个连接org1和org2组织并加入他们peer的通道，命令如下：</p>
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;network.sh createChannel</span><br></pre></td></tr></table></figure></div>
 
-<a href="/2020/04/16/HyperLedger-Fabric/4.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/04/16/HyperLedger-Fabric/4.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/04/16/HyperLedger-Fabric/4.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>创建成功，默认通道名为mychannel</p>
 <p>也可以带上channel标签，命令如下（-c ChannelName）：</p>
@@ -125,7 +125,7 @@ function activateLightMode(){
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">bash</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">go env -w GO111MODULE=on</span><br><span class="line">go env -w GOPROXY=https://goproxy.cn,direct</span><br></pre></td></tr></table></figure></div>
 
 <p>得到下图，启动成功</p>
-<a href="/2020/04/16/HyperLedger-Fabric/5.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/04/16/HyperLedger-Fabric/5.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/04/16/HyperLedger-Fabric/5.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>3、与网络互动</p>
 <p>网络启动之后，可以使用peer cli客户端去操作网络，可以通过cli客户端去调用部署智能合约，更新通道，或者安装和部署新的智能合约。</p>
