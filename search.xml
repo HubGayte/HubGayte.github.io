@@ -80,13 +80,19 @@
 <p>🌶⑩💉💧🐂🍺</p>
 <p>NPUCTF{欢迎⼤家来到⻄北⼯业⼤学CTF⽐赛世界上最简单的⽐赛}</p>
 <h3 id="HappyCheckInVerification"><a href="#HappyCheckInVerification" class="headerlink" title="HappyCheckInVerification"></a>HappyCheckInVerification</h3><p>思路：zip修复、伪加密、补全二位码定位、与佛论禅、base16、urldecode、base64、dtmf电话音、微信公众号、无线电识别Robot36</p>
-<p>这题很多无意义的套娃，关联性也没有那么强，最后还得去把视频里的电话音base64加密发到公众号上（这谁想得到嘛），得到一段音频再用无线电识别，wp就不写了</p>
+<p>这题很多无意义的套娃，关联性也没有那么强，最后还得去把视频里的电话音base64加密发到公众号上（这谁想得到嘛），得到一段音频再用无线电识别，wp就不写了。详细wp可以去这里看<a href="https://l1near.top/index.php/2020/04/20/33.html" target="_blank" rel="noopener">https://l1near.top/index.php/2020/04/20/33.html</a></p>
 <h3 id="碰上彩虹，吃定彩虹"><a href="#碰上彩虹，吃定彩虹" class="headerlink" title="碰上彩虹，吃定彩虹"></a>碰上彩虹，吃定彩虹</h3><p>思路：空格转摩斯、autokey爆破、strings文件发现字符串、零字符宽度隐写、NTFS、词频统计、base64、encrypto、脑洞（删去strings字符串）、foremost、gimp提取颜色并比较html标记后两位、拼起来转16进制、隐藏文字、ALPHUCK</p>
 <p>盖乐希师傅的题，有点懒了，可以直接去这里看<a href="http://www.ga1axy.top/index.php/archives/27/" target="_blank" rel="noopener">http://www.ga1axy.top/index.php/archives/27/</a></p>
 <h3 id="老千层饼"><a href="#老千层饼" class="headerlink" title="老千层饼"></a>老千层饼</h3><p>思路：文件分离、base64、LSB、01序列转二维码、二维码补全、脑洞、cyberchef_recipe、B站av转bv</p>
 <p>同上：详细wp地址<a href="http://www.ga1axy.top/index.php/archives/27/" target="_blank" rel="noopener">http://www.ga1axy.top/index.php/archives/27/</a></p>
 <p>总结上三题：巨大脑洞+多层套娃</p>
-<h3 id="剩下的题"><a href="#剩下的题" class="headerlink" title="剩下的题"></a>剩下的题</h3><p>MC、刻在DNA的撤硕儿（偏逆向，要读代码，不会喽）、还有个回收站是取证（么有做，网上应该可以搜到</p>
+<h3 id="回收站"><a href="#回收站" class="headerlink" title="回收站"></a>回收站</h3><p>FTK Imager的使用、系统默认的桌面图片的寻找</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img style="zoom:60%;" data-src="/2020/04/22/NPUCTF-2020/1.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>RECYCLER文件夹里面也有flag文件夹，但是那个套娃最后的图片拼到一起看不出来。。</p>
+<p>看wp，发现win7系统默认的桌面图片都放在<code>C:\WINDOWS\Web\Wallpaper</code> 里面，得到<code>Flag.png</code>。</p>
+<p>改个后缀或者cat一下都可以得到flag</p>
+<h3 id="剩下的题"><a href="#剩下的题" class="headerlink" title="剩下的题"></a>剩下的题</h3><p>MC（红石电路的常亮和短亮转二进制、二进制转ASCII、ASCII用md5加密即可）、刻在DNA的撤硕儿（偏逆向，要读代码，不会喽）</p>
 <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><p>有时间就复盘</p>
 <h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><p>这个做了两道最简单的，一个日历、一个atbash，wp也可以直接搜到</p>
 ]]></content>
