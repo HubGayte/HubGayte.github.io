@@ -14,9 +14,9 @@
 <h3 id="INSHack2019-gflag"><a href="#INSHack2019-gflag" class="headerlink" title="[INSHack2019]gflag"></a>[INSHack2019]gflag</h3><p>考点：3D打印gcode命令</p>
 <p><a href="http://gcode.ws/、https://ncviewer.com/（参考自[Root.](https://shawroot.cc/)师傅博客" target="_blank" rel="noopener">http://gcode.ws/、https://ncviewer.com/（参考自[Root.](https://shawroot.cc/)师傅博客</a></p>
 <p>把文件后缀改成<code>.gcode</code>，放进上面两个网站都可以出来</p>
-<a href="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/1.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/1.png" src="/img/loading.gif" class="lazyload"></a>
 
-<a href="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/2.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/2.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/2.png" src="/img/loading.gif" class="lazyload"></a>
 
 <h3 id="INSHack2017-hiding-in-plain-sight"><a href="#INSHack2017-hiding-in-plain-sight" class="headerlink" title="[INSHack2017]hiding-in-plain-sight"></a>[INSHack2017]hiding-in-plain-sight</h3><p>foremost提取一下，打开图片就得到flag了</p>
 <h3 id="INSHack2017-10-cl0v3rf13ld-lane-signal"><a href="#INSHack2017-10-cl0v3rf13ld-lane-signal" class="headerlink" title="[INSHack2017]10-cl0v3rf13ld-lane-signal"></a>[INSHack2017]10-cl0v3rf13ld-lane-signal</h3><p>binwalk发现里面有张png，提取出来发现是摩斯解码规则，猜测还有文件</p>
@@ -33,19 +33,27 @@
 <h3 id="INSHack2018-not-so-deep"><a href="#INSHack2018-not-so-deep" class="headerlink" title="[INSHack2018] (not) so deep"></a>[INSHack2018] (not) so deep</h3><p>考点：频谱和deepsound</p>
 <p>放进au，转成频谱图，调一下频率，发现如下</p>
 <p>下载个<a href="https://deepsound.soft112.com/" target="_blank" rel="noopener">deepsound</a>、及其分析文件的密码<a href="https://github.com/magnumripper/JohnTheRipper/blob/bleeding-jumbo/run/deepsound2john.py" target="_blank" rel="noopener">破解脚本</a></p>
-<a href="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/3.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/3.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/3.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>文件放进去发现有密码，破解一下，得到密码：<code>azerty</code></p>
-<a href="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/4.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/4.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/4.png" src="/img/loading.gif" class="lazyload"></a>
 
 <p>把<code>flag2.txt</code>导出后，得到后一半flag，拼起来就行</p>
 <h3 id="INSHack2017-remote-multimedia-controller"><a href="#INSHack2017-remote-multimedia-controller" class="headerlink" title="[INSHack2017]remote-multimedia-controller"></a>[INSHack2017]remote-multimedia-controller</h3><p>在tcp 02流中发现一段base64，多次解码，得到flag</p>
-<a href="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/5.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/5.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/5.png" src="/img/loading.gif" class="lazyload"></a>
 
-<a href="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/6.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/6.png" src="/img/loading.gif" class="lazyload"></a>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/6.png" src="/img/loading.gif" class="lazyload"></a>
 
-<p>&nbsp;</p>
-<p>快乐LOL去了，剩下的以后写。明天看defcon怎么说，不打的话就编遍程、水水misc。</p>
+<p><del>快乐LOL去了，剩下的以后写。明天看defcon怎么说，不打的话就编遍程、水水misc。</del></p>
+<p>打完回来了，再写一道睡觉</p>
+<h3 id="INSHack2018-Spreadshit"><a href="#INSHack2018-Spreadshit" class="headerlink" title="[INSHack2018]Spreadshit"></a>[INSHack2018]Spreadshit</h3><p>拿到这题第一反应，改后缀，找找zip里有没有什么东西</p>
+<p>然后我就发现了一张白色的png和meta.xml（都没啥子用）</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/7.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>然后就拿excel打开ods文件，查找空格，并全选，答案就出来了（看不清楚就把行高调大一点）</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/8.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>睡觉去了</p>
 ]]></content>
       <categories>
         <category>Misc</category>
