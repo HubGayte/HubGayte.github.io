@@ -1,6 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>INSHack大杂烩</title>
+    <url>/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/</url>
+    <content><![CDATA[<p>👴又来耍misc了，RSA、DES不想编、LRU不着急，Web做不动。misc，我胡汉三又回来了！</p>
+<p>睡醒午觉有、无聊，作业也不想写，就来刷刷misc，看到<code>INSHack</code>这块还挺多，打算做做试试（中间还去快乐乱斗了。</p>
+<p>首先Ctrl F搜一下关键词，开始做题，我丢，五道签到，这分嫖得也太爽了。。</p>
+<p>白给题目们：<code>[INSHack2017]insanity、[INSHack2017]sanity、[INSHack2018]INSanity、[INSHack2019]INSAnity、[INSHack2019]Sanity</code></p>
+<h3 id="INSHack2018-Self-Congratulation"><a href="#INSHack2018-Self-Congratulation" class="headerlink" title="[INSHack2018]Self Congratulation"></a>[INSHack2018]Self Congratulation</h3><p>图片左上角有一堆黑白块，按白色为0黑色为1转成二进制，得到：</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">00110001001</span><br><span class="line">10010001100</span><br><span class="line">11001101000</span><br><span class="line">01101010011</span><br><span class="line">01100011011</span><br><span class="line">10011100000</span><br></pre></td></tr></table></figure></div>
+
+<p>二进制转ASCII得到：12345678</p>
+<h3 id="INSHack2019-gflag"><a href="#INSHack2019-gflag" class="headerlink" title="[INSHack2019]gflag"></a>[INSHack2019]gflag</h3><p>考点：3D打印gcode命令</p>
+<p><a href="http://gcode.ws/、https://ncviewer.com/（参考自[Root.](https://shawroot.cc/)师傅博客" target="_blank" rel="noopener">http://gcode.ws/、https://ncviewer.com/（参考自[Root.](https://shawroot.cc/)师傅博客</a></p>
+<p>把文件后缀改成<code>.gcode</code>，放进上面两个网站都可以出来</p>
+<a href="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/1.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/1.png" src="/img/loading.gif" class="lazyload"></a>
+
+<a href="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/2.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/2.png" src="/img/loading.gif" class="lazyload"></a>
+
+<h3 id="INSHack2017-hiding-in-plain-sight"><a href="#INSHack2017-hiding-in-plain-sight" class="headerlink" title="[INSHack2017]hiding-in-plain-sight"></a>[INSHack2017]hiding-in-plain-sight</h3><p>foremost提取一下，打开图片就得到flag了</p>
+<h3 id="INSHack2017-10-cl0v3rf13ld-lane-signal"><a href="#INSHack2017-10-cl0v3rf13ld-lane-signal" class="headerlink" title="[INSHack2017]10-cl0v3rf13ld-lane-signal"></a>[INSHack2017]10-cl0v3rf13ld-lane-signal</h3><p>binwalk发现里面有张png，提取出来发现是摩斯解码规则，猜测还有文件</p>
+<p>放进010里面，发现ogg文件，手动提取出来，放进au，发现摩斯电码</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.. -. ... .- -.--. -- ----- .-. ..... ...-- ..--.- .-- .---- .-.. .-.. ..--.- -. ...-- ...- ...-- .-. ..--.- ....- --. ...-- -.-.-- -.-</span><br></pre></td></tr></table></figure></div>
+
+<p>有点懒，不想照着表一个一个翻译了，直接扔到网页里跑一下，发现结果千奇百怪。。</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">INSA-.--.M-----R........--..--.-W.----LL..--.-N...--V...--R..--.-....-G...---.-.--K</span><br><span class="line">INSAM5R53W1LLN3V3R4G3</span><br><span class="line">INSA(M0R53_W1LL_N3V3R_4G3!K</span><br></pre></td></tr></table></figure></div>
+
+<p>最后这个看着还靠谱点，然后去网上找一下，摩斯解码规则，发现<code>-.--.</code>代表<code>(</code>也可以理解为<code>{</code>，所以把最后这个改一下啊，得到flag：<code>INSA{M0R53_W1LL_N3V3R_4G3!}</code></p>
+<h3 id="INSHack2018-42-tar-xz"><a href="#INSHack2018-42-tar-xz" class="headerlink" title="[INSHack2018]42.tar.xz"></a>[INSHack2018]42.tar.xz</h3><p>这题一看就是恶心人的压缩包套娃，这波啊，这波是copy，ctftime上的解压代码抄一手</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">shell</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">while [ "`find . -type f -name '*.tar.xz' | wc -l`" -gt 0 ]; do find -type f -name "*.tar.xz" -exec tar xf '&#123;&#125;' \; -exec rm -- '&#123;&#125;' \;; done;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="INSHack2018-not-so-deep"><a href="#INSHack2018-not-so-deep" class="headerlink" title="[INSHack2018] (not) so deep"></a>[INSHack2018] (not) so deep</h3><p>考点：频谱和deepsound</p>
+<p>放进au，转成频谱图，调一下频率，发现如下</p>
+<p>下载个<a href="https://deepsound.soft112.com/" target="_blank" rel="noopener">deepsound</a>、及其分析文件的密码<a href="https://github.com/magnumripper/JohnTheRipper/blob/bleeding-jumbo/run/deepsound2john.py" target="_blank" rel="noopener">破解脚本</a></p>
+<a href="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/3.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="100%" height="100%" data-src="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/3.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>文件放进去发现有密码，破解一下，得到密码：<code>azerty</code></p>
+<a href="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/4.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/4.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>把<code>flag2.txt</code>导出后，得到后一半flag，拼起来就行</p>
+<h3 id="INSHack2017-remote-multimedia-controller"><a href="#INSHack2017-remote-multimedia-controller" class="headerlink" title="[INSHack2017]remote-multimedia-controller"></a>[INSHack2017]remote-multimedia-controller</h3><p>在tcp 02流中发现一段base64，多次解码，得到flag</p>
+<a href="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/5.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/5.png" src="/img/loading.gif" class="lazyload"></a>
+
+<a href="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/6.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/05/15/INSHack%E5%A4%A7%E6%9D%82%E7%83%A9/6.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>&nbsp;</p>
+<p>快乐LOL去了，剩下的以后写。明天看defcon怎么说，不打的话就编遍程、水水misc。</p>
+]]></content>
+      <categories>
+        <category>Misc</category>
+      </categories>
+      <tags>
+        <tag>Write_up</tag>
+        <tag>Misc</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2020网鼎杯filejava（Javaweb、CVE-2014-3529）</title>
     <url>/2020/05/14/2020%E7%BD%91%E9%BC%8E%E6%9D%AFfilejava/</url>
     <content><![CDATA[<p>本来这个题想放到初识XML那一篇里面的，发现有一些Javaweb知识后就把它单独列出来了</p>
