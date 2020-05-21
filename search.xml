@@ -1,6 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>UTCTF-misc合集</title>
+    <url>/2020/05/21/UTCTF-misc%E5%90%88%E9%9B%86/</url>
+    <content><![CDATA[<p>熬夜搞得有、头疼。今天原本想复盘朱雀的namp、phpweb和buu的online tool的，现在没有啥状态，先写几道misc调整一下状态。</p>
+<h3 id="UTCTF2020-zero"><a href="#UTCTF2020-zero" class="headerlink" title="[UTCTF2020]zero"></a>[UTCTF2020]zero</h3><p>考点：零宽度字符隐写</p>
+<p>打开txt，发现显示列数远多于字母数，拿vim打开，发现许多&lt;200b&gt;之类文字，于是想到<a href="http://330k.github.io/misc_tools/unicode_steganography.html" target="_blank" rel="noopener">零宽度字符</a></p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/21/UTCTF-misc%E5%90%88%E9%9B%86/1.png" src="/img/loading.gif" class="lazyload"></a>
+
+<h3 id="UTCTF2020-basic-forensics"><a href="#UTCTF2020-basic-forensics" class="headerlink" title="[UTCTF2020]basic-forensics"></a>[UTCTF2020]basic-forensics</h3><p>考点：Ctrl F</p>
+<p>花里胡哨的一个jpeg文件，放到010里面打开，发现有很多章节啥的</p>
+<p>然后我以为是要字频统计，Ctrl F搜了一下<code>{</code>，得到flag</p>
+<h3 id="UTCTF2020-docx"><a href="#UTCTF2020-docx" class="headerlink" title="[UTCTF2020]docx"></a>[UTCTF2020]docx</h3><p>考点：docx本质、寻找能力</p>
+<p>拿到题目，打开看了一下内容并没有发现什么有用的信息</p>
+<p>转后缀为zip，发现很多图片，以为没用没仔细翻，然后看了眼属性发现有一句<code>链接失效了吗？</code>，开始想是不是要访问文中给的链接，然后自己否定了。以为要统计字体或者行高什么的了，又把自己否定了。</p>
+<p>最后又把后缀改成zip，去看xml里面有没有flag，没找到。去一堆png里面发现了一张大小比较大的，打开看看，得到flag。</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/21/UTCTF-misc%E5%90%88%E9%9B%86/2.png" src="/img/loading.gif" class="lazyload"></a>
+
+<h3 id="UTCTF2020-file-header"><a href="#UTCTF2020-file-header" class="headerlink" title="[UTCTF2020]file header"></a>[UTCTF2020]file header</h3><p>考点：文件头</p>
+<p>题目提示很明显，拿到文件放进010，补上文件头89504e47，得到flag</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/21/UTCTF-misc%E5%90%88%E9%9B%86/3.png" src="/img/loading.gif" class="lazyload"></a>
+
+<h3 id="UTCTF2020-File-Carving"><a href="#UTCTF2020-File-Carving" class="headerlink" title="[UTCTF2020]File Carving"></a>[UTCTF2020]File Carving</h3><p>考点：binwalk、strings</p>
+<p>先尝试了<code>zsteg</code>，发现了<code>This is one of the twists: there is no flag here!</code>，和一个多余的zip包。于是用<code>foremost</code>分离，得到hidden_binary，<code>file</code>一下是个elf文件（还以为是个啥加密要用到上面的hint），然后<code>strings</code>一下得到flag。</p>
+<h3 id="UTCTF2020-spectogram"><a href="#UTCTF2020-spectogram" class="headerlink" title="[UTCTF2020]spectogram"></a>[UTCTF2020]spectogram</h3><p>考点：频谱图</p>
+<p>放进au，转换为频谱图得到flag</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/21/UTCTF-misc%E5%90%88%E9%9B%86/4.png" src="/img/loading.gif" class="lazyload"></a>
+
+<h3 id="UTCTF2020-sstv"><a href="#UTCTF2020-sstv" class="headerlink" title="[UTCTF2020]sstv"></a>[UTCTF2020]sstv</h3><p>考点：无线电转图片、Robot36</p>
+<p>sstv将图片转化为声音，robot36可以将其转换回来。但是我整不出来了，耳朵快整聋了，手机还是没识别出来（就一小段</p>
+<p>看ctftime上的wp是用<a href="https://razvioverflow.github.io/ctfwriteups/UTCTF2020/#basics" target="_blank" rel="noopener">QSSTV</a>还原的</p>
+<p>我整了个mmsstv还不会用。。</p>
+<h3 id="UTCTF2020-dns-shell"><a href="#UTCTF2020-dns-shell" class="headerlink" title="[UTCTF2020]dns-shell"></a>[UTCTF2020]dns-shell</h3><p>这题我不会，只能做到下面这一步（而且wp看不懂</p>
+<p><code>ls -la</code></p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/21/UTCTF-misc%E5%90%88%E9%9B%86/5.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>详情见：<a href="https://meowmeowxw.gitlab.io/ctf/utctf-2020-do-not-stop/" target="_blank" rel="noopener">https://meowmeowxw.gitlab.io/ctf/utctf-2020-do-not-stop/</a></p>
+<h3 id="UTCTF2020-gb"><a href="#UTCTF2020-gb" class="headerlink" title="[UTCTF2020]gb"></a>[UTCTF2020]gb</h3><h3 id="UTCTF2020-icmp-file-transfer"><a href="#UTCTF2020-icmp-file-transfer" class="headerlink" title="[UTCTF2020]icmp-file-transfer"></a>[UTCTF2020]icmp-file-transfer</h3><p>没做捏不想做了，困了。。</p>
+]]></content>
+      <categories>
+        <category>Misc</category>
+      </categories>
+      <tags>
+        <tag>Write_up</tag>
+        <tag>misc</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>V&amp;N2020公开赛 HappyCTFd(CVE-2020-7245)</title>
     <url>/2020/05/19/VN2020%E5%85%AC%E5%BC%80%E8%B5%9B-HappyCTFd-CVE-2020-7245/</url>
     <content><![CDATA[<h3 id="CVE-2020-7245"><a href="#CVE-2020-7245" class="headerlink" title="CVE-2020-7245"></a>CVE-2020-7245</h3><h4 id="漏洞介绍"><a href="#漏洞介绍" class="headerlink" title="漏洞介绍"></a>漏洞介绍</h4><p>   在 CTFd v2.0.0 - v2.2.2 的注册过程中，如果知道用户名并在 CTFd 实例上启用电子邮件，则攻击者可以修改任意帐户的密码。（有、懒了，不太想搭了，直接分析有问题的<a href="https://github.com/CTFd/CTFd/" target="_blank" rel="noopener">源码</a>吧。）</p>
@@ -1417,10 +1463,10 @@
 <p><a href="https://www.runoob.com/git/git-tutorial.html" target="_blank" rel="noopener">Git 菜鸟教程</a></p>
 ]]></content>
       <categories>
-        <category>hexo</category>
+        <category>Hexo</category>
       </categories>
       <tags>
-        <tag>hexo</tag>
+        <tag>Hexo</tag>
         <tag>cdn</tag>
         <tag>git</tag>
       </tags>
@@ -1463,7 +1509,6 @@
 ]]></content>
       <categories>
         <category>Write_up</category>
-        <category>misc</category>
       </categories>
       <tags>
         <tag>Write_up</tag>
