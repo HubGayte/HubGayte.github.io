@@ -103,7 +103,7 @@
 <blockquote>
 <p>在PHP版本7.2.x、7.2.29以下、7.3.x低于7.3.16和7.4.x在7.4.4以下，在使用用户提供的URL的get headers()时，如果URL包含0(\0)字符，URL将被静默截断。这可能导致一些软件对get headers()的目标做出错误的假设，并可能将一些信息发送到错误的服务器。</p>
 </blockquote>
-<p>看到一个链接view ctfhub，点一下会跳转，源码里有<code>Venom 在线招人</code>（太菜了</p>
+<p>看到一个链接view ctfhub，点一下会跳转，源码里有Venom 在线招人（我太菜了</p>
 <p>发现<code>/?url=http://www.ctfhub.com</code>，跳转后发现Headers中存在Hint:<code>Flag in localhost</code></p>
 <a href="/2020/05/27/2020GKCTF/15.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="70%" height="70%" data-src="/2020/05/27/2020GKCTF/15.png" src="/img/loading.gif" class="lazyload"></a>
 
@@ -111,7 +111,38 @@
 <div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[4] &#x3D;&gt; Tips: Host must be end with &#39;123&#39;</span><br></pre></td></tr></table></figure></div>
 
 <p>因此将<code>127.0.0.1</code>替换为<code>127.0.0.123</code>，访问即可得到flag</p>
-<p><code>睡了，剩下的题目明天抽时间复盘</code></p>
+<p><del>睡了，剩下的题目明天抽时间复盘</del></p>
+<h3 id="老八小超市儿"><a href="#老八小超市儿" class="headerlink" title="老八小超市儿"></a>老八小超市儿</h3><p>打开后是个shopxo界面，在网上搜一下<a href="http://www.nctry.com/1660.html" target="_blank" rel="noopener">shopxo的漏洞</a></p>
+<p>发现默认后台<code>/admin.php</code>有弱口令账号：admin 密码：shopxo</p>
+<p>登录成功后在应用中心-应用商店-主题，然后下载默认主题，下载下来把你的shell放到压缩包的<code>default\_static_</code> 目录下</p>
+<p>回到网页上，找到网站管理-主题管理-主题安装，然后选择你加入shell后的主题压缩包进行上传</p>
+<p>安装成功后，拿蚁剑连一下地址是：<code>xxxx/public/static/index/default/7788.phtml</code></p>
+<p>在根目录的flag里面发现<code>flag{this_is_fake_flag/true_flag_in_/root}</code>，提示flag在/root目录里，尝试打开发现没有权限</p>
+<p>flag.hint文件里是</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Thu May 28 09:23:12 2020 </span><br><span class="line">Get The RooT,The Date Is Useful!</span><br></pre></td></tr></table></figure></div>
+
+<p>auto.sh里面是</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">Code</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;sh </span><br><span class="line">while true; do (python &#x2F;var&#x2F;mail&#x2F;makeflaghint.py &amp;) &amp;&amp; sleep 60; done</span><br></pre></td></tr></table></figure></div>
+
+<p>/var/mail/makeflaghint.py里面是</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">python</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> io</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line">os.system(<span class="string">"whoami"</span>)</span><br><span class="line">gk1=str(time.ctime())</span><br><span class="line">gk=<span class="string">"\nGet The RooT,The Date Is Useful!"</span></span><br><span class="line">f=io.open(<span class="string">"/flag.hint"</span>, <span class="string">"rb+"</span>)</span><br><span class="line">f.write(str(gk1))</span><br><span class="line">f.write(str(gk))</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure></div>
+
+<p>直接执行发现没有打开flag.hint文件的权限，于是尝试修改makeflaghint.py，让它去读/root/flag，然后执行auto.sh从而执行这个文件</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">python</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">f=open(<span class="string">"/root/flag"</span>, <span class="string">"r"</span>)</span><br><span class="line">f1=open(<span class="string">"/flag.txt"</span>,<span class="string">"w"</span>)</span><br><span class="line">f1.write(f.read())</span><br><span class="line">f.close()</span><br><span class="line">f1.close()</span><br></pre></td></tr></table></figure></div>
+
+<p>执行auto.sh后等待60s，打开flag.txt即可得到flag</p>
+<h2 id="Reverse"><a href="#Reverse" class="headerlink" title="Reverse"></a>Reverse</h2><h3 id="Check-1n"><a href="#Check-1n" class="headerlink" title="Check_1n"></a>Check_1n</h3><p>这个题看着有点好玩就做了做（记得之前在B站见到过这种电脑好像是一个大作业啥的，有、东西</p>
+<p>拿到题目打开后，需要输入开机密码，于是放进IDA找一下</p>
+<p>Shift+F12查看字符，发现：<code>密 码 错 误</code>，于是按x查看一下那一部分引用了该函数</p>
+<a href="/2020/05/27/2020GKCTF/16.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/05/27/2020GKCTF/16.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>得到开机密码，进去后先去看flag文件</p>
+<a href="/2020/05/27/2020GKCTF/17.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/05/27/2020GKCTF/17.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>base64翻译后得到：<code>Why don&#39;t you try the magic brick game</code>，于是打开那个打砖块游戏，等一会就得到flag了</p>
+<a href="/2020/05/27/2020GKCTF/18.png" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/05/27/2020GKCTF/18.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>另一种解法就是看<code>2i9Q8AtFJTfL3ahU2XGuemEqZJ2ensozjg1EjPJwCHy4RY1Nyvn1ZE1bZe</code>这串字符的引用，然后base58解码得到flag。</p>
 ]]></content>
       <categories>
         <category>Write_up</category>
