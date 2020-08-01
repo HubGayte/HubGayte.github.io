@@ -1,3 +1,4 @@
+https://www.btis.site/2020/08/01/%E5%AE%89%E6%B4%B5%E6%9D%AF-2019-easy-web/
 https://www.btis.site/2020/07/31/2020%E7%BD%91%E9%BC%8E%E6%9D%AFphpweb/
 https://www.btis.site/2020/07/19/PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%80%83%E9%80%B8/
 https://www.btis.site/2020/07/13/SoapClient%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/
@@ -17,4 +18,3 @@ https://www.btis.site/2020/04/16/Http-301/
 https://www.btis.site/2020/04/16/HyperLedger-Fabric/
 https://www.btis.site/2020/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019/
 https://www.btis.site/2020/04/13/ACTF2020/
-https://www.btis.site/2020/04/02/WUSTCTF2020/
